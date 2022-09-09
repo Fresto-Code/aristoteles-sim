@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::create('magazines', function (Blueprint $table) {
-            $table->uuid('id');
+            $table->uuid('id')->index()->primary();
             $table->uuid('author_id');
             $table->string('title');
             $table->string('description')->nullable();
@@ -22,6 +22,11 @@ return new class extends Migration
             $table->enum('moderation_status', ['draft', 'published'])->default('draft');
             $table->timestamps();
             $table->softDeletesTz($column = 'deleted_at', $precision = 0);
+        });
+
+        //relation
+        Schema::table('magazines', function (Blueprint $table) {
+            $table->foreign('author_id')->references('id')->on('users');
         });
     }
 

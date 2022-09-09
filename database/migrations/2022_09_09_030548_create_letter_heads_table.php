@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::create('letter_heads', function (Blueprint $table) {
-            $table->uuid('id');
+            $table->uuid('id')->index()->primary();
             $table->uuid('letter_id');
             $table->string('title');
             $table->string('left_picture')->nullable();
@@ -23,6 +23,11 @@ return new class extends Migration
             $table->string('sub_detail')->nullable();
             $table->timestamps();
             $table->softDeletesTz($column = 'deleted_at', $precision = 0);
+        });
+
+         //relation
+         Schema::table('letter_heads', function (Blueprint $table) {
+            $table->foreign('letter_id')->references('id')->on('letters');
         });
     }
 

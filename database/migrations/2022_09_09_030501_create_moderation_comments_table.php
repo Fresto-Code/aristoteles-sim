@@ -14,12 +14,18 @@ return new class extends Migration
     public function up()
     {
         Schema::create('moderation_comments', function (Blueprint $table) {
-            $table->uuid('id');
+            $table->uuid('id')->index()->primary();
             $table->uuid('magazine_id');
             $table->uuid('user_id');
             $table->string('comment');
             $table->timestamps();
             $table->softDeletesTz($column = 'deleted_at', $precision = 0);
+        });
+
+        //relation
+        Schema::table('moderation_comments', function (Blueprint $table) {
+            $table->foreign('magazine_id')->references('id')->on('magazines');
+            $table->foreign('user_id')->references('id')->on('users');
         });
     }
 

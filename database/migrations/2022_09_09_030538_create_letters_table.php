@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::create('letters', function (Blueprint $table) {
-            $table->uuid('id');
+            $table->uuid('id')->index()->primary();
             $table->uuid('user_recipient_id')->nullable();
             $table->boolean('is_reviewed')->default(false);
             $table->string('note')->nullable();
@@ -22,6 +22,11 @@ return new class extends Migration
             $table->string('reply_latter')->nullable();
             $table->timestamps();
             $table->softDeletesTz($column = 'deleted_at', $precision = 0);
+        });
+
+         //relation
+         Schema::table('letters', function (Blueprint $table) {
+            $table->foreign('user_recipient_id')->references('id')->on('users');
         });
     }
 
