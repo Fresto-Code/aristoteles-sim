@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('email')->index();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->enum('role', ['user', 'admin'])->default('user');
+            $table->enum('role', ['student', 'admin', 'principal', 'teacher']);
             $table->rememberToken();
             $table->timestamps();
             $table->softDeletesTz($column = 'deleted_at', $precision = 0);

@@ -45,4 +45,3 @@ Route::get('magazine/{id}', [MagazineController::class, 'show']);
 Route::get('magazine/{id}/edit', [MagazineController::class, 'edit']);
 Route::put('magazine/{id}', [MagazineController::class, 'update']);
 Route::delete('magazine/{id}', [MagazineController::class, 'softDelete']);
-
