@@ -8,4 +8,5 @@ use Illuminate\Database\Eloquent\Model;
 class LetterHead extends Model
 {
     use HasFactory;
+    protected $guarded = ['id', 'timestamps'];
 }

@@ -8,4 +8,5 @@ use Illuminate\Database\Eloquent\Model;
 class ModerationComment extends Model
 {
     use HasFactory;
+    protected $guarded = ['id', 'timestamps'];
 }
