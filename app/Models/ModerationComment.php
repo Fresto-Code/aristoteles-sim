@@ -9,4 +9,5 @@ class ModerationComment extends Model
 {
     use HasFactory;
     protected $guarded = ['id', 'timestamps'];
+    
 }

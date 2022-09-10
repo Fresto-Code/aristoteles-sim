@@ -24,8 +24,8 @@ return new class extends Migration
             $table->softDeletesTz($column = 'deleted_at', $precision = 0);
         });
 
-        //relation
-        Schema::table('magazines', function (Blueprint $table) {
+         //relation
+         Schema::table('magazines', function (Blueprint $table) {
             $table->foreign('author_id')->references('id')->on('users');
         });
     }

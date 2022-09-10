@@ -9,4 +9,9 @@ class Magazine extends Model
 {
     use HasFactory;
     protected $guarded = ['id', 'timestamps'];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }
