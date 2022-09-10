@@ -17,7 +17,7 @@ return new class extends Migration
             $table->uuid('id')->index()->primary();
             $table->uuid('magazine_id');
             $table->uuid('user_id');
-            $table->string('comment');
+            $table->string('comment')->nullable();
             $table->timestamps();
             $table->softDeletesTz($column = 'deleted_at', $precision = 0);
         });
