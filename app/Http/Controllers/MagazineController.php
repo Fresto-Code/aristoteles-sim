@@ -4,9 +4,15 @@ namespace App\Http\Controllers;
 
 use App\Models\Magazine;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class MagazineController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +20,8 @@ class MagazineController extends Controller
      */
     public function index()
     {
-        //
+        $magazine = Magazine::all();
+        return view('pages.magazine.magazine', compact('magazine'));
     }
 
     /**
@@ -24,7 +31,7 @@ class MagazineController extends Controller
      */
     public function create()
     {
-        //
+        return view('pages.magazine.create');
     }
 
     /**
@@ -35,7 +42,25 @@ class MagazineController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'title' => 'required',
+            'url' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'moderation_status' => 'required',
+        ]);
+
+        //image name
+        $imageName = time() . '_magazine.' . $request->url->extension();
+        $request->url->move(public_path('magazine-images'), $imageName);
+
+        Magazine::create([
+            'author_id' =>  Auth::user()->id,
+            'title' => $request->title,
+            'description' => $request->description,
+            'url' => $imageName,
+            'moderation_status' => $request->moderation_status,
+        ]);
+        
+        return redirect('magazine')->with('create', 'Magazine added successfully!');
     }
 
     /**
@@ -46,7 +71,8 @@ class MagazineController extends Controller
      */
     public function show(Magazine $magazine)
     {
-        //
+        $magazine = Magazine::find($magazine->id);
+        return view('pages.magazine.show', compact('magazine'));
     }
 
     /**
@@ -57,7 +83,7 @@ class MagazineController extends Controller
      */
     public function edit(Magazine $magazine)
     {
-        //
+        return view('pages.magazine.edit', compact('magazine'));
     }
 
     /**
@@ -69,7 +95,26 @@ class MagazineController extends Controller
      */
     public function update(Request $request, Magazine $magazine)
     {
-        //
+        $request->validate([
+            'title' => 'required',
+            'url' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'moderation_status' => 'required',
+        ]);
+
+        //image name
+        $imageName = time() . '_magazine.' . $request->url->extension();
+        $request->url->move(public_path('magazine-images'), $imageName);
+
+        Magazine::where('id', $magazine->id)
+            ->update([
+                'author_id' =>  Auth::user()->id,
+                'title' => $request->title,
+                'description' => $request->description,
+                'url' => $imageName,
+                'moderation_status' => $request->moderation_status,
+            ]);
+
+        return redirect('magazine')->with('update', 'Magazine updated successfully!');
     }
 
     /**
@@ -78,6 +123,13 @@ class MagazineController extends Controller
      * @param  \App\Models\Magazine  $magazine
      * @return \Illuminate\Http\Response
      */
+    public function softDelete(Magazine $magazine)
+    {
+        //soft delete
+        $magazine->delete();
+        return redirect('magazine')->with('delete', 'Magazine deleted successfully!');
+    }
+    
     public function destroy(Magazine $magazine)
     {
         //

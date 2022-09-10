@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\MagazineController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -34,4 +36,13 @@ Route::group(['middleware' => 'auth'], function () {
 	 Route::get('table-list', function () {return view('pages.tables');})->name('table');
 	Route::put('profile/password', ['as' => 'profile.password', 'uses' => 'App\Http\Controllers\ProfileController@password']);
 });
+
+//magazine
+Route::get('magazine', [MagazineController::class, 'index'])->name('magazine');
+Route::get('magazine/create', [MagazineController::class, 'create']);
+Route::post('magazine', [MagazineController::class, 'store']);
+Route::get('magazine/{id}', [MagazineController::class, 'show']);
+Route::get('magazine/{id}/edit', [MagazineController::class, 'edit']);
+Route::put('magazine/{id}', [MagazineController::class, 'update']);
+Route::delete('magazine/{id}', [MagazineController::class, 'softDelete']);
 
