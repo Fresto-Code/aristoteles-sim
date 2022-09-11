@@ -1,5 +1,5 @@
 Magazine 
-- Create magazine from student
-    - create dashboard student
+- Update majalah
+- approval majalah
 - Create approval from teacher + note 
 - Read the magazine

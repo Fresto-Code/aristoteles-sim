@@ -64,6 +64,34 @@ class MagazineController extends Controller
         return view('pages.magazine.public.create');
     }
 
+        /**
+     * Approve the magazine to be published.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function approve(Magazine $magazine)
+    {
+        try {
+            Magazine::where('id', $magazine->id)->update([
+                'moderation_status' => 'published',
+            ]);
+
+            $updatedMagzine = Magazine::where('id', $magazine->id)->first();
+            
+            Storage::setVisibility($updatedMagzine->url, 'public');
+            Storage::setVisibility($updatedMagzine->cover, 'public');
+
+            return redirect('magazine')->with(
+                'update',
+                'Magazine updated successfully!'
+            );
+        } catch (\Throwable $th) {
+            //throw $th;
+            dd($th);
+        }
+    }
+
+
     /**
      * Store a newly created resource in storage.
      *
@@ -79,8 +107,8 @@ class MagazineController extends Controller
             // 'magazine_file' => 'required|mimes:pdf|max:500000',
         ]);
 
-        //dd($request->magazine_file->extention());
         $folderAndFileName = time() . '_magazine';
+
         //magazine name and file
         $magazineName =
             $folderAndFileName . '.' . $request->magazine_file->extension();

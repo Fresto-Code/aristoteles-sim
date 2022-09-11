@@ -47,5 +47,6 @@ Route::post('magazine', [MagazineController::class, 'store']);
 Route::get('magazine/{id}', [MagazineController::class, 'show']);
 Route::get('magazine/{id}/edit', [MagazineController::class, 'edit']);
 Route::put('magazine/{id}', [MagazineController::class, 'update']);
+Route::put('magazine/{id}/approve', [MagazineController::class, 'approve']);
 Route::delete('magazine/{id}', [MagazineController::class, 'softDelete']);
 Route::get('magazine/browse/dashboard', [MagazineController::class, 'browse']);

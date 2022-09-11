@@ -15,11 +15,11 @@
                         <table class="table align-items-center table-flush">
                             <thead class="thead-light">
                                 <tr>
+                                    <th scope="col" class="sort" data-sort="action">Aksi</th>
                                     <th scope="col" class="sort" data-sort="title">Judul</th>
                                     <th scope="col" class="sort" data-sort="author">Penulis</th>
                                     <th scope="col" class="sort" data-sort="moderation_status">Moderation Status</th>
                                     <th scope="col" class="sort" data-sort="description">Deskripsi</th>
-                                    
                                     <th scope="col" class="sort" data-sort="completion">Di Buat Pada</th>
                                     <th scope="col" class="sort" data-sort="completion">Terakhir Diperbaharui Pada</th>
                                     <th scope="col"></th>
@@ -28,6 +28,28 @@
                             <tbody class="list">
                                 @foreach ($magazines as $magazine)
                                     <tr>
+                                        <td>
+
+                                            
+                                            <button class="border-0 btn-white shadow-none">
+                                            <a href="/magazine/{{ $magazine->id }}/edit"
+                                                class="btn btn-sm btn-primary">Edit</a>
+                                            </button>
+                                            <button class="border-0 btn-white shadow-none">
+                                                <form action="/magazine/{{ $magazine->id }}/approve" method="post">
+                                                    @method('delete')
+                                                    @csrf
+                                                    <button type="submit" class="btn btn-sm btn-danger">Hapus</button>
+                                            </button>
+                                            @if ($magazine->moderation_status == 'draft')
+                                            <button class="border-0 btn-white shadow-none">
+                                                <form action="/magazine/{{ $magazine->id }}/approve" method="post">
+                                                @method('put')
+                                                @csrf
+                                                <button type="submit" class="btn btn-sm btn-success">Setujui</button>
+                                            </form> 
+                                            </button>
+                                            @endif
                                         <td>
                                             {{ $magazine->title }}
                                         </td>
