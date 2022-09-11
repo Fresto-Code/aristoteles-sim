@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Magazine;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Aws\S3\S3Client;
+use Illuminate\Support\Facades\Storage;
 
 class MagazineController extends Controller
 {
@@ -20,21 +22,31 @@ class MagazineController extends Controller
      */
     public function index()
     {
-        $magazine = Magazine::all();
-        return view('pages.magazine.magazine', compact('magazine'));
+        $magazines = Magazine::join(
+            'users',
+            'users.id',
+            '=',
+            'magazines.author_id'
+        )->get(['magazines.*', 'users.name']);
+        return view('pages.magazine.magazine', compact('magazines'));
     }
 
-        /**
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
     public function browse()
     {
-        $magazines = Magazine::join('users', 'users.id', '=', 'magazines.author_id')
-            ->where('magazines.moderation_status','published')
+        $magazines = Magazine::join(
+            'users',
+            'users.id',
+            '=',
+            'magazines.author_id'
+        )
+            ->where('magazines.moderation_status', 'published')
             ->get(['magazines.*', 'users.name']);
-        return view('pages.magazine.browse', compact('magazines'));
+        return view('pages.magazine.public.magazine', compact('magazines'));
     }
 
     public function view(Magazine $magazine)
@@ -49,7 +61,7 @@ class MagazineController extends Controller
      */
     public function create()
     {
-        return view('pages.magazine.create');
+        return view('pages.magazine.public.create');
     }
 
     /**
@@ -62,23 +74,50 @@ class MagazineController extends Controller
     {
         $request->validate([
             'title' => 'required',
-            'url' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'moderation_status' => 'required',
+            'description' => 'required',
+            // 'cover_file' => 'mimes:jpeg,png|max:200000',
+            // 'magazine_file' => 'required|mimes:pdf|max:500000',
         ]);
 
-        //image name
-        $imageName = time() . '_magazine.' . $request->url->extension();
-        $request->url->move(public_path('magazine-images'), $imageName);
+        //dd($request->magazine_file->extention());
+        $folderAndFileName = time() . '_magazine';
+        //magazine name and file
+        $magazineName =
+            $folderAndFileName . '.' . $request->magazine_file->extension();
+        $request->magazine_file->move(
+            public_path('magazines_temp'),
+            $magazineName
+        );
+
+        //magazine cover
+        $magazineCoverName =
+            $folderAndFileName . '.' . $request->cover_file->extension();
+        $request->cover_file->move(
+            public_path('magazines_temp'),
+            $magazineCoverName
+        );
 
         Magazine::create([
-            'author_id' =>  Auth::user()->id,
+            'author_id' => Auth::user()->id,
             'title' => $request->title,
             'description' => $request->description,
-            'url' => $imageName,
-            'moderation_status' => $request->moderation_status,
+            'url' => Storage::disk('spaces')->putFile(
+                'magazines/' . $folderAndFileName,
+                public_path('magazines_temp') . '/' . $magazineName,
+                'private'
+            ),
+            'cover' => Storage::disk('spaces')->putFile(
+                'magazines/' . $folderAndFileName,
+                public_path('magazines_temp') . '/' . $magazineCoverName,
+                'private'
+            ),
+            'moderation_status' => 'draft',
         ]);
-        
-        return redirect('magazine')->with('create', 'Magazine added successfully!');
+
+        return redirect('magazine/browse/dashboard')->with(
+            'create',
+            'Magazine added successfully!'
+        );
     }
 
     /**
@@ -123,16 +162,18 @@ class MagazineController extends Controller
         $imageName = time() . '_magazine.' . $request->url->extension();
         $request->url->move(public_path('magazine-images'), $imageName);
 
-        Magazine::where('id', $magazine->id)
-            ->update([
-                'author_id' =>  Auth::user()->id,
-                'title' => $request->title,
-                'description' => $request->description,
-                'url' => $imageName,
-                'moderation_status' => $request->moderation_status,
-            ]);
+        Magazine::where('id', $magazine->id)->update([
+            'author_id' => Auth::user()->id,
+            'title' => $request->title,
+            'description' => $request->description,
+            'url' => $imageName,
+            'moderation_status' => $request->moderation_status,
+        ]);
 
-        return redirect('magazine')->with('update', 'Magazine updated successfully!');
+        return redirect('magazine')->with(
+            'update',
+            'Magazine updated successfully!'
+        );
     }
 
     /**
@@ -145,9 +186,12 @@ class MagazineController extends Controller
     {
         //soft delete
         $magazine->delete();
-        return redirect('magazine')->with('delete', 'Magazine deleted successfully!');
+        return redirect('magazine')->with(
+            'delete',
+            'Magazine deleted successfully!'
+        );
     }
-    
+
     public function destroy(Magazine $magazine)
     {
         //

@@ -21,8 +21,7 @@ Route::get('/', function () {
 
 
 
-Route::get('/magazine/browse', [MagazineController::class, 'browse']);
-Route::get('/magazine/view/file={magazine_title}&magazineMode=true', [MagazineController::class, 'view']);
+
 
 Auth::routes();
 
@@ -35,9 +34,9 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('profile', ['as' => 'profile.edit', 'uses' => 'App\Http\Controllers\ProfileController@edit']);
 	Route::put('profile', ['as' => 'profile.update', 'uses' => 'App\Http\Controllers\ProfileController@update']);
 	Route::get('upgrade', function () {return view('pages.upgrade');})->name('upgrade'); 
-	 Route::get('map', function () {return view('pages.maps');})->name('map');
-	 Route::get('icons', function () {return view('pages.icons');})->name('icons'); 
-	 Route::get('table-list', function () {return view('pages.tables');})->name('table');
+	Route::get('map', function () {return view('pages.maps');})->name('map');
+	Route::get('icons', function () {return view('pages.icons');})->name('icons'); 
+	Route::get('table-list', function () {return view('pages.tables');})->name('table');
 	Route::put('profile/password', ['as' => 'profile.password', 'uses' => 'App\Http\Controllers\ProfileController@password']);
 });
 
@@ -49,3 +48,4 @@ Route::get('magazine/{id}', [MagazineController::class, 'show']);
 Route::get('magazine/{id}/edit', [MagazineController::class, 'edit']);
 Route::put('magazine/{id}', [MagazineController::class, 'update']);
 Route::delete('magazine/{id}', [MagazineController::class, 'softDelete']);
+Route::get('magazine/browse/dashboard', [MagazineController::class, 'browse']);
