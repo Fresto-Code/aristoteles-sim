@@ -27,7 +27,7 @@ class MagazineController extends Controller
             'users.id',
             '=',
             'magazines.author_id'
-        )->get(['magazines.*', 'users.name']);
+        )->get(['magazines.*', 'users.name'])->sortBy('moderation_status');;
         return view('pages.magazine.magazine', compact('magazines'));
     }
 
@@ -45,7 +45,7 @@ class MagazineController extends Controller
             'magazines.author_id'
         )
             ->where('magazines.moderation_status', 'published')
-            ->get(['magazines.*', 'users.name']);
+            ->get(['magazines.*', 'users.name'])->sortBy('updated_at');;
         return view('pages.magazine.public.magazine', compact('magazines'));
     }
 
