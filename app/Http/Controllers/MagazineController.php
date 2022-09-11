@@ -24,6 +24,24 @@ class MagazineController extends Controller
         return view('pages.magazine.magazine', compact('magazine'));
     }
 
+        /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function browse()
+    {
+        $magazines = Magazine::join('users', 'users.id', '=', 'magazines.author_id')
+            ->where('magazines.moderation_status','published')
+            ->get(['magazines.*', 'users.name']);
+        return view('pages.magazine.browse', compact('magazines'));
+    }
+
+    public function view(Magazine $magazine)
+    {
+        return view('pages.magazine.view_pdf');
+    }
+
     /**
      * Show the form for creating a new resource.
      *

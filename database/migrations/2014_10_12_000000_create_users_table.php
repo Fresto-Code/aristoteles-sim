@@ -13,6 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
+        DB::statement('CREATE EXTENSION IF NOT EXISTS "uuid-ossp";');
         Schema::create('users', function (Blueprint $table) {
             $table->uuid('id')->index()->primary();
             $table->string('name')->unique();
@@ -24,6 +25,7 @@ return new class extends Migration
             $table->timestamps();
             $table->softDeletesTz($column = 'deleted_at', $precision = 0);
         });
+        DB::statement('ALTER TABLE users ALTER COLUMN id SET DEFAULT uuid_generate_v4();');
     }
 
     /**

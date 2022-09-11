@@ -43,11 +43,13 @@ class User extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'id' => 'string',
     ];
 
     public function magazines()
     {
         return $this->hasMany(Magazine::class);
     }
+
     protected $dates = [ 'deleted_at' ];
 }

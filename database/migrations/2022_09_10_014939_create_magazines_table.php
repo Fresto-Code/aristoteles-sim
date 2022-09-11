@@ -13,16 +13,20 @@ return new class extends Migration
      */
     public function up()
     {
+        DB::statement('CREATE EXTENSION IF NOT EXISTS "uuid-ossp";');
         Schema::create('magazines', function (Blueprint $table) {
             $table->uuid('id')->index()->primary();
             $table->uuid('author_id');
             $table->string('title');
             $table->string('description')->nullable();
             $table->string('url')->nullable();
+            $table->string('cover')->nullable();
             $table->enum('moderation_status', ['draft', 'published'])->default('draft');
             $table->timestamps();
             $table->softDeletesTz($column = 'deleted_at', $precision = 0);
         });
+
+        DB::statement('ALTER TABLE magazines ALTER COLUMN id SET DEFAULT uuid_generate_v4();');
 
          //relation
          Schema::table('magazines', function (Blueprint $table) {

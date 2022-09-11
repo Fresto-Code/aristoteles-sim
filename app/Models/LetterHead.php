@@ -13,4 +13,8 @@ class LetterHead extends Model
     
     protected $guarded = ['id', 'timestamps'];
     protected $dates = [ 'deleted_at' ];
+
+    protected $casts = [
+        'id' => 'string',
+    ];
 }

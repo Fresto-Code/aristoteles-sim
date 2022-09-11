@@ -83,24 +83,24 @@
             <ul class="navbar-nav">
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('home') }}">
-                        <i class="ni ni-tv-2 text-primary"></i> {{ __('Dashboard') }}
+                        <i class="ni ni-tv-2 text-warning"></i> {{ __('Dashboard') }}
                     </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('table') }}">
-                      <i class="ni ni-books text-blue"></i>
+                      <i class="ni ni-books text-warning"></i>
                       <span class="nav-link-text">E-Library</span>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('table') }}">
-                      <i class="ni ni-single-copy-04 text-success"></i>
+                    <a class="nav-link" href="{{ route('magazine') }}">
+                      <i class="ni ni-single-copy-04 text-warning"></i>
                       <span class="nav-link-text">E-Magazine</span>
                     </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#navbar-examples" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="navbar-examples">
-                        <i class="ni ni-send text-orange"></i>
+                        <i class="ni ni-send text-warning"></i>
                         <span class="nav-link-text">Surat</span>
                     </a>
                     <div class="collapse show" id="navbar-examples">
@@ -125,16 +125,16 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('table') }}">
-                      <i class="ni ni-archive-2 text-default"></i>
+                      <i class="ni ni-archive-2 text-warning"></i>
                       <span class="nav-link-text">Persediaan</span>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#navbar-examples" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="navbar-examples">
-                        <i class="ni ni-circle-08 text-info"></i>
+                    <a class="nav-link" href="#alumni" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="navbar-examples">
+                        <i class="ni ni-circle-08 text-warning"></i>
                         <span class="nav-link-text">Alumni & Orang Tua</span>
                     </a>
-                    <div class="collapse show" id="navbar-examples">
+                    <div class="collapse show" id="alumni">
                         <ul class="nav nav-sm flex-column">
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('profile.edit') }}">
@@ -151,13 +151,13 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('table') }}">
-                      <i class="ni ni-bulb-61 text-yellow"></i>
+                      <i class="ni ni-bulb-61 text-warning"></i>
                       <span class="nav-link-text">Sumber Daya Manusia (SDM)</span>
                     </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('table') }}">
-                      <i class="ni ni-settings text-green"></i>
+                      <i class="ni ni-settings text-warning"></i>
                       <span class="nav-link-text">BKK</span>
                     </a>
                 </li>

@@ -19,4 +19,8 @@ class Magazine extends Model
     }
 
     protected $dates = [ 'deleted_at' ];
+
+    protected $casts = [
+        'id' => 'string',
+    ];
 }

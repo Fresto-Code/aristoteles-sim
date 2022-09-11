@@ -19,10 +19,14 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+
+
+Route::get('/magazine/browse', [MagazineController::class, 'browse']);
+Route::get('/magazine/view/file={magazine_title}&magazineMode=true', [MagazineController::class, 'view']);
+
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Auth::routes();
 
 Route::get('/home', 'App\Http\Controllers\HomeController@index')->name('home');
 
