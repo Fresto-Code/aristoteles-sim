@@ -44,7 +44,7 @@
                                             @if ($magazine->moderation_status == 'draft')
                                             <button class="border-0 btn-white shadow-none">
                                                 <form action="/magazine/{{ $magazine->id }}/approve" method="post">
-                                                @method('put')
+                                                @method('PATCH')
                                                 @csrf
                                                 <button type="submit" class="btn btn-sm btn-success">Setujui</button>
                                             </form> 

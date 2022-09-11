@@ -77,10 +77,10 @@ class MagazineController extends Controller
             ]);
 
             $updatedMagzine = Magazine::where('id', $magazine->id)->first();
-            
-            Storage::setVisibility($updatedMagzine->url, 'public');
-            Storage::setVisibility($updatedMagzine->cover, 'public');
+            //dd($updatedMagzine);
 
+            Storage::disk('spaces')->setVisibility($updatedMagzine->url, 'public');
+            Storage::disk('spaces')->setVisibility($updatedMagzine->cover, 'public');
             return redirect('magazine')->with(
                 'update',
                 'Magazine updated successfully!'
@@ -91,7 +91,6 @@ class MagazineController extends Controller
         }
     }
 
-
     /**
      * Store a newly created resource in storage.
      *
@@ -100,52 +99,60 @@ class MagazineController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'title' => 'required',
-            'description' => 'required',
-            // 'cover_file' => 'mimes:jpeg,png|max:200000',
-            // 'magazine_file' => 'required|mimes:pdf|max:500000',
-        ]);
-
-        $folderAndFileName = time() . '_magazine';
-
-        //magazine name and file
-        $magazineName =
-            $folderAndFileName . '.' . $request->magazine_file->extension();
-        $request->magazine_file->move(
-            public_path('magazines_temp'),
-            $magazineName
-        );
-
-        //magazine cover
-        $magazineCoverName =
-            $folderAndFileName . '.' . $request->cover_file->extension();
-        $request->cover_file->move(
-            public_path('magazines_temp'),
-            $magazineCoverName
-        );
-
-        Magazine::create([
-            'author_id' => Auth::user()->id,
-            'title' => $request->title,
-            'description' => $request->description,
-            'url' => Storage::disk('spaces')->putFile(
-                'magazines/' . $folderAndFileName,
-                public_path('magazines_temp') . '/' . $magazineName,
-                'private'
-            ),
-            'cover' => Storage::disk('spaces')->putFile(
-                'magazines/' . $folderAndFileName,
-                public_path('magazines_temp') . '/' . $magazineCoverName,
-                'private'
-            ),
-            'moderation_status' => 'draft',
-        ]);
-
-        return redirect('magazine/browse/dashboard')->with(
-            'create',
-            'Magazine added successfully!'
-        );
+        try {
+            $request->validate([
+                'title' => 'required',
+                'description' => 'required',
+                // 'cover_file' => 'mimes:jpeg,png|max:200000',
+                // 'magazine_file' => 'required|mimes:pdf|max:500000',
+            ]);
+    
+            $folderAndFileName = time() . '_magazine';
+    
+            //magazine name and file
+            $magazineName =
+                $folderAndFileName . '.' . $request->magazine_file->extension();
+            $request->magazine_file->move(
+                public_path('magazines_temp'),
+                $magazineName
+            );
+    
+            //magazine cover
+            $magazineCoverName =
+                $folderAndFileName . '.' . $request->cover_file->extension();
+            $request->cover_file->move(
+                public_path('magazines_temp'),
+                $magazineCoverName
+            );
+    
+            Magazine::create([
+                'author_id' => Auth::user()->id,
+                'title' => $request->title,
+                'description' => $request->description,
+                'url' => Storage::disk('spaces')->putFile(
+                    'magazines/' . $folderAndFileName,
+                    public_path('magazines_temp') . '/' . $magazineName,
+                    'private'
+                ),
+                'cover' => Storage::disk('spaces')->putFile(
+                    'magazines/' . $folderAndFileName,
+                    public_path('magazines_temp') . '/' . $magazineCoverName,
+                    'private'
+                ),
+                'moderation_status' => 'draft',
+            ]);
+    
+            return redirect('magazine/browse/dashboard')->with(
+                'create',
+                'Magazine added successfully!'
+            );
+        } catch (\Throwable $th) {
+            return redirect('magazine/browse/dashboard')->with(
+                'Failed',
+                'Magazine failed to be added!'
+            );
+        }
+        
     }
 
     /**

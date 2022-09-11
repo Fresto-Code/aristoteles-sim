@@ -19,10 +19,6 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-
-
-
-
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
@@ -44,9 +40,9 @@ Route::group(['middleware' => 'auth'], function () {
 Route::get('magazine', [MagazineController::class, 'index'])->name('magazine');
 Route::get('magazine/create', [MagazineController::class, 'create']);
 Route::post('magazine', [MagazineController::class, 'store']);
-Route::get('magazine/{id}', [MagazineController::class, 'show']);
-Route::get('magazine/{id}/edit', [MagazineController::class, 'edit']);
-Route::put('magazine/{id}', [MagazineController::class, 'update']);
-Route::put('magazine/{id}/approve', [MagazineController::class, 'approve']);
-Route::delete('magazine/{id}', [MagazineController::class, 'softDelete']);
+Route::get('magazine/{magazine}', [MagazineController::class, 'show']);
+Route::get('magazine/{magazine}/edit', [MagazineController::class, 'edit']);
+Route::put('magazine/{magazine}', [MagazineController::class, 'update']);
+Route::patch('magazine/{magazine}/approve', [MagazineController::class, 'approve']);
+Route::delete('magazine/{magazine}', [MagazineController::class, 'softDelete']);
 Route::get('magazine/browse/dashboard', [MagazineController::class, 'browse']);
