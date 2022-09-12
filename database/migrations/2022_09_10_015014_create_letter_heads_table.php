@@ -29,8 +29,8 @@ return new class extends Migration
 
         DB::statement('ALTER TABLE letter_heads ALTER COLUMN id SET DEFAULT uuid_generate_v4();');
 
-         //relation
-         Schema::table('letter_heads', function (Blueprint $table) {
+        //relation
+        Schema::table('letter_heads', function (Blueprint $table) {
             $table->foreign('letter_id')->references('id')->on('letters');
         });
     }

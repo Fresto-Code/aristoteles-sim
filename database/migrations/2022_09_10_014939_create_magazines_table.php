@@ -29,8 +29,8 @@ return new class extends Migration
 
         DB::statement('ALTER TABLE magazines ALTER COLUMN id SET DEFAULT uuid_generate_v4();');
 
-         //relation
-         Schema::table('magazines', function (Blueprint $table) {
+        //relation
+        Schema::table('magazines', function (Blueprint $table) {
             $table->foreign('author_id')->references('id')->on('users');
         });
     }
