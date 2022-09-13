@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Auth;
 use Aws\S3\S3Client;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\DB;
+use Dompdf\Dompdf;
 
 class MagazineController extends Controller
 {
@@ -31,7 +32,9 @@ class MagazineController extends Controller
             'users.id',
             '=',
             'magazines.author_id'
-        )->get(['magazines.*', 'users.name'])->sortBy('moderation_status');;
+        )
+            ->get(['magazines.*', 'users.name'])
+            ->sortBy('moderation_status');
         return view('pages.magazine.magazine', compact('magazines'));
     }
 
@@ -49,7 +52,8 @@ class MagazineController extends Controller
             'magazines.author_id'
         )
             ->where('magazines.moderation_status', 'published')
-            ->get(['magazines.*', 'users.name'])->sortBy('updated_at');;
+            ->get(['magazines.*', 'users.name'])
+            ->sortBy('updated_at');
         return view('pages.magazine.public.magazine', compact('magazines'));
     }
 
@@ -83,8 +87,14 @@ class MagazineController extends Controller
             $updatedMagzine = Magazine::where('id', $magazine->id)->first();
             //dd($updatedMagzine);
 
-            Storage::disk('spaces')->setVisibility($updatedMagzine->url, 'public');
-            Storage::disk('spaces')->setVisibility($updatedMagzine->cover, 'public');
+            Storage::disk('spaces')->setVisibility(
+                $updatedMagzine->url,
+                'public'
+            );
+            Storage::disk('spaces')->setVisibility(
+                $updatedMagzine->cover,
+                'public'
+            );
             return redirect('magazine')->with(
                 'update',
                 'Magazine updated successfully!'
@@ -95,6 +105,87 @@ class MagazineController extends Controller
         }
     }
 
+    public function storeEditor(Request $request)
+    {
+        $request->validate([
+            'title' => 'required',
+            'description' => 'required',
+            // 'cover_file' => 'mimes:jpeg,png|max:200000',
+            // 'magazine_file' => 'required|mimes:pdf|max:500000',
+        ]);
+
+        $folderAndFileName = time() . '_magazine';
+        $magazineName = $folderAndFileName . '.pdf';
+        // instantiate and use the dompdf class
+        $dompdf = new Dompdf();
+        $dompdf->loadHtml($request->writenMagazine);
+
+        // Render the HTML as PDF
+        $dompdf->render();
+
+        file_put_contents(public_path('magazines_temp/'.$magazineName), $dompdf->output());
+
+        //magazine cover
+        $magazineCoverName =
+            $folderAndFileName . '.' . $request->cover_file->extension();
+        $request->cover_file->move(
+            public_path('magazines_temp'),
+            $magazineCoverName
+        );
+
+        //transaction
+        try {
+            DB::beginTransaction();
+
+            //create magazine and get data
+            $newMagazine = Magazine::create([
+                'author_id' => Auth::user()->id,
+                'title' => $request->title,
+                'description' => $request->description,
+                'url' => Storage::disk('spaces')->putFile(
+                    'magazines/' . $folderAndFileName,
+                    public_path('magazines_temp') . '/' . $magazineName,
+                    'private'
+                ),
+                'cover' => Storage::disk('spaces')->putFile(
+                    'magazines/' . $folderAndFileName,
+                    public_path('magazines_temp') . '/' . $magazineCoverName,
+                    'private'
+                ),
+                'moderation_status' => 'draft',
+            ]);
+
+            $getUsers = User::where('role', 'osis')
+                ->orWhere('role', 'teacher')
+                ->get();
+
+            $notifications = [];
+            foreach ($getUsers as $user) {
+                $notifications[] = [
+                    'user_id' => $user->id,
+                    'notification_content' =>
+                        'Magazine baru telah diunggah oleh ' .
+                        Auth::user()->name,
+                    'hyperlink_id' => $newMagazine->id,
+                    'hyperlink_type' => 'magazine',
+                    'is_read' => 'false',
+                ];
+            }
+
+            //insert to notifications table
+            Notification::insert($notifications);
+
+            DB::commit();
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            throw $th;
+        }
+
+        return redirect('magazine/browse/dashboard')->with(
+            'create',
+            'Magazine added successfully!'
+        );
+    }
     /**
      * Store a newly created resource in storage.
      *
@@ -145,7 +236,9 @@ class MagazineController extends Controller
                     ),
                     'cover' => Storage::disk('spaces')->putFile(
                         'magazines/' . $folderAndFileName,
-                        public_path('magazines_temp') . '/' . $magazineCoverName,
+                        public_path('magazines_temp') .
+                            '/' .
+                            $magazineCoverName,
                         'private'
                     ),
                     'moderation_status' => 'draft',
@@ -159,7 +252,9 @@ class MagazineController extends Controller
                 foreach ($getUsers as $user) {
                     $notifications[] = [
                         'user_id' => $user->id,
-                        'notification_content' => 'Magazine baru telah diunggah oleh ' . Auth::user()->name,
+                        'notification_content' =>
+                            'Magazine baru telah diunggah oleh ' .
+                            Auth::user()->name,
                         'hyperlink_id' => $newMagazine->id,
                         'hyperlink_type' => 'magazine',
                         'is_read' => 'false',
@@ -266,7 +361,10 @@ class MagazineController extends Controller
 
     public function showMagazineComment(Magazine $magazine)
     {
-        $comments = ModerationComment::where('magazine_id', $magazine->id)->get();
+        $comments = ModerationComment::where(
+            'magazine_id',
+            $magazine->id
+        )->get();
         return view('pages.magazine.show', compact('comments', 'magazine'));
     }
 }

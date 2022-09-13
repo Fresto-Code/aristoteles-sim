@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Auth;
 */
 
 Route::get('/', function () {
-	return view('welcome');
+	return view('auth.login');
 });
 
 Auth::routes();
@@ -54,6 +54,13 @@ Route::put('magazine/{magazine}', [MagazineController::class, 'update']);
 Route::patch('magazine/{magazine}/approve', [MagazineController::class, 'approve']);
 Route::delete('magazine/{magazine}', [MagazineController::class, 'softDelete']);
 Route::get('magazine/browse/dashboard', [MagazineController::class, 'browse']);
+Route::get('magazine/choose/type', function() {
+	return view('pages.magazine.public.option');
+})->name('magazine.choose_type');
+Route::post('magazine/inline/editor', [MagazineController::class, 'storeEditor'])->name('magazine/inline/editor');
+Route::get('magazine/inline/editor', function() {
+	return view('pages.magazine.public.editor');
+})->name('magazine.editor');
 //magazine & comment
 Route::get('magazine/{magazine}/comment', [MagazineController::class, 'showMagazineComment'])->name('magazine.comment');
 
@@ -77,3 +84,4 @@ Route::patch('letter/{letter}/principal-update', [LetterController::class, 'prin
 Route::get('letter-reviewed', [LetterController::class, 'letterReviewed'])->name('letter-reviewed');
 Route::get('reply-letter/{letter}/create', [LetterController::class, 'createReplyLetter']);
 Route::post('reply-letter', [LetterController::class, 'storeReplyLetter']);
+

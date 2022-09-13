@@ -38,16 +38,15 @@
                                     @endif
                                 </div>
                                 <div class="form-group">
-                                    <div class="input-group">
-                                        <label >Cover</label>
-                                        <input type="file" class="form-control-file" name="cover_file">
-                                    </div>
+                                        <label class="form-label" for="customFile">Pilih Cover</label>
+                                        <input type="file" class="form-control input-group-alternative " name="cover_file">
+                                    
                                 </div>
                                 <div class="form-group">
-                                    <div class="input-group">
-                                        <label>Magazine PDF</label>
-                                        <input type="file" class="form-control-file" name="magazine_file">
-                                    </div>
+     
+                                        <label class="form-label" for="customFile">Pilih Magazine PDF</label>
+                                        <input type="file" class="form-control input-group-alternative" name="magazine_file">
+                                
                                 </div>
                                 <div class="text-center">
                                     <button type="submit" class="btn btn-success mt-4">{{ __('Tambah') }}</button>

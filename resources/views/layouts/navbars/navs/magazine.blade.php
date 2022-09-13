@@ -26,7 +26,7 @@
             <!-- Navbar items -->
             <ul class="navbar-nav ml-auto align-items-center d-none d-flex">
                 <li class="nav-item">
-                    <a href="{{ url('magazine/create') }}" class="btn btn-success btn-lg" role="button" aria-disabled="true">Tambah Magazine</a>
+                    <a href="{{ url('magazine/choose/type') }}" class="btn btn-success btn-lg" role="button" aria-disabled="true">Tambah Magazine</a>
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link pr-0" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
