@@ -1,4 +1,5 @@
 <?php
+
 namespace Database\Seeders;
 
 use Illuminate\Support\Facades\DB;
@@ -20,6 +21,33 @@ class UsersTableSeeder extends Seeder
             'email_verified_at' => now(),
             'password' => Hash::make('secret'),
             'role' => 'admin',
+            'created_at' => now(),
+            'updated_at' => now()
+        ]);
+        DB::table('users')->insert([
+            'name' => 'Osis',
+            'email' => 'osis@argon.com',
+            'email_verified_at' => now(),
+            'password' => Hash::make('secret'),
+            'role' => 'osis',
+            'created_at' => now(),
+            'updated_at' => now()
+        ]);
+        DB::table('users')->insert([
+            'name' => 'Teacher',
+            'email' => 'teacher@argon.com',
+            'email_verified_at' => now(),
+            'password' => Hash::make('secret'),
+            'role' => 'teacher',
+            'created_at' => now(),
+            'updated_at' => now()
+        ]);
+        DB::table('users')->insert([
+            'name' => 'principal',
+            'email' => 'principal@argon.com',
+            'email_verified_at' => now(),
+            'password' => Hash::make('secret'),
+            'role' => 'principal',
             'created_at' => now(),
             'updated_at' => now()
         ]);

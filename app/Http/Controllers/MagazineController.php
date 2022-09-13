@@ -3,11 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Models\Magazine;
+use App\Models\User;
 use App\Models\ModerationComment;
+use App\Models\Notification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Aws\S3\S3Client;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\DB;
 
 class MagazineController extends Controller
 {
@@ -126,22 +129,43 @@ class MagazineController extends Controller
                 $magazineCoverName
             );
 
-            Magazine::create([
-                'author_id' => Auth::user()->id,
-                'title' => $request->title,
-                'description' => $request->description,
-                'url' => Storage::disk('spaces')->putFile(
-                    'magazines/' . $folderAndFileName,
-                    public_path('magazines_temp') . '/' . $magazineName,
-                    'private'
-                ),
-                'cover' => Storage::disk('spaces')->putFile(
-                    'magazines/' . $folderAndFileName,
-                    public_path('magazines_temp') . '/' . $magazineCoverName,
-                    'private'
-                ),
-                'moderation_status' => 'draft',
-            ]);
+            //transaction
+            try {
+                DB::beginTransaction();
+
+                //create magazine and get data
+                $newMagazine = Magazine::create([
+                    'author_id' => Auth::user()->id,
+                    'title' => $request->title,
+                    'description' => $request->description,
+                    'url' => '1',
+                    'cover' => '2',
+                    'moderation_status' => 'draft',
+                ]);
+
+                $getUsers = User::where('role', 'osis')
+                    ->orWhere('role', 'teacher')
+                    ->get();
+
+                $notifications = [];
+                foreach ($getUsers as $user) {
+                    $notifications[] = [
+                        'user_id' => $user->id,
+                        'notification_content' => 'Magazine baru telah diunggah oleh ' . Auth::user()->name,
+                        'hyperlink_id' => $newMagazine->id,
+                        'hyperlink_type' => 'magazine',
+                        'is_read' => 'false',
+                    ];
+                }
+
+                //insert to notifications table
+                Notification::insert($notifications);
+
+                DB::commit();
+            } catch (\Throwable $th) {
+                DB::rollBack();
+                throw $th;
+            }
 
             return redirect('magazine/browse/dashboard')->with(
                 'create',
@@ -235,6 +259,6 @@ class MagazineController extends Controller
     public function showMagazineComment(Magazine $magazine)
     {
         $comments = ModerationComment::where('magazine_id', $magazine->id)->get();
-        return view('pages.magazine.comment', compact('comments', 'magazine'));
+        return view('pages.magazine.show', compact('comments', 'magazine'));
     }
 }
