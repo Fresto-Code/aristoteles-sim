@@ -138,8 +138,16 @@ class MagazineController extends Controller
                     'author_id' => Auth::user()->id,
                     'title' => $request->title,
                     'description' => $request->description,
-                    'url' => '1',
-                    'cover' => '2',
+                    'url' => Storage::disk('spaces')->putFile(
+                        'magazines/' . $folderAndFileName,
+                        public_path('magazines_temp') . '/' . $magazineName,
+                        'private'
+                    ),
+                    'cover' => Storage::disk('spaces')->putFile(
+                        'magazines/' . $folderAndFileName,
+                        public_path('magazines_temp') . '/' . $magazineCoverName,
+                        'private'
+                    ),
                     'moderation_status' => 'draft',
                 ]);
 
