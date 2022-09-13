@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Magazine;
+use App\Models\ModerationComment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Aws\S3\S3Client;
@@ -64,7 +65,7 @@ class MagazineController extends Controller
         return view('pages.magazine.public.create');
     }
 
-        /**
+    /**
      * Approve the magazine to be published.
      *
      * @return \Illuminate\Http\Response
@@ -106,9 +107,9 @@ class MagazineController extends Controller
                 // 'cover_file' => 'mimes:jpeg,png|max:200000',
                 // 'magazine_file' => 'required|mimes:pdf|max:500000',
             ]);
-    
+
             $folderAndFileName = time() . '_magazine';
-    
+
             //magazine name and file
             $magazineName =
                 $folderAndFileName . '.' . $request->magazine_file->extension();
@@ -116,7 +117,7 @@ class MagazineController extends Controller
                 public_path('magazines_temp'),
                 $magazineName
             );
-    
+
             //magazine cover
             $magazineCoverName =
                 $folderAndFileName . '.' . $request->cover_file->extension();
@@ -124,7 +125,7 @@ class MagazineController extends Controller
                 public_path('magazines_temp'),
                 $magazineCoverName
             );
-    
+
             Magazine::create([
                 'author_id' => Auth::user()->id,
                 'title' => $request->title,
@@ -141,7 +142,7 @@ class MagazineController extends Controller
                 ),
                 'moderation_status' => 'draft',
             ]);
-    
+
             return redirect('magazine/browse/dashboard')->with(
                 'create',
                 'Magazine added successfully!'
@@ -152,7 +153,6 @@ class MagazineController extends Controller
                 'Magazine failed to be added!'
             );
         }
-        
     }
 
     /**
@@ -230,5 +230,11 @@ class MagazineController extends Controller
     public function destroy(Magazine $magazine)
     {
         //
+    }
+
+    public function showMagazineComment(Magazine $magazine)
+    {
+        $comments = ModerationComment::where('magazine_id', $magazine->id)->get();
+        return view('pages.magazine.comment', compact('comments', 'magazine'));
     }
 }

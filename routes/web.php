@@ -54,6 +54,14 @@ Route::put('magazine/{magazine}', [MagazineController::class, 'update']);
 Route::patch('magazine/{magazine}/approve', [MagazineController::class, 'approve']);
 Route::delete('magazine/{magazine}', [MagazineController::class, 'softDelete']);
 Route::get('magazine/browse/dashboard', [MagazineController::class, 'browse']);
+//magazine & comment
+Route::get('magazine/{magazine}/comment', [MagazineController::class, 'showMagazineComment'])->name('magazine.comment');
+
+//moderation comment
+Route::post('moderation-comment/{magazine}', [MagazineController::class, 'store']);
+Route::get('moderation-comment/{magazine}/{moderationComment}/edit', [MagazineController::class, 'edit']);
+Route::put('moderation-comment/{moderationComment}', [MagazineController::class, 'update']);
+
 
 //letter
 Route::get('letter', [LetterController::class, 'index'])->name('letter');

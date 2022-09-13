@@ -2,11 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Magazine;
 use App\Models\ModerationComment;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ModerationCommentController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -33,9 +39,19 @@ class ModerationCommentController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, Magazine $magazine)
     {
-        //
+        $request->validate([
+            'comment' => 'required'
+        ]);
+
+        ModerationComment::create([
+            'magazine_id' => $magazine->id,
+            'user_id' => Auth::user()->id,
+            'comment' => $request->comment
+        ]);
+
+        return redirect()->back();
     }
 
     /**
@@ -55,9 +71,9 @@ class ModerationCommentController extends Controller
      * @param  \App\Models\ModerationComment  $moderationComment
      * @return \Illuminate\Http\Response
      */
-    public function edit(ModerationComment $moderationComment)
+    public function edit(ModerationComment $moderationComment, Magazine $magazine)
     {
-        //
+        return view('pages.magazine.moderation-comment-edit', compact('moderationComment', 'magazine'));
     }
 
     /**
@@ -69,7 +85,16 @@ class ModerationCommentController extends Controller
      */
     public function update(Request $request, ModerationComment $moderationComment)
     {
-        //
+        $request->validate([
+            'comment' => 'required'
+        ]);
+
+        ModerationComment::where('id', $moderationComment->id)
+            ->update([
+                'comment' => $request->comment
+            ]);
+
+        return redirect()->route('magazine.comment', $moderationComment->magazine_id);
     }
 
     /**
