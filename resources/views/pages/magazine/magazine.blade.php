@@ -8,7 +8,16 @@
                 <div class="card">
                     <!-- Card header -->
                     <div class="card-header border-0">
-                        <h3 class="mb-0">Daftar E-Magazine</h3>
+                        <div class="row">
+                            <div class="col-sm">
+                                <h2>Daftar E-Magazine</h2>
+                            </div>
+                            <div class="col-sm">
+                                <a href="{{ url('magazine/browse/dashboard') }}" class="btn btn-success float-right">Jelajahi PDF</a>
+                            </div>
+                          </div>
+
+                       
                     </div>
                     <!-- List E-Magazine -->
                     <div class="table-responsive">
