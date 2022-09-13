@@ -67,5 +67,6 @@ class Kernel extends HttpKernel
         'principal' => \App\Http\Middleware\PrincipalRole::class,
         'student' => \App\Http\Middleware\StudentRole::class,
         'teacher' => \App\Http\Middleware\TeacherRole::class,
+        'osis' => \App\Http\Middleware\OsisRole::class,
     ];
 }
