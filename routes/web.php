@@ -54,11 +54,11 @@ Route::put('magazine/{magazine}', [MagazineController::class, 'update']);
 Route::patch('magazine/{magazine}/approve', [MagazineController::class, 'approve']);
 Route::delete('magazine/{magazine}', [MagazineController::class, 'softDelete']);
 Route::get('magazine/browse/dashboard', [MagazineController::class, 'browse']);
-Route::get('magazine/choose/type', function() {
+Route::get('magazine/choose/type', function () {
 	return view('pages.magazine.public.option');
 })->name('magazine.choose_type');
 Route::post('magazine/inline/editor', [MagazineController::class, 'storeEditor'])->name('magazine/inline/editor');
-Route::get('magazine/inline/editor', function() {
+Route::get('magazine/inline/editor', function () {
 	return view('pages.magazine.public.editor');
 })->name('magazine.editor');
 //magazine & comment
@@ -68,7 +68,6 @@ Route::get('magazine/{magazine}/comment', [MagazineController::class, 'showMagaz
 Route::post('moderation-comment/{magazine}', [MagazineController::class, 'store']);
 Route::get('moderation-comment/{magazine}/{moderationComment}/edit', [MagazineController::class, 'edit']);
 Route::put('moderation-comment/{moderationComment}', [MagazineController::class, 'update']);
-
 
 //letter
 Route::get('letter', [LetterController::class, 'index'])->name('letter');
@@ -85,3 +84,11 @@ Route::get('letter-reviewed', [LetterController::class, 'letterReviewed'])->name
 Route::get('reply-letter/{letter}/create', [LetterController::class, 'createReplyLetter']);
 Route::post('reply-letter', [LetterController::class, 'storeReplyLetter']);
 
+//letter head
+Route::get('letter-head', [LetterHeadController::class, 'index'])->name('letter-head');
+Route::get('letter-head/create', [LetterHeadController::class, 'create']);
+Route::post('letter-head', [LetterHeadController::class, 'store']);
+Route::get('letter-head/{letterHead}', [LetterHeadController::class, 'show']);
+Route::get('letter-head/{letterHead}/edit', [LetterHeadController::class, 'edit']);
+Route::patch('letter-head/{letterHead}', [LetterHeadController::class, 'update']);
+Route::delete('letter-head/{letterHead}', [LetterHeadController::class, 'softDelete']);

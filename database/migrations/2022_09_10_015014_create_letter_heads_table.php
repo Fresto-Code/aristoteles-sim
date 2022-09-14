@@ -17,7 +17,7 @@ return new class extends Migration
         DB::statement('CREATE EXTENSION IF NOT EXISTS "uuid-ossp";');
         Schema::create('letter_heads', function (Blueprint $table) {
             $table->uuid('id')->index()->primary();
-            $table->uuid('letter_id');
+            //$table->uuid('letter_id')->nullable();
             $table->string('title');
             $table->string('left_picture')->nullable();
             $table->string('right_picture')->nullable();
@@ -30,9 +30,9 @@ return new class extends Migration
         DB::statement('ALTER TABLE letter_heads ALTER COLUMN id SET DEFAULT uuid_generate_v4();');
 
         //relation
-        Schema::table('letter_heads', function (Blueprint $table) {
-            $table->foreign('letter_id')->references('id')->on('letters');
-        });
+        // Schema::table('letter_heads', function (Blueprint $table) {
+        //     $table->foreign('letter_id')->references('id')->on('letters');
+        // });
     }
 
     /**

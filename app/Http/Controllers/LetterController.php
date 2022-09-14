@@ -47,23 +47,23 @@ class LetterController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'url' => 'required|mimes:pdf|max:2048',
+        ]);
+
+        // $file = $request->file('file');
+        // $name = time() . $file->getClientOriginalName();
+        // $file->move(public_path() . '/files/', $name);
+
+        // $letter = new Letter();
+        // $letter->title = $request->title;
+        // $letter->content = $request->content;
+        // $letter->file = $name;
+        // $letter->author_id = auth()->user()->id;
+        // $letter->save();
+
+        // file name
         try {
-            $request->validate([
-                'url' => 'required|mimes:pdf|max:2048',
-            ]);
-
-            // $file = $request->file('file');
-            // $name = time() . $file->getClientOriginalName();
-            // $file->move(public_path() . '/files/', $name);
-
-            // $letter = new Letter();
-            // $letter->title = $request->title;
-            // $letter->content = $request->content;
-            // $letter->file = $name;
-            // $letter->author_id = auth()->user()->id;
-            // $letter->save();
-
-            // file name
             $fileName = time() . '.' . $request->url->extension();
             $request->url->move(public_path('latter_temp'), $fileName);
 
@@ -75,8 +75,9 @@ class LetterController extends Controller
             ]);
 
             return redirect()->route('letter.index')->with('create', 'Letter created successfully.');
-        } catch (\Exception $e) {
-            return $e->getMessage();
+        } catch (\Throwable $th) {
+            return redirect()->route('letter.index')->with('error', 'Letter not created!');
+            //return $th->getMessage();
         }
     }
 
@@ -112,12 +113,11 @@ class LetterController extends Controller
      */
     public function update(Request $request, Letter $letter)
     {
+        $request->validate([
+            'user_recipient_id' => 'required',
+            'url' => 'required|mimes:pdf|max:2048',
+        ]);
         try {
-            $request->validate([
-                'user_recipient_id' => 'required',
-                'url' => 'required|mimes:pdf|max:2048',
-            ]);
-
             // file name
             $fileName = time() . '.' . $request->url->extension();
             $request->url->move(public_path('latter_temp'), $fileName);
@@ -130,8 +130,9 @@ class LetterController extends Controller
             ]);
 
             return redirect()->route('letter.index')->with('update', 'Letter updated successfully.');
-        } catch (\Exception $e) {
-            return $e->getMessage();
+        } catch (\Throwable $th) {
+            //return $th->getMessage();
+            return redirect()->route('letter.index')->with('error', 'Letter not updated!');
         }
     }
 
@@ -140,8 +141,9 @@ class LetterController extends Controller
         try {
             $letter->delete();
             return redirect()->route('letter.index')->with('delete', 'Letter deleted successfully.');
-        } catch (\Exception $e) {
-            return $e->getMessage();
+        } catch (\Throwable $th) {
+            //return $th->getMessage();
+            return redirect()->route('letter.index')->with('error', 'Letter not deleted!');
         }
     }
 
@@ -158,12 +160,12 @@ class LetterController extends Controller
 
     public function principalUpdate(Request $request, Letter $letter)
     {
-        try {
-            $request->validate([
-                'user_recipient_id' => 'required',
-                'is_reviewed' => 'required',
-            ]);
+        $request->validate([
+            'user_recipient_id' => 'required',
+            'is_reviewed' => 'required',
+        ]);
 
+        try {
             Letter::where('id', $letter->id)->update([
                 'user_recipient_id' => $request->user_recipient_id,
                 'is_reviewed' => $request->is_reviewed,
@@ -171,8 +173,9 @@ class LetterController extends Controller
             ]);
 
             return redirect()->route('letter.index')->with('update', 'Letter updated successfully.');
-        } catch (\Exception $e) {
-            return $e->getMessage();
+        } catch (\Throwable $th) {
+            //return $th->getMessage();
+            return redirect()->route('letter.index')->with('error', 'Letter not updated!');
         }
     }
 
@@ -189,11 +192,11 @@ class LetterController extends Controller
 
     public function storeReplyLetter(Request $request)
     {
-        try {
-            $request->validate([
-                'reply_latter' => 'required|mimes:pdf|max:2048',
-            ]);
+        $request->validate([
+            'reply_latter' => 'required|mimes:pdf|max:2048',
+        ]);
 
+        try {
             // file name
             $fileName = time() . '.' . $request->reply_latter->extension();
             $request->reply_latter->move(public_path('latter_temp'), $fileName);
@@ -203,8 +206,9 @@ class LetterController extends Controller
             ]);
 
             return redirect()->route('letter.index')->with('create', 'Letter created successfully.');
-        } catch (\Exception $e) {
-            return $e->getMessage();
+        } catch (\Throwable $th) {
+            //return $th->getMessage();
+            return redirect()->route('letter.index')->with('error', 'Letter not created!');
         }
     }
 }
