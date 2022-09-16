@@ -13,3 +13,4 @@ Magazine
 -fix view mobile
 -image dan video mode web
 -banyak user tulis admin bs nyambungin
+-multy tenant
