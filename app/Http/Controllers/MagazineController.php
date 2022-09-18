@@ -92,10 +92,34 @@ class MagazineController extends Controller
                 'public'
             );
 
-            return redirect('magazine')->with(
-                'update',
-                'Magazine updated successfully!'
+            return redirect()->back();
+        } catch (\Throwable $th) {
+            //throw $th;
+            dd($th);
+        }
+    }
+
+      /**
+     * Cancel the magazine to be published.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function cancel(Magazine $magazine)
+    {
+        try {
+            Magazine::where('id', $magazine->id)->update([
+                'moderation_status' => 'draft',
+            ]);
+
+            $updatedMagzine = Magazine::where('id', $magazine->id)->first();
+            //dd($updatedMagzine);
+
+            Storage::disk('spaces')->setVisibility(
+                $updatedMagzine->url,
+                'private'
             );
+
+            return redirect()->back();
         } catch (\Throwable $th) {
             //throw $th;
             dd($th);

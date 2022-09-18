@@ -57,6 +57,7 @@ Route::get('magazine/{magazine}', [MagazineController::class, 'show']);
 Route::get('magazine/{magazine}/edit', [MagazineController::class, 'edit']);
 Route::put('magazine/{magazine}', [MagazineController::class, 'update']);
 Route::patch('magazine/{magazine}/approve', [MagazineController::class, 'approve']);
+Route::patch('magazine/{magazine}/cancel', [MagazineController::class, 'cancel']);
 Route::delete('magazine/{magazine}', [MagazineController::class, 'softDelete']);
 Route::get('magazine/browse/dashboard', [MagazineController::class, 'browse']);
 Route::get('magazine/choose/type', function () {

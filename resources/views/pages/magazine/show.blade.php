@@ -5,6 +5,7 @@
         'title' => __($magazine->title),
         'description' => __($magazine->description),
         'cover' => $magazine->cover,
+        'status' => $magazine->moderation_status,
         'class' => 'col-lg-7',
     ])
 
@@ -55,6 +56,11 @@
 
                                 <div id="collapseOne" class="collapse show" aria-labelledby="headingOne"
                                     data-parent="#accordion">
+                                    @if (count($comments) === 0)
+                                        <div class="card-body">
+                                            <p class="text-center">Belum ada komentar</p>
+                                        </div>
+                                    @else    
                                     <div class="card-body">
                                         @foreach ($comments as $comment)
                                             <div class="row mb-3">
@@ -77,7 +83,8 @@
                                                 </div>
                                             </div>
                                         @endforeach
-                                    </div>
+                                    </div>                                    
+                                    @endif
                                 </div>
                             </div>
                         </div>
