@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\MagazineController;
+use App\Http\Controllers\ModerationCommentController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
@@ -24,6 +25,10 @@ Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Route::get('/home', 'App\Http\Controllers\HomeController@index')->name('home');
+
+Route::get('maintenance', function() {
+	return view('maintenance');
+})->name('maintenance');
 
 Route::group(['middleware' => 'auth'], function () {
 	Route::resource('user', 'App\Http\Controllers\UserController', ['except' => ['show']]);
@@ -65,9 +70,9 @@ Route::get('magazine/inline/editor', function () {
 Route::get('magazine/{magazine}/comment', [MagazineController::class, 'showMagazineComment'])->name('magazine.comment');
 
 //moderation comment
-Route::post('moderation-comment/{magazine}', [MagazineController::class, 'store']);
-Route::get('moderation-comment/{magazine}/{moderationComment}/edit', [MagazineController::class, 'edit']);
-Route::put('moderation-comment/{moderationComment}', [MagazineController::class, 'update']);
+Route::post('moderation-comment/{magazine}', [ModerationCommentController::class, 'store']);
+Route::get('moderation-comment/{magazine}/{moderationComment}/edit', [ModerationCommentController::class, 'edit']);
+Route::put('moderation-comment/{moderationComment}', [ModerationCommentController::class, 'update']);
 
 //letter
 Route::get('letter', [LetterController::class, 'index'])->name('letter');

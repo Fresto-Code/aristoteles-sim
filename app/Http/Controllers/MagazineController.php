@@ -91,10 +91,7 @@ class MagazineController extends Controller
                 $updatedMagzine->url,
                 'public'
             );
-            Storage::disk('spaces')->setVisibility(
-                $updatedMagzine->cover,
-                'public'
-            );
+
             return redirect('magazine')->with(
                 'update',
                 'Magazine updated successfully!'
@@ -239,7 +236,7 @@ class MagazineController extends Controller
                         public_path('magazines_temp') .
                             '/' .
                             $magazineCoverName,
-                        'private'
+                        'public'
                     ),
                     'moderation_status' => 'draft',
                 ]);
@@ -290,8 +287,26 @@ class MagazineController extends Controller
      */
     public function show(Magazine $magazine)
     {
-        $magazine = Magazine::find($magazine->id);
-        return view('pages.magazine.show', compact('magazine'));
+        $magazine = Magazine::join(
+            'users',
+            'users.id',
+            '=',
+            'magazines.author_id'
+        )
+            ->where('magazines.id', $magazine->id)
+            ->get(['magazines.*', 'users.name'])
+            ->first();
+        
+        $comments = ModerationComment::join(
+            'users',
+            'users.id',
+            '=',
+            'moderation_comments.user_id'
+        )
+            ->where('moderation_comments.magazine_id', $magazine->id)
+            ->get(['moderation_comments.*', 'users.name']);
+
+        return view('pages.magazine.show', compact('magazine', 'comments'));
     }
 
     /**

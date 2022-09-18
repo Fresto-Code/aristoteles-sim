@@ -87,7 +87,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('table') }}">
+                    <a class="nav-link" href="{{ route('maintenance') }}">
                       <i class="ni ni-books text-muted"></i>
                       <span class="nav-link-text">E-Library</span>
                     </a>
@@ -99,24 +99,24 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#navbar-examples" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="navbar-examples">
+                    <a class="nav-link" href="#surat" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="surat">
                         <i class="ni ni-send text-muted"></i>
                         <span class="nav-link-text">Surat</span>
                     </a>
-                    <div class="collapse" id="navbar-examples">
+                    <div class="collapse" id="surat">
                         <ul class="nav nav-sm flex-column">
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('profile.edit') }}">
+                                <a class="nav-link" href="{{ route('maintenance') }}">
                                     Surat Masuk
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('user.index') }}">
+                                <a class="nav-link" href="{{ route('maintenance') }}">
                                     Surat Terproses
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('user.index') }}">
+                                <a class="nav-link" href="{{ route('maintenance') }}">
                                     Surat Terjawab
                                 </a>
                             </li>
@@ -124,7 +124,7 @@
                     </div>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('table') }}">
+                    <a class="nav-link" href="{{ route('maintenance') }}">
                       <i class="ni ni-archive-2 text-muted"></i>
                       <span class="nav-link-text">Persediaan</span>
                     </a>
@@ -137,12 +137,12 @@
                     <div class="collapse" id="alumni">
                         <ul class="nav nav-sm flex-column">
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('profile.edit') }}">
+                                <a class="nav-link" href="{{ route('maintenance') }}">
                                     Feedback Alumni
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('user.index') }}">
+                                <a class="nav-link" href="{{ route('maintenance') }}">
                                     Feedback Orang Tua
                                 </a>
                             </li>
@@ -150,13 +150,13 @@
                     </div>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('table') }}">
+                    <a class="nav-link" href="{{ route('maintenance') }}">
                       <i class="ni ni-bulb-61 text-muted"></i>
                       <span class="nav-link-text">Sumber Daya Manusia (SDM)</span>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('table') }}">
+                    <a class="nav-link" href="{{ route('maintenance') }}">
                       <i class="ni ni-settings text-muted"></i>
                       <span class="nav-link-text">BKK</span>
                     </a>
@@ -169,7 +169,7 @@
             <!-- Navigation -->
             <ul class="navbar-nav mb-md-3">
                 <li class="nav-item">
-                    <a class="nav-link" href="https://argon-dashboard-laravel.creative-tim.com/docs/getting-started/overview.html">
+                    <a class="nav-link" href="{{ route('maintenance') }}">
                         <i class="ni ni-spaceship"></i> Cara Pengoprasian
                     </a>
                 </li>
