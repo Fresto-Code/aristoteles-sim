@@ -7,7 +7,7 @@
                 <div class="col-sm-6">
                   <div class="card">
                     <div class="card-body">
-                      <h5 class="card-title">Unggah PDF</h5>
+                      <h5 class="card-title"> <i class="ni ni-cloud-upload-96"></i> Unggah PDF</h5>
                       <p class="card-text">Sebarkan E-Magazine mu yang sudah berbentuk PDF</p>
                       <a href="{{ url('magazine/create') }}" class="btn btn-primary">Pilih</a>
                     </div>
@@ -16,7 +16,7 @@
                 <div class="col-sm-6">
                   <div class="card">
                     <div class="card-body">
-                      <h5 class="card-title">Tulis E-Magazine</h5>
+                      <h5 class="card-title"><i class="ni ni-ruler-pencil"></i> Surat Sederhana</h5>
                       <p class="card-text">Tulis sendiri beritamu dan sebarkan sebagai PDF</p>
                       <a href="{{ url('magazine/inline/editor')}}" class="btn btn-primary">Pilih</a>
                     </div>
