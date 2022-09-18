@@ -40,14 +40,10 @@
                                         <td>                                            
                                             <button class="border-0 btn-white shadow-none">
                                                 <a href="/magazine/{{ $magazine->id }}"
-                                                    class="btn btn-sm btn-success">Lihat</a>
+                                                    class="btn btn-sm btn-primary">Lihat</a>
                                                 </button>
                                             <button class="border-0 btn-white shadow-none">
-                                            <a href="/magazine/{{ $magazine->id }}/edit"
-                                                class="btn btn-sm btn-primary">Edit</a>
-                                            </button>
-                                            <button class="border-0 btn-white shadow-none">
-                                                <form action="/magazine/{{ $magazine->id }}/approve" method="post">
+                                                <form action="/magazine/{{ $magazine->id }}" method="post">
                                                     @method('delete')
                                                     @csrf
                                                     <button type="submit" class="btn btn-sm btn-danger">Hapus</button>

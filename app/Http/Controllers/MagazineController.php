@@ -385,8 +385,16 @@ class MagazineController extends Controller
      */
     public function softDelete(Magazine $magazine)
     {
+        $updatedMagzine = Magazine::where('id', $magazine->id)->first();
+
+        Storage::disk('spaces')->setVisibility(
+            $updatedMagzine->url,
+            'private'
+        );
+
         //soft delete
         $magazine->delete();
+        
         return redirect('magazine')->with(
             'delete',
             'Magazine deleted successfully!'

@@ -28,18 +28,23 @@
                             <div class="col">
                                 <div class="card-profile-stats d-flex justify-content-center">
                                     @if ($magazine->moderation_status == 'draft')
-                                        <form action="/magazine/{{ $magazine->id }}/approve" method="post">
+                                        <form class="m-1" action="/magazine/{{ $magazine->id }}/approve" method="post">
                                             @method('PATCH')
                                             @csrf
                                             <button type="submit" class="btn btn-success">Setujui</button>
                                         </form>
                                     @else
-                                        <form action="/magazine/{{ $magazine->id }}/cancel" method="post">
+                                        <form class="m-1" action="/magazine/{{ $magazine->id }}/cancel" method="post">
                                             @method('PATCH')
                                             @csrf
-                                            <button type="submit" class="btn btn-danger">Batalkan</button>
+                                            <button type="submit" class="btn btn-yellow">Ubah ke Draft</button>
                                         </form>
                                     @endif
+                                    <form class="m-1" action="/magazine/{{ $magazine->id }}" method="post">
+                                        @method('delete')
+                                        @csrf
+                                        <button type="submit" class="btn btn-danger">Hapus</button>
+                                    </form>
                                 </div>
                             </div>
                         </div>
