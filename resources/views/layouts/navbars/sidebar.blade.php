@@ -6,10 +6,10 @@
         </button>
         <!-- Brand -->
         <a class="navbar-brand" href="{{ route('home') }}">
-            <img src="{{ asset('assets') }}/img/brand/afresto.png" class="navbar-brand-img" alt="..."><br>
+            <img src="{{ global_asset('assets') }}/img/brand/afresto.png" class="navbar-brand-img" alt="..."><br>
             <span class="text-success text-center">Afresto </span>
             <span class="text-success font-weight-bold text-center">SIM</span>
-            
+
         </a>
         <!-- User -->
         <ul class="nav align-items-center d-md-none">
@@ -17,7 +17,7 @@
                 <a class="nav-link" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <div class="media align-items-center">
                         <span class="avatar avatar-sm rounded-circle">
-                        <img alt="Image placeholder" src="{{ asset('argon') }}/img/theme/team-1-800x800.jpg">
+                            <img alt="Image placeholder" src="{{ global_asset('argon') }}/img/theme/team-1-800x800.jpg">
                         </span>
                     </div>
                 </a>
@@ -57,7 +57,7 @@
                 <div class="row">
                     <div class="col-6 collapse-brand">
                         <a href="{{ route('home') }}">
-                            <img src="{{ asset('argon') }}/img/brand/blue.png">
+                            <img src="{{ global_asset('argon') }}/img/brand/blue.png">
                         </a>
                     </div>
                     <div class="col-6 collapse-close">
@@ -88,14 +88,14 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('table') }}">
-                      <i class="ni ni-books text-muted"></i>
-                      <span class="nav-link-text">E-Library</span>
+                        <i class="ni ni-books text-muted"></i>
+                        <span class="nav-link-text">E-Library</span>
                     </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('magazine') }}">
-                      <i class="ni ni-single-copy-04 text-muted"></i>
-                      <span class="nav-link-text">E-Magazine</span>
+                        <i class="ni ni-single-copy-04 text-muted"></i>
+                        <span class="nav-link-text">E-Magazine</span>
                     </a>
                 </li>
                 <li class="nav-item">
@@ -125,8 +125,8 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('table') }}">
-                      <i class="ni ni-archive-2 text-muted"></i>
-                      <span class="nav-link-text">Persediaan</span>
+                        <i class="ni ni-archive-2 text-muted"></i>
+                        <span class="nav-link-text">Persediaan</span>
                     </a>
                 </li>
                 <li class="nav-item">
@@ -151,14 +151,14 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('table') }}">
-                      <i class="ni ni-bulb-61 text-muted"></i>
-                      <span class="nav-link-text">Sumber Daya Manusia (SDM)</span>
+                        <i class="ni ni-bulb-61 text-muted"></i>
+                        <span class="nav-link-text">Sumber Daya Manusia (SDM)</span>
                     </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('table') }}">
-                      <i class="ni ni-settings text-muted"></i>
-                      <span class="nav-link-text">BKK</span>
+                        <i class="ni ni-settings text-muted"></i>
+                        <span class="nav-link-text">BKK</span>
                     </a>
                 </li>
             </ul>
