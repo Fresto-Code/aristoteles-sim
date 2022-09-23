@@ -15,7 +15,7 @@ class MagazineTableSeeder extends Seeder
      */
     public function run()
     {
-        $id = DB::table('users')->where('email', 'admin@argon.com')->first()->id;
+        $id = DB::table('users')->where('email', 'agus.halim@afresto.com')->first()->id;
 
         DB::table('magazines')->insert([
             'author_id' => $id,
@@ -27,7 +27,7 @@ class MagazineTableSeeder extends Seeder
             'created_at' => now(),
             'updated_at' => now()
         ]);
-       
+
         DB::table('magazines')->insert([
             'author_id' => $id,
             'title' => 'The Nation',

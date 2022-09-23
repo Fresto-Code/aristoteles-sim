@@ -26,7 +26,7 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 Route::get('/home', 'App\Http\Controllers\HomeController@index')->name('home');
 
-Route::get('maintenance', function() {
+Route::get('maintenance', function () {
 	return view('maintenance');
 })->name('maintenance');
 
@@ -51,6 +51,7 @@ Route::group(['middleware' => 'auth'], function () {
 
 //magazine
 Route::get('magazine', [MagazineController::class, 'index'])->name('magazine');
+Route::get('magazine/own-magazine', [MagazineController::class, 'ownMagazine']);
 Route::get('magazine/create', [MagazineController::class, 'create']);
 Route::post('magazine', [MagazineController::class, 'store']);
 Route::get('magazine/{magazine}', [MagazineController::class, 'show']);

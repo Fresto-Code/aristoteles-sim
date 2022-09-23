@@ -10,7 +10,7 @@
                 <div class="card-header border-0">
                     <div class="row">
                         <div class="col-sm">
-                            <h2>Daftar E-Magazine</h2>
+                            <h2>Daftar My-Magazine</h2>
                         </div>
                         <div class="col-sm">
                             <a href="{{ url('magazine/browse/dashboard') }}" class="btn btn-success float-right">Jelajahi PDF</a>
@@ -47,15 +47,7 @@
                                             @csrf
                                             <button type="submit" class="btn btn-sm btn-danger">Hapus</button>
                                     </button>
-                                    @if ($magazine->moderation_status == 'draft')
-                                    <button class="border-0 btn-white shadow-none">
-                                        <form action="/magazine/{{ $magazine->id }}/approve" method="post">
-                                            @method('PATCH')
-                                            @csrf
-                                            <button type="submit" class="btn btn-sm btn-success">Setujui</button>
-                                        </form>
-                                    </button>
-                                    @endif
+
                                 <td>
                                     {{ $magazine->title }}
                                 </td>

@@ -9,3 +9,8 @@ Magazine
 - magazine index hanya guru dan osis, guru bs edit, osis hanya bisa comment dan setujui 
 
 search-ms:displayname=Search%20Results%20in%20Windows%20(C%3A)&crumb=location:C%3A%5C\valet-windows
+
+- show author view comment
+- create artikel before create pdf
+- get user from v2
+- routing

@@ -38,6 +38,18 @@ class MagazineController extends Controller
         return view('pages.magazine.magazine', compact('magazines'));
     }
 
+    public function ownMagazine()
+    {
+
+        $magazines = DB::table('magazines')
+            ->join('users', 'users.id', '=', 'magazines.author_id')
+            ->select('magazines.*', 'users.name')
+            ->where('author_id', Auth::user()->id)
+            ->orderByDesc('created_at')
+            ->get();
+        return view('pages.magazine.own_magazine', compact('magazines'));
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -99,7 +111,7 @@ class MagazineController extends Controller
         }
     }
 
-      /**
+    /**
      * Cancel the magazine to be published.
      *
      * @return \Illuminate\Http\Response
@@ -144,7 +156,7 @@ class MagazineController extends Controller
         // Render the HTML as PDF
         $dompdf->render();
 
-        file_put_contents(public_path('magazines_temp/'.$magazineName), $dompdf->output());
+        file_put_contents(public_path('magazines_temp/' . $magazineName), $dompdf->output());
 
         //magazine cover
         $magazineCoverName =
@@ -185,7 +197,7 @@ class MagazineController extends Controller
                 $notifications[] = [
                     'user_id' => $user->id,
                     'notification_content' =>
-                        'Magazine baru telah diunggah oleh ' .
+                    'Magazine baru telah diunggah oleh ' .
                         Auth::user()->name,
                     'hyperlink_id' => $newMagazine->id,
                     'hyperlink_type' => 'magazine',
@@ -274,7 +286,7 @@ class MagazineController extends Controller
                     $notifications[] = [
                         'user_id' => $user->id,
                         'notification_content' =>
-                            'Magazine baru telah diunggah oleh ' .
+                        'Magazine baru telah diunggah oleh ' .
                             Auth::user()->name,
                         'hyperlink_id' => $newMagazine->id,
                         'hyperlink_type' => 'magazine',
@@ -320,7 +332,7 @@ class MagazineController extends Controller
             ->where('magazines.id', $magazine->id)
             ->get(['magazines.*', 'users.name'])
             ->first();
-        
+
         $comments = ModerationComment::join(
             'users',
             'users.id',
@@ -394,7 +406,7 @@ class MagazineController extends Controller
 
         //soft delete
         $magazine->delete();
-        
+
         return redirect('magazine')->with(
             'delete',
             'Magazine deleted successfully!'
