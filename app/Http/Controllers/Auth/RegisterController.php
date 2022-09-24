@@ -8,7 +8,8 @@ use App\Models\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
- 
+use Illuminate\Support\Facades\Storage;
+
 class RegisterController extends Controller
 {
     /*
@@ -53,6 +54,8 @@ class RegisterController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
+            //'avatar' => ['image', 'mimes:jpeg,png,jpg,gif,svg', 'max:2048'],
+            'avatar' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048'
         ]);
     }
 
@@ -64,11 +67,24 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
+        //avatar name
+        $folderAndFileName = time() . '_avatar' .  $data['name'];
+        $avatarName = $folderAndFileName . '.' . $data['avatar']->extension();
+        $data['avatar']->move(
+            public_path('user-avatar'),
+            $avatarName
+        );
+
         return User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
-            'role' => 'student'
+            'role' => 'student',
+            'cover' => Storage::disk('spaces')->putFile(
+                'user-avatar/' . $folderAndFileName,
+                public_path('user-avatar') . '/' . $avatarName,
+                'public'
+            )
         ]);
     }
 }
