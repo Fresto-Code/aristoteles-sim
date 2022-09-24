@@ -92,8 +92,25 @@ class MagazineController extends Controller
     public function approve(Magazine $magazine)
     {
         try {
+            //convert text to pdf
+            $folderAndFileName = time() . '_magazine';
+            $magazineName = $folderAndFileName . '.pdf';
+            // instantiate and use the dompdf class
+            $dompdf = new Dompdf();
+            $dompdf->loadHtml($magazine->writenMagazine);
+
+            // Render the HTML as PDF
+            $dompdf->render();
+
+            file_put_contents(public_path('magazines_temp/' . $magazineName), $dompdf->output());
+
             Magazine::where('id', $magazine->id)->update([
                 'moderation_status' => 'published',
+                'url' => Storage::disk('spaces')->putFile(
+                    'magazines/' . $folderAndFileName,
+                    public_path('magazines_temp') . '/' . $magazineName,
+                    'private'
+                ),
             ]);
 
             $updatedMagzine = Magazine::where('id', $magazine->id)->first();
@@ -147,16 +164,17 @@ class MagazineController extends Controller
             // 'magazine_file' => 'required|mimes:pdf|max:500000',
         ]);
 
+        // //convert text to pdf
         $folderAndFileName = time() . '_magazine';
-        $magazineName = $folderAndFileName . '.pdf';
-        // instantiate and use the dompdf class
-        $dompdf = new Dompdf();
-        $dompdf->loadHtml($request->writenMagazine);
+        // $magazineName = $folderAndFileName . '.pdf';
+        // // instantiate and use the dompdf class
+        // $dompdf = new Dompdf();
+        // $dompdf->loadHtml($request->writenMagazine);
 
-        // Render the HTML as PDF
-        $dompdf->render();
+        // // Render the HTML as PDF
+        // $dompdf->render();
 
-        file_put_contents(public_path('magazines_temp/' . $magazineName), $dompdf->output());
+        // file_put_contents(public_path('magazines_temp/' . $magazineName), $dompdf->output());
 
         //magazine cover
         $magazineCoverName =
@@ -175,11 +193,7 @@ class MagazineController extends Controller
                 'author_id' => Auth::user()->id,
                 'title' => $request->title,
                 'description' => $request->description,
-                'url' => Storage::disk('spaces')->putFile(
-                    'magazines/' . $folderAndFileName,
-                    public_path('magazines_temp') . '/' . $magazineName,
-                    'private'
-                ),
+                'content' => $request->writenMagazine,
                 'cover' => Storage::disk('spaces')->putFile(
                     'magazines/' . $folderAndFileName,
                     public_path('magazines_temp') . '/' . $magazineCoverName,

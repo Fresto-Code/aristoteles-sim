@@ -107,10 +107,13 @@
         <div class="col-xl-8 order-xl-1">
             <div class="card bg-secondary shadow">
                 <div class="card-body">
+                    @if ($magazine->content === '' || $magazine->content === null)
                     <object data="your_url_to_pdf" type="application/pdf">
                         <iframe src="{{ env('DO_SPACES_ENDPOINT') . '/' . $magazine->url }}" height="1000px" style=" display:block;
                                 width:100%;"></iframe>
                     </object>
+                    @else if ($magazine->content != null && $magazine->moderation_status === 'draft')
+                    @endif
                 </div>
             </div>
         </div>
