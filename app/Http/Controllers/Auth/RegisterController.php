@@ -71,7 +71,7 @@ class RegisterController extends Controller
         $folderAndFileName = time() . '_avatar' .  $data['name'];
         $avatarName = $folderAndFileName . '.' . $data['avatar']->extension();
         $data['avatar']->move(
-            public_path('user-avatar'),
+            public_path('avatar_temp'),
             $avatarName
         );
 
@@ -82,7 +82,7 @@ class RegisterController extends Controller
             'role' => 'student',
             'cover' => Storage::disk('spaces')->putFile(
                 'user-avatar/' . $folderAndFileName,
-                public_path('user-avatar') . '/' . $avatarName,
+                public_path('avatar_temp') . '/' . $avatarName,
                 'public'
             )
         ]);

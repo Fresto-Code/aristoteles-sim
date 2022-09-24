@@ -25,9 +25,9 @@ search-ms:displayname=Search%20Results%20in%20Windows%20(C%3A)&crumb=location:C%
 -user v2
 
 -------------galih----------------
-- avatar user controller and migration
-- routing
-- content magazine
+- avatar user controller and migration (done)
+- routing (done)
+- content magazine (done)
 - notif auto load
 - searching
 - pagination
