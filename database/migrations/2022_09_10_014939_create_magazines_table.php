@@ -19,6 +19,7 @@ return new class extends Migration
             $table->uuid('id')->index()->primary();
             $table->uuid('author_id');
             $table->string('title');
+            $table->longText('content')->nullable();
             $table->longText('description')->nullable();
             $table->string('url')->nullable();
             $table->string('cover')->nullable();

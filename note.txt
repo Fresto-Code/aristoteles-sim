@@ -14,3 +14,19 @@ search-ms:displayname=Search%20Results%20in%20Windows%20(C%3A)&crumb=location:C%
 - create artikel before create pdf
 - get user from v2
 - routing
+- notif auto load
+- searching
+- pagination 
+
+-------------ivan----------------
+-presigned url
+-student magazine dashboard
+-profile view
+
+-------------galih----------------
+- avatar user controller and migration
+- routing
+- content magazine
+- notif auto load
+- searching
+- pagination
