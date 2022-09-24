@@ -28,14 +28,27 @@ class MagazineController extends Controller
      */
     public function index()
     {
-        $magazines = Magazine::join(
-            'users',
-            'users.id',
-            '=',
-            'magazines.author_id'
-        )
-            ->get(['magazines.*', 'users.name'])
-            ->sortBy('moderation_status');
+        if (Auth::user()->role == 'student') {
+            $magazines = Magazine::join(
+                'users',
+                'users.id',
+                '=',
+                'magazines.author_id'
+            )
+                ->where('magazines.author_id', Auth::user()->id)
+                ->get(['magazines.*', 'users.name'])
+                ->sortBy('moderation_status');
+        } else {
+            $magazines = Magazine::join(
+                'users',
+                'users.id',
+                '=',
+                'magazines.author_id'
+            )
+                ->get(['magazines.*', 'users.name'])
+                ->sortBy('moderation_status');
+        }
+        
         return view('pages.magazine.magazine', compact('magazines'));
     }
 
