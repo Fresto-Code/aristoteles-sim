@@ -19,8 +19,8 @@ search-ms:displayname=Search%20Results%20in%20Windows%20(C%3A)&crumb=location:C%
 - pagination 
 
 -------------ivan----------------
--presigned url
--student magazine dashboard
+-presigned url - done
+-student magazine dashboard - done
 -profile view
 -user v2
 

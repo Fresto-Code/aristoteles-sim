@@ -25,7 +25,10 @@
             <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                 @csrf
             </form>
+            @if (auth()->user()->role == 'admin' || auth()->user()->role == 'osis' || auth()->user()->role == 'principal' || auth()->user()->role == 'teacher')
+                @include('layouts.navbars.sidebar')
             @include('layouts.navbars.sidebar')
+        @endif
         @endauth
         
         <div class="main-content">

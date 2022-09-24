@@ -41,13 +41,16 @@
                                     <button class="border-0 btn-white shadow-none">
                                         <a href="/magazine/{{ $magazine->id }}" class="btn btn-sm btn-primary">Lihat</a>
                                     </button>
+                                    @if (Auth::user()->role == 'admin' || Auth::user()->role == 'teacher' || Auth::user()->role == 'osis' || Auth::user()->role == 'principal' || (Auth::user()->role == 'student' && $magazine->moderation_status == 'draft'))
                                     <button class="border-0 btn-white shadow-none">
                                         <form action="/magazine/{{ $magazine->id }}" method="post">
                                             @method('delete')
                                             @csrf
                                             <button type="submit" class="btn btn-sm btn-danger">Hapus</button>
                                     </button>
+                                    @endif
                                     @if ($magazine->moderation_status == 'draft')
+                                    @if (Auth::user()->role == 'admin' || Auth::user()->role == 'teacher' || Auth::user()->role == 'osis' || Auth::user()->role == 'principal')
                                     <button class="border-0 btn-white shadow-none">
                                         <form action="/magazine/{{ $magazine->id }}/approve" method="post">
                                             @method('PATCH')
@@ -55,6 +58,7 @@
                                             <button type="submit" class="btn btn-sm btn-success">Setujui</button>
                                         </form>
                                     </button>
+                                    @endif
                                     @endif
                                 <td>
                                     {{ $magazine->title }}
