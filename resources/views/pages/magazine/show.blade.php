@@ -108,7 +108,7 @@
             <div class="card bg-secondary shadow">
                 <div class="card-body">
                     <object data="your_url_to_pdf" type="application/pdf">
-                        <iframe src="{{ env('DO_SPACES_ENDPOINT') . '/' . $magazine->url }}" height="1000px" style=" display:block;
+                        <iframe src="{{ $magazine->url }}" height="1000px" style=" display:block;
                                 width:100%;"></iframe>
                     </object>
                 </div>

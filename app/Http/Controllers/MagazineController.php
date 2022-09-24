@@ -12,6 +12,7 @@ use Aws\S3\S3Client;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\DB;
 use Dompdf\Dompdf;
+use Carbon\Carbon;
 
 class MagazineController extends Controller
 {
@@ -342,6 +343,15 @@ class MagazineController extends Controller
             ->where('moderation_comments.magazine_id', $magazine->id)
             ->get(['moderation_comments.*', 'users.name']);
 
+
+
+        // Make sure you have s3 as your disk driver
+        $url = Storage::disk('spaces')->temporaryUrl(
+            $magazine->url, Carbon::now()->addMinutes(5)
+        );
+        
+        $magazine->url = $url;
+            
         return view('pages.magazine.show', compact('magazine', 'comments'));
     }
 
