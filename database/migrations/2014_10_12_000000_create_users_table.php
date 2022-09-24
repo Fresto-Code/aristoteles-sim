@@ -19,6 +19,7 @@ return new class extends Migration
             $table->uuid('id')->index()->primary();
             $table->string('name')->unique();
             $table->string('email')->index();
+            $table->string('avatar')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->enum('role', ['student', 'admin', 'principal', 'teacher', 'osis']);

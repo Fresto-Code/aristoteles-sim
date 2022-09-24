@@ -51,5 +51,14 @@ class UsersTableSeeder extends Seeder
             'created_at' => now(),
             'updated_at' => now()
         ]);
+        DB::table('users')->insert([
+            'name' => 'student',
+            'email' => 'student@argon.com',
+            'email_verified_at' => now(),
+            'password' => Hash::make('secret'),
+            'role' => 'student',
+            'created_at' => now(),
+            'updated_at' => now()
+        ]);
     }
 }
