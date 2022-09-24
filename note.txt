@@ -22,6 +22,7 @@ search-ms:displayname=Search%20Results%20in%20Windows%20(C%3A)&crumb=location:C%
 -presigned url
 -student magazine dashboard
 -profile view
+-user v2
 
 -------------galih----------------
 - avatar user controller and migration
