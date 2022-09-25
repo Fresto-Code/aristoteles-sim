@@ -30,13 +30,13 @@ class LoginController extends Controller
     protected function redirectTo()
     {
         if (auth()->user()->role == 'admin') {
-            return '/home';
+            return '/magazine';
         } else if (auth()->user()->role == 'principal') {
-            return '/home';
+            return '/magazine';
         } else if (auth()->user()->role == 'teacher') {
-            return '/home';
+            return '/magazine';
         } else if (auth()->user()->role == 'osis') {
-            return '/home';
+            return '/magazine';
         } else {
             return '/magazine/browse/dashboard';
         }

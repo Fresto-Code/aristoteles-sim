@@ -21,6 +21,7 @@ class UsersTableSeeder extends Seeder
             'email_verified_at' => now(),
             'password' => Hash::make('secret'),
             'role' => 'admin',
+            'avatar' => 'user-avatar/1.png',
             'created_at' => now(),
             'updated_at' => now()
         ]);
@@ -30,6 +31,7 @@ class UsersTableSeeder extends Seeder
             'email_verified_at' => now(),
             'password' => Hash::make('secret'),
             'role' => 'osis',
+            'avatar' => 'user-avatar/2.png',
             'created_at' => now(),
             'updated_at' => now()
         ]);
@@ -39,6 +41,7 @@ class UsersTableSeeder extends Seeder
             'email_verified_at' => now(),
             'password' => Hash::make('secret'),
             'role' => 'teacher',
+            'avatar' => 'user-avatar/3.png',
             'created_at' => now(),
             'updated_at' => now()
         ]);
@@ -48,6 +51,7 @@ class UsersTableSeeder extends Seeder
             'email_verified_at' => now(),
             'password' => Hash::make('secret'),
             'role' => 'principal',
+            'avatar' => 'user-avatar/4.png',
             'created_at' => now(),
             'updated_at' => now()
         ]);
@@ -57,6 +61,7 @@ class UsersTableSeeder extends Seeder
             'email_verified_at' => now(),
             'password' => Hash::make('secret'),
             'role' => 'student',
+            'avatar' => 'user-avatar/5.png',
             'created_at' => now(),
             'updated_at' => now()
         ]);
