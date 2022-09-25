@@ -23,11 +23,12 @@ search-ms:displayname=Search%20Results%20in%20Windows%20(C%3A)&crumb=location:C%
 -student magazine dashboard - done
 -profile view - done
 -user v2 
+-pagination - done
 
 -------------galih----------------
 - avatar user controller and migration (done)
 - routing (done)
 - content magazine (done)
+- approval magazine content (done)
 - notif auto load
 - searching
-- pagination

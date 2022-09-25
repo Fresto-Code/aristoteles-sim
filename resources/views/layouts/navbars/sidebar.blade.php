@@ -83,8 +83,8 @@
             <ul class="navbar-nav">
                 {{-- <li class="nav-item">
                     <a class="nav-link" href="{{ route('home') }}">
-                        <i class="ni ni-tv-2 text-muted"></i> {{ __('Dashboard') }}
-                    </a>
+                <i class="ni ni-tv-2 text-muted"></i> {{ __('Dashboard') }}
+                </a>
                 </li> --}}
                 <li class="nav-item">
                     <a class="nav-link" href="#e-magazine" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="e-magazine">
