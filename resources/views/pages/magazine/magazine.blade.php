@@ -53,6 +53,7 @@
                                                         @method('delete')
                                                         @csrf
                                                         <button type="submit" class="btn btn-sm btn-danger">Hapus</button>
+                                                    </form>
                                                 </button>
                                             @endif
                                             @if ($magazine->moderation_status == 'draft')

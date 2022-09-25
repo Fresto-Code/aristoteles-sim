@@ -5,8 +5,8 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         <!-- Brand -->
-        <a class="navbar-brand" href="{{ route('home') }}">
-            <img src="{{ asset('assets') }}/img/brand/afresto.png" class="navbar-brand-img" alt="..."><br>
+        <a class="navbar-brand text-center" href="{{ route('home') }}">
+            <img class="" src="{{ asset('assets') }}/img/brand/afresto.png" class="navbar-brand-img" alt="..."><br>
             <span class="text-success text-center">Afresto </span>
             <span class="text-success font-weight-bold text-center">SIM</span>
 
@@ -17,7 +17,7 @@
                 <a class="nav-link" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <div class="media align-items-center">
                         <span class="avatar avatar-sm rounded-circle">
-                            <img alt="Image placeholder" src="{{ asset('argon') }}/img/theme/team-1-800x800.jpg">
+                            <img alt="Image placeholder" src="{{ env('SPACES_URL') . Auth()->user()->avatar }}">
                         </span>
                     </div>
                 </a>
@@ -28,18 +28,6 @@
                     <a href="{{ route('profile.edit') }}" class="dropdown-item">
                         <i class="ni ni-single-02"></i>
                         <span>{{ __('My profile') }}</span>
-                    </a>
-                    <a href="#" class="dropdown-item">
-                        <i class="ni ni-settings-gear-65"></i>
-                        <span>{{ __('Settings') }}</span>
-                    </a>
-                    <a href="#" class="dropdown-item">
-                        <i class="ni ni-calendar-grid-58"></i>
-                        <span>{{ __('Activity') }}</span>
-                    </a>
-                    <a href="#" class="dropdown-item">
-                        <i class="ni ni-support-16"></i>
-                        <span>{{ __('Support') }}</span>
                     </a>
                     <div class="dropdown-divider"></div>
                     <a href="{{ route('logout') }}" class="dropdown-item" onclick="event.preventDefault();
