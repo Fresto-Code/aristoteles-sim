@@ -15,7 +15,7 @@
                         <div class="col-lg-3 order-lg-2">
                             <div class="card-profile-image">
                                 <a href="#">
-                                    <img src="{{ env('SPACES_URL') . Auth()->user()->avatar }}" class="rounded-circle shadow-4" style="width: 150px; height: 150px; object-fit: cover;" alt="Avatar">
+                                    <img src="{{ env('SPACES_URL') . Auth()->user()->avatar }}" class="rounded-circle" style="width: 150px; height: 150px; object-fit: cover;" alt="Avatar">
                                 </a>
                             </div>
                         </div>

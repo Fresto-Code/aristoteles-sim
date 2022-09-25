@@ -76,7 +76,7 @@
                                         <th scope="row">
                                             <div class="media align-items-center">
                                                 <a href="#" class="avatar avatar-sm rounded-circle mr-3"
-                                                    data-toggle="tooltip" data-original-title="Ryan Tompson">
+                                                    data-toggle="tooltip" data-original-title="{{$magazine->name}}">
                                                     <img alt="Image placeholder" src="{{ env('SPACES_URL') . $magazine->avatar }}">
                                                 </a>
                                                 <div class="media-body">

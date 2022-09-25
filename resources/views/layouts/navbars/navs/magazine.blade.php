@@ -3,7 +3,7 @@
         <a class="h4 mb-0 text-white text-uppercase d-none d-lg-inline-block  mr-5" href="{{ url('magazine/browse/dashboard') }}">{{ __('Home') }}</a>
         <!-- Brand -->
         @if (Auth::user()->role == 'admin' || Auth::user()->role == 'teacher' || Auth::user()->role == 'osis')
-        <a class="h4 mb-0 text-white text-uppercase d-none d-lg-inline-block" href="/home">{{ __('Admin') }}</a>
+        <a class="h4 mb-0 text-white text-uppercase d-none d-lg-inline-block" href="/magazine">{{ __('Admin') }}</a>
         @endif
         @if (Auth::user()->role == 'student')
         <a class="h4 mb-0 text-white text-uppercase d-none d-lg-inline-block" href="/magazine">{{ __('My E-Magazine') }}</a>
@@ -37,6 +37,9 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link pr-0" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <div class="media align-items-center">
+                            <span class="avatar avatar-sm rounded-circle">
+                                <img alt="Image placeholder" src="{{ env('SPACES_URL') . Auth()->user()->avatar }}">
+                            </span>
                             <div class="media-body ml-2 d-none d-lg-block">
                                 <span class="mb-0 text-sm  font-weight-bold">{{ auth()->user()->name }}</span>
                             </div>
