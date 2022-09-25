@@ -107,9 +107,13 @@ class MagazineController extends Controller
     {
         try {
             if ($magazine->content != null) {
+                //split patch name from cover
+                $cover = explode('/', $magazine->cover);
+                $cover = $cover[1];
+                //dd($cover);
                 //convert text to pdf
-                $folderAndFileName = time() . '_magazine';
-                $magazineName = $folderAndFileName . '.pdf';
+                //$folderAndFileName = time() . '_magazine';
+                $magazineName = $cover . '.pdf';
                 // instantiate and use the dompdf class
                 $dompdf = new Dompdf();
                 $dompdf->loadHtml($magazine->content);
@@ -122,9 +126,9 @@ class MagazineController extends Controller
                 Magazine::where('id', $magazine->id)->update([
                     'moderation_status' => 'published',
                     'url' => Storage::disk('spaces')->putFile(
-                        'magazines/' . $folderAndFileName,
+                        'magazines/' . $cover,
                         public_path('magazines_temp') . '/' . $magazineName,
-                        'private'
+                        'public'
                     ),
                 ]);
             } else {
