@@ -18,8 +18,13 @@ use Illuminate\Support\Facades\Auth;
 |
 */
 
-Route::get('/', function () {
-	return view('auth.login');
+// Route::get('/', function () {
+// 	return view('auth.login')->middel;
+// });
+
+Route::group(['middleware' => 'guest'], function () {
+
+	Route::get('/', function () { return view('auth.login'); });
 });
 
 Auth::routes();
