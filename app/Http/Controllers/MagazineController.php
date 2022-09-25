@@ -37,7 +37,7 @@ class MagazineController extends Controller
             )
                 ->where('magazines.author_id', Auth::user()->id)
                 ->orderBy('moderation_status')
-                ->paginate(10, ['magazines.*', 'users.name']);
+                ->paginate(10, ['magazines.*', 'users.name', 'users.avatar']);
         } else {
             $magazines = Magazine::join(
                 'users',
@@ -45,8 +45,8 @@ class MagazineController extends Controller
                 '=',
                 'magazines.author_id'
             )
-                ->orderBy('moderation_status')
-                ->paginate(10, ['magazines.*', 'users.name']);
+            ->orderBy('moderation_status')
+            ->paginate(10, ['magazines.*', 'users.name', 'users.avatar']);
         }
 
         return view('pages.magazine.magazine', compact('magazines'));
