@@ -112,7 +112,7 @@ class MagazineController extends Controller
                 $magazineName = $folderAndFileName . '.pdf';
                 // instantiate and use the dompdf class
                 $dompdf = new Dompdf();
-                $dompdf->loadHtml($magazine->writenMagazine);
+                $dompdf->loadHtml($magazine->content);
 
                 // Render the HTML as PDF
                 $dompdf->render();
