@@ -45,8 +45,8 @@ class MagazineController extends Controller
                 '=',
                 'magazines.author_id'
             )
-            ->orderBy('moderation_status')
-            ->paginate(10, ['magazines.*', 'users.name', 'users.avatar']);
+                ->orderBy('moderation_status')
+                ->paginate(10, ['magazines.*', 'users.name', 'users.avatar']);
         }
 
         return view('pages.magazine.magazine', compact('magazines'));
@@ -252,6 +252,25 @@ class MagazineController extends Controller
             'Magazine added successfully!'
         );
     }
+
+    public function updateEditor(Request $request, Magazine $magazine)
+    {
+        try {
+            Magazine::where('id', $magazine->id)->update([
+                'content' => $request->writenMagazine,
+            ]);
+
+            return redirect()->back()->with(
+                'update',
+                'Magazine updated successfully!'
+            );
+        } catch (\Throwable $th) {
+            //throw $th;
+            return redirect()->back()->with('error', 'Failed to update magazine');
+        }
+    }
+
+
     /**
      * Store a newly created resource in storage.
      *

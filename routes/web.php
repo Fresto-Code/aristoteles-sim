@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\MagazineController;
 use App\Http\Controllers\ModerationCommentController;
+use App\Http\Controllers\LetterController;
+use App\Http\Controllers\LetterHeadController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
@@ -65,6 +67,7 @@ Route::get('magazine/choose/type', function () {
 	return view('pages.magazine.public.option');
 })->name('magazine.choose_type');
 Route::post('magazine/inline/editor', [MagazineController::class, 'storeEditor'])->name('magazine/inline/editor');
+Route::patch('magazine/inline/editor/{magazine}', [MagazineController::class, 'updateEditor']);
 Route::get('magazine/inline/editor', function () {
 	return view('pages.magazine.public.editor');
 })->name('magazine.editor');
