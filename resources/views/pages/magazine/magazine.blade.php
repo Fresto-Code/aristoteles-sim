@@ -77,7 +77,7 @@
                                             <div class="media align-items-center">
                                                 <a href="#" class="avatar avatar-sm rounded-circle mr-3"
                                                     data-toggle="tooltip" data-original-title="Ryan Tompson">
-                                                    <img alt="Image placeholder" src="../assets/img/theme/team-1.jpg">
+                                                    <img alt="Image placeholder" src="{{ env('SPACES_URL') . $magazine->avatar }}">
                                                 </a>
                                                 <div class="media-body">
                                                     <span class="name mb-0 text-sm">{{ $magazine->name }}</span>

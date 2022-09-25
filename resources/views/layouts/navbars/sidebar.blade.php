@@ -93,16 +93,24 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('magazine') }}">
+                    <a class="nav-link" href="#e-magazine" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="e-magazine">
                         <i class="ni ni-single-copy-04 text-muted"></i>
                         <span class="nav-link-text">E-Magazine</span>
                     </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/magazine/own-magazine">
-                        <i class="ni ni-single-copy-04 text-muted"></i>
-                        <span class="nav-link-text">My-Magazine</span>
-                    </a>
+                    <div class="collapse" id="e-magazine">
+                        <ul class="nav nav-sm flex-column">
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('magazine') }}">
+                                    Semua E-Magazine
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/magazine/own-magazine">
+                                    E-Magazine Saya
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#surat" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="surat">
