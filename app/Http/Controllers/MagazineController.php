@@ -145,6 +145,11 @@ class MagazineController extends Controller
                 'public'
             );
 
+            Storage::disk('spaces')->setVisibility(
+                $updatedMagzine->cover,
+                'public'
+            );
+
             return redirect()->back();
         } catch (\Throwable $th) {
             //throw $th;
