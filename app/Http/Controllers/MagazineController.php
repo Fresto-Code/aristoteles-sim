@@ -45,10 +45,10 @@ class MagazineController extends Controller
                 '=',
                 'magazines.author_id'
             )
-            ->orderBy('moderation_status')
-            ->paginate(10, ['magazines.*', 'users.name']);
+                ->orderBy('moderation_status')
+                ->paginate(10, ['magazines.*', 'users.name']);
         }
-        
+
         return view('pages.magazine.magazine', compact('magazines'));
     }
 
@@ -106,9 +106,32 @@ class MagazineController extends Controller
     public function approve(Magazine $magazine)
     {
         try {
-            Magazine::where('id', $magazine->id)->update([
-                'moderation_status' => 'published',
-            ]);
+            if ($magazine->content != null) {
+                //convert text to pdf
+                $folderAndFileName = time() . '_magazine';
+                $magazineName = $folderAndFileName . '.pdf';
+                // instantiate and use the dompdf class
+                $dompdf = new Dompdf();
+                $dompdf->loadHtml($magazine->writenMagazine);
+
+                // Render the HTML as PDF
+                $dompdf->render();
+
+                file_put_contents(public_path('magazines_temp/' . $magazineName), $dompdf->output());
+
+                Magazine::where('id', $magazine->id)->update([
+                    'moderation_status' => 'published',
+                    'url' => Storage::disk('spaces')->putFile(
+                        'magazines/' . $folderAndFileName,
+                        public_path('magazines_temp') . '/' . $magazineName,
+                        'private'
+                    ),
+                ]);
+            } else {
+                Magazine::where('id', $magazine->id)->update([
+                    'moderation_status' => 'published',
+                ]);
+            }
 
             $updatedMagzine = Magazine::where('id', $magazine->id)->first();
             //dd($updatedMagzine);
@@ -162,15 +185,15 @@ class MagazineController extends Controller
         ]);
 
         $folderAndFileName = time() . '_magazine';
-        $magazineName = $folderAndFileName . '.pdf';
-        // instantiate and use the dompdf class
-        $dompdf = new Dompdf();
-        $dompdf->loadHtml($request->writenMagazine);
+        // $magazineName = $folderAndFileName . '.pdf';
+        // // instantiate and use the dompdf class
+        // $dompdf = new Dompdf();
+        // $dompdf->loadHtml($request->writenMagazine);
 
-        // Render the HTML as PDF
-        $dompdf->render();
+        // // Render the HTML as PDF
+        // $dompdf->render();
 
-        file_put_contents(public_path('magazines_temp/' . $magazineName), $dompdf->output());
+        // file_put_contents(public_path('magazines_temp/' . $magazineName), $dompdf->output());
 
         //magazine cover
         $magazineCoverName =
@@ -189,11 +212,7 @@ class MagazineController extends Controller
                 'author_id' => Auth::user()->id,
                 'title' => $request->title,
                 'description' => $request->description,
-                'url' => Storage::disk('spaces')->putFile(
-                    'magazines/' . $folderAndFileName,
-                    public_path('magazines_temp') . '/' . $magazineName,
-                    'private'
-                ),
+                'content' => $request->writenMagazine,
                 'cover' => Storage::disk('spaces')->putFile(
                     'magazines/' . $folderAndFileName,
                     public_path('magazines_temp') . '/' . $magazineCoverName,
@@ -359,12 +378,17 @@ class MagazineController extends Controller
 
 
         // Make sure you have s3 as your disk driver
-        $url = Storage::disk('spaces')->temporaryUrl(
-            $magazine->url, Carbon::now()->addMinutes(5)
-        );
-        
-        $magazine->url = $url;
-            
+        //trim url
+
+        if ($magazine->url != null || trim($magazine->url) != '') {
+            $url = Storage::disk('spaces')->temporaryUrl(
+                $magazine->url,
+                Carbon::now()->addMinutes(5)
+            );
+
+            $magazine->url = $url;
+        }
+
         return view('pages.magazine.show', compact('magazine', 'comments'));
     }
 
