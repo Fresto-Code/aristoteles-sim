@@ -81,17 +81,11 @@
             </form>
             <!-- Navigation -->
             <ul class="navbar-nav">
-                <li class="nav-item">
+                {{-- <li class="nav-item">
                     <a class="nav-link" href="{{ route('home') }}">
                         <i class="ni ni-tv-2 text-muted"></i> {{ __('Dashboard') }}
                     </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('maintenance') }}">
-                        <i class="ni ni-books text-muted"></i>
-                        <span class="nav-link-text">E-Library</span>
-                    </a>
-                </li>
+                </li> --}}
                 <li class="nav-item">
                     <a class="nav-link" href="#e-magazine" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="e-magazine">
                         <i class="ni ni-single-copy-04 text-muted"></i>
@@ -111,6 +105,12 @@
                             </li>
                         </ul>
                     </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('maintenance') }}">
+                        <i class="ni ni-books text-muted"></i>
+                        <span class="nav-link-text">E-Library</span>
+                    </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#surat" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="surat">
