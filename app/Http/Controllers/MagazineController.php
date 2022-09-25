@@ -54,14 +54,12 @@ class MagazineController extends Controller
 
     public function ownMagazine()
     {
-
         $magazines = DB::table('magazines')
             ->join('users', 'users.id', '=', 'magazines.author_id')
-            ->select('magazines.*', 'users.name')
             ->where('author_id', Auth::user()->id)
             ->orderByDesc('created_at')
-            ->get();
-        return view('pages.magazine.own_magazine', compact('magazines'));
+            ->paginate(10, ['magazines.*', 'users.name', 'users.avatar']);
+        return view('pages.magazine.magazine', compact('magazines'));
     }
 
     /**
