@@ -58,7 +58,7 @@ Route::group(['middleware' => 'auth'], function () {
 
 //magazine
 Route::get('magazine', [MagazineController::class, 'index'])->name('magazine');
-Route::get('magazine/own-magazine', [MagazineController::class, 'ownMagazine']);
+Route::get('magazine/own-magazine', [MagazineController::class, 'ownMagazine'])->name('own-magazine');
 Route::get('magazine/create', [MagazineController::class, 'create']);
 Route::post('magazine', [MagazineController::class, 'store']);
 Route::get('magazine/{magazine}', [MagazineController::class, 'show']);

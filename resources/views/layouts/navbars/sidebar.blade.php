@@ -82,7 +82,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="magazine/own-magazine">
+                    <a class="nav-link" href="{{ route('own-magazine') }}">
                         <i class="ni ni-spaceship text-muted"></i>
                         <span class="nav-link-text">E-Magazine Saya</span>
                     </a>
