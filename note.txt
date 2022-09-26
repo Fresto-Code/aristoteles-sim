@@ -32,3 +32,8 @@ search-ms:displayname=Search%20Results%20in%20Windows%20(C%3A)&crumb=location:C%
 - approval magazine content (done)
 - notif auto load
 - searching
+
+- jam comment 
+- validation cover max 100kb
+- validation pdf max 5mb
+- login username

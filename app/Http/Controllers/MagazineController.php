@@ -187,8 +187,10 @@ class MagazineController extends Controller
         $request->validate([
             'title' => 'required',
             'description' => 'required',
-            // 'cover_file' => 'mimes:jpeg,png|max:200000',
-            // 'magazine_file' => 'required|mimes:pdf|max:500000',
+            //max 100kb
+            'cover_file' => 'required|image|mimes:jpeg,png,jpg|max:100',
+            //max 5mb
+            'magazine_file' => 'required|mimes:pdf|max:5000',
         ]);
 
         $folderAndFileName = time() . '_magazine';
@@ -286,92 +288,87 @@ class MagazineController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'title' => 'required',
+            'description' => 'required',
+            //max 100kb
+            'cover_file' => 'required|image|mimes:jpeg,png,jpg|max:100',
+            //max 5mb
+            'magazine_file' => 'required|mimes:pdf|max:5000',
+        ]);
+
+        $folderAndFileName = time() . '_magazine';
+
+        //magazine name and file
+        $magazineName =
+            $folderAndFileName . '.' . $request->magazine_file->extension();
+        $request->magazine_file->move(
+            public_path('magazines_temp'),
+            $magazineName
+        );
+
+        //magazine cover
+        $magazineCoverName =
+            $folderAndFileName . '.' . $request->cover_file->extension();
+        $request->cover_file->move(
+            public_path('magazines_temp'),
+            $magazineCoverName
+        );
+
+        //transaction
         try {
-            $request->validate([
-                'title' => 'required',
-                'description' => 'required',
-                // 'cover_file' => 'mimes:jpeg,png|max:200000',
-                // 'magazine_file' => 'required|mimes:pdf|max:500000',
+            DB::beginTransaction();
+
+            //create magazine and get data
+            $newMagazine = Magazine::create([
+                'author_id' => Auth::user()->id,
+                'title' => $request->title,
+                'description' => $request->description,
+                'url' => Storage::disk('spaces')->putFile(
+                    'magazines/' . $folderAndFileName,
+                    public_path('magazines_temp') . '/' . $magazineName,
+                    'private'
+                ),
+                'cover' => Storage::disk('spaces')->putFile(
+                    'magazines/' . $folderAndFileName,
+                    public_path('magazines_temp') .
+                        '/' .
+                        $magazineCoverName,
+                    'public'
+                ),
+                'moderation_status' => 'draft',
             ]);
 
-            $folderAndFileName = time() . '_magazine';
+            $getUsers = User::where('role', 'osis')
+                ->orWhere('role', 'teacher')
+                ->get();
 
-            //magazine name and file
-            $magazineName =
-                $folderAndFileName . '.' . $request->magazine_file->extension();
-            $request->magazine_file->move(
-                public_path('magazines_temp'),
-                $magazineName
-            );
-
-            //magazine cover
-            $magazineCoverName =
-                $folderAndFileName . '.' . $request->cover_file->extension();
-            $request->cover_file->move(
-                public_path('magazines_temp'),
-                $magazineCoverName
-            );
-
-            //transaction
-            try {
-                DB::beginTransaction();
-
-                //create magazine and get data
-                $newMagazine = Magazine::create([
-                    'author_id' => Auth::user()->id,
-                    'title' => $request->title,
-                    'description' => $request->description,
-                    'url' => Storage::disk('spaces')->putFile(
-                        'magazines/' . $folderAndFileName,
-                        public_path('magazines_temp') . '/' . $magazineName,
-                        'private'
-                    ),
-                    'cover' => Storage::disk('spaces')->putFile(
-                        'magazines/' . $folderAndFileName,
-                        public_path('magazines_temp') .
-                            '/' .
-                            $magazineCoverName,
-                        'public'
-                    ),
-                    'moderation_status' => 'draft',
-                ]);
-
-                $getUsers = User::where('role', 'osis')
-                    ->orWhere('role', 'teacher')
-                    ->get();
-
-                $notifications = [];
-                foreach ($getUsers as $user) {
-                    $notifications[] = [
-                        'user_id' => $user->id,
-                        'notification_content' =>
-                        'Magazine baru telah diunggah oleh ' .
-                            Auth::user()->name,
-                        'hyperlink_id' => $newMagazine->id,
-                        'hyperlink_type' => 'magazine',
-                        'is_read' => 'false',
-                    ];
-                }
-
-                //insert to notifications table
-                Notification::insert($notifications);
-
-                DB::commit();
-            } catch (\Throwable $th) {
-                DB::rollBack();
-                throw $th;
+            $notifications = [];
+            foreach ($getUsers as $user) {
+                $notifications[] = [
+                    'user_id' => $user->id,
+                    'notification_content' =>
+                    'Magazine baru telah diunggah oleh ' .
+                        Auth::user()->name,
+                    'hyperlink_id' => $newMagazine->id,
+                    'hyperlink_type' => 'magazine',
+                    'is_read' => 'false',
+                ];
             }
 
-            return redirect('magazine/browse/dashboard')->with(
-                'create',
-                'Magazine added successfully!'
-            );
+            //insert to notifications table
+            Notification::insert($notifications);
+
+            DB::commit();
         } catch (\Throwable $th) {
-            return redirect('magazine/browse/dashboard')->with(
-                'Failed',
-                'Magazine failed to be added!'
-            );
+            DB::rollBack();
+            throw $th;
         }
+
+        return redirect('magazine/browse/dashboard')->with(
+            'create',
+            'Magazine added successfully!'
+        );
     }
 
     /**
