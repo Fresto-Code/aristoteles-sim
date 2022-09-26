@@ -190,7 +190,7 @@ class MagazineController extends Controller
             //max 100kb
             'cover_file' => 'required|image|mimes:jpeg,png,jpg|max:100',
             //max 5mb
-            'magazine_file' => 'required|mimes:pdf|max:5000',
+            'writenMagazine' => 'required',
         ]);
 
         $folderAndFileName = time() . '_magazine';
