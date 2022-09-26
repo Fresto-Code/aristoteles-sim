@@ -9,12 +9,17 @@
                     <!-- Card header -->
                     <div class="card-header border-0">
                         <div class="row">
-                            <div class="col-sm">
+                            <div class="col-xl-8 col-lg-6 col-md-5 col-sm-4">
                                 <h2>Daftar E-Magazine</h2>
                             </div>
-                            <div class="col-sm">
-                                <a href="{{ url('magazine/browse/dashboard') }}" class="btn btn-success float-right">Jelajahi
-                                    PDF</a>
+                            <div class="col-xl-4 col-lg-6 col-md-7 col-sm-8">
+         
+                                    <a href="{{ url('magazine/choose/type') }}" class="btn btn-success float-left">Tambah E-Magazine</a>
+                                
+         
+                                    <a href="{{ url('magazine/browse/dashboard') }}" class="btn btn-primary float-right">Jelajahi PDF</a>
+                                
+                                
                             </div>
                         </div>
 
