@@ -133,15 +133,15 @@ class MagazineController extends Controller
                 Magazine::where('id', $magazine->id)->update([
                     'moderation_status' => 'published',
                 ]);
-
-                Storage::disk('spaces')->setVisibility(
-                    $updatedMagzine->url,
-                    'public'
-                );
             }
 
             $updatedMagzine = Magazine::where('id', $magazine->id)->first();
 
+            Storage::disk('spaces')->setVisibility(
+                $updatedMagzine->url,
+                'public'
+            );
+            
             Storage::disk('spaces')->setVisibility(
                 $updatedMagzine->cover,
                 'public'
