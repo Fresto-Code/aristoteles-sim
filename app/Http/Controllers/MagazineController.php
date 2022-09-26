@@ -398,7 +398,12 @@ class MagazineController extends Controller
             ->where('moderation_comments.magazine_id', $magazine->id)
             ->get(['moderation_comments.*', 'users.name']);
 
-
+        //formating timezone to default own timezone
+        foreach ($comments as $comment) {
+            $comment->created_at = Carbon::parse($comment->created_at)
+                ->timezone('Asia/Jakarta')
+                ->format('d M Y H:i');
+        }
 
         // Make sure you have s3 as your disk driver
         //trim url
