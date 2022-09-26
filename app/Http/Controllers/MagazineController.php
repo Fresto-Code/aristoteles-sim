@@ -57,6 +57,7 @@ class MagazineController extends Controller
         $magazines = DB::table('magazines')
             ->join('users', 'users.id', '=', 'magazines.author_id')
             ->where('author_id', Auth::user()->id)
+            ->where('magazines.deleted_at', null)
             ->orderByDesc('created_at')
             ->paginate(10, ['magazines.*', 'users.name', 'users.avatar']);
         return view('pages.magazine.magazine', compact('magazines'));
@@ -141,7 +142,7 @@ class MagazineController extends Controller
                 $updatedMagzine->url,
                 'public'
             );
-            
+
             Storage::disk('spaces')->setVisibility(
                 $updatedMagzine->cover,
                 'public'
