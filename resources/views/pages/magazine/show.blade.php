@@ -72,7 +72,7 @@
                                         <div class="card p-3 w-100 border-0 shadow-sm">
                                             <div class="d-flex justify-content-between align-items-center">
                                                 <div class="user d-flex flex-row align-items-center">
-                                                    <img src="{{ asset('assets/img/icons/common/profile.png') }}" width="30" class="user-img rounded-circle mr-2">
+                                                    <img src="{{ env('SPACES_URL') . $comment->avatar }}" width="30" class="user-img rounded-circle mr-2">
                                                     <span>
                                                         <small class="font-weight-bold text-primary">{{ $comment->name }}:
                                                         </small>

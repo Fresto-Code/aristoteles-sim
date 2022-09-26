@@ -74,108 +74,25 @@
                 <i class="ni ni-tv-2 text-muted"></i> {{ __('Dashboard') }}
                 </a>
                 </li> --}}
+ 
                 <li class="nav-item">
-                    <a class="nav-link" href="#e-magazine" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="e-magazine">
+                    <a class="nav-link" href="{{ route('magazine') }}">
                         <i class="ni ni-single-copy-04 text-muted"></i>
-                        <span class="nav-link-text">E-Magazine</span>
-                    </a>
-                    <div class="collapse" id="e-magazine">
-                        <ul class="nav nav-sm flex-column">
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('magazine') }}">
-                                    Semua E-Magazine
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="/magazine/own-magazine">
-                                    E-Magazine Saya
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('maintenance') }}">
-                        <i class="ni ni-books text-muted"></i>
-                        <span class="nav-link-text">E-Library</span>
+                        <span class="nav-link-text">Semua E-Magazine</span>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#surat" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="surat">
-                        <i class="ni ni-send text-muted"></i>
-                        <span class="nav-link-text">Surat</span>
-                    </a>
-                    <div class="collapse" id="surat">
-                        <ul class="nav nav-sm flex-column">
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('maintenance') }}">
-                                    Surat Masuk
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('maintenance') }}">
-                                    Surat Terproses
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('maintenance') }}">
-                                    Surat Terjawab
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('maintenance') }}">
-                        <i class="ni ni-archive-2 text-muted"></i>
-                        <span class="nav-link-text">Persediaan</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#alumni" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="navbar-examples">
-                        <i class="ni ni-circle-08 text-muted"></i>
-                        <span class="nav-link-text">Alumni & Orang Tua</span>
-                    </a>
-                    <div class="collapse" id="alumni">
-                        <ul class="nav nav-sm flex-column">
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('maintenance') }}">
-                                    Feedback Alumni
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('maintenance') }}">
-                                    Feedback Orang Tua
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('maintenance') }}">
-                        <i class="ni ni-bulb-61 text-muted"></i>
-                        <span class="nav-link-text">Sumber Daya Manusia (SDM)</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('maintenance') }}">
-                        <i class="ni ni-settings text-muted"></i>
-                        <span class="nav-link-text">BKK</span>
+                    <a class="nav-link" href="magazine/own-magazine">
+                        <i class="ni ni-spaceship text-muted"></i>
+                        <span class="nav-link-text">E-Magazine Saya</span>
                     </a>
                 </li>
             </ul>
             <!-- Divider -->
             <hr class="my-3">
             <!-- Heading -->
-            <h6 class="navbar-heading text-muted">Dokumentasi</h6>
             <!-- Navigation -->
-            <ul class="navbar-nav mb-md-3">
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('maintenance') }}">
-                        <i class="ni ni-spaceship"></i> Cara Pengoprasian
-                    </a>
-                </li>
-            </ul>
+            
         </div>
     </div>
 </nav>

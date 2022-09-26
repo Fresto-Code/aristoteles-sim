@@ -119,15 +119,15 @@ class MagazineController extends Controller
                 // Render the HTML as PDF
                 $dompdf->render();
 
-                file_put_contents(public_path('magazines_temp/' . $magazineName), $dompdf->output());
+                Storage::disk('spaces')->put(
+                    'magazines/' . $cover . '/' . $magazineName,
+                    $dompdf->output(),
+                    'public'
+                );
 
                 Magazine::where('id', $magazine->id)->update([
                     'moderation_status' => 'published',
-                    'url' => Storage::disk('spaces')->putFile(
-                        'magazines/' . $cover,
-                        public_path('magazines_temp') . '/' . $magazineName,
-                        'public'
-                    ),
+                    'url' => 'magazines/' . $cover . '/' . $magazineName,
                 ]);
             } else {
                 Magazine::where('id', $magazine->id)->update([
@@ -136,12 +136,6 @@ class MagazineController extends Controller
             }
 
             $updatedMagzine = Magazine::where('id', $magazine->id)->first();
-            //dd($updatedMagzine);
-
-            Storage::disk('spaces')->setVisibility(
-                $updatedMagzine->url,
-                'public'
-            );
 
             Storage::disk('spaces')->setVisibility(
                 $updatedMagzine->cover,
@@ -188,9 +182,7 @@ class MagazineController extends Controller
             'title' => 'required',
             'description' => 'required',
             //max 100kb
-            'cover_file' => 'required|image|mimes:jpeg,png,jpg|max:100',
-            //max 5mb
-            'writenMagazine' => 'required',
+            'cover_file' => 'required|image|mimes:jpeg,png,jpg|max:600'
         ]);
 
         $folderAndFileName = time() . '_magazine';
@@ -205,15 +197,20 @@ class MagazineController extends Controller
         // file_put_contents(public_path('magazines_temp/' . $magazineName), $dompdf->output());
 
         //magazine cover
-        $magazineCoverName =
-            $folderAndFileName . '.' . $request->cover_file->extension();
-        $request->cover_file->move(
-            public_path('magazines_temp'),
-            $magazineCoverName
-        );
+        $magazineCoverName = $folderAndFileName . '/' . $folderAndFileName . '.' . $request->cover_file->extension();
+        // $request->cover_file->move(
+        //     public_path('magazines_temp'),
+        //     $magazineCoverName
+        // );
 
         //transaction
         try {
+            Storage::disk('spaces')->put(
+                'magazines/' . $magazineCoverName,
+                $request->cover_file->get(),
+                'public'
+            );
+
             DB::beginTransaction();
 
             //create magazine and get data
@@ -222,11 +219,7 @@ class MagazineController extends Controller
                 'title' => $request->title,
                 'description' => $request->description,
                 'content' => $request->writenMagazine,
-                'cover' => Storage::disk('spaces')->putFile(
-                    'magazines/' . $folderAndFileName,
-                    public_path('magazines_temp') . '/' . $magazineCoverName,
-                    'private'
-                ),
+                'cover' => 'magazines/' . $magazineCoverName,
                 'moderation_status' => 'draft',
             ]);
 
@@ -292,7 +285,7 @@ class MagazineController extends Controller
             'title' => 'required',
             'description' => 'required',
             //max 100kb
-            'cover_file' => 'required|image|mimes:jpeg,png,jpg|max:100',
+            'cover_file' => 'required|image|mimes:jpeg,png,jpg|max:600',
             //max 5mb
             'magazine_file' => 'required|mimes:pdf|max:5000',
         ]);
@@ -300,23 +293,26 @@ class MagazineController extends Controller
         $folderAndFileName = time() . '_magazine';
 
         //magazine name and file
-        $magazineName =
-            $folderAndFileName . '.' . $request->magazine_file->extension();
-        $request->magazine_file->move(
-            public_path('magazines_temp'),
-            $magazineName
-        );
+        $magazineName = $folderAndFileName . '/' . $folderAndFileName . '.' . $request->magazine_file->extension();
 
         //magazine cover
-        $magazineCoverName =
-            $folderAndFileName . '.' . $request->cover_file->extension();
-        $request->cover_file->move(
-            public_path('magazines_temp'),
-            $magazineCoverName
-        );
+        $magazineCoverName = $folderAndFileName . '/' . $folderAndFileName . '.' . $request->cover_file->extension();
 
+        //dd($request->magazine_file->get());
         //transaction
         try {
+            Storage::disk('spaces')->put(
+                'magazines/' . $magazineName,
+                $request->magazine_file->get(),
+                'private'
+            );
+
+            Storage::disk('spaces')->put(
+                'magazines/' . $magazineCoverName,
+                $request->cover_file->get(),
+                'public'
+            );
+
             DB::beginTransaction();
 
             //create magazine and get data
@@ -324,18 +320,8 @@ class MagazineController extends Controller
                 'author_id' => Auth::user()->id,
                 'title' => $request->title,
                 'description' => $request->description,
-                'url' => Storage::disk('spaces')->putFile(
-                    'magazines/' . $folderAndFileName,
-                    public_path('magazines_temp') . '/' . $magazineName,
-                    'private'
-                ),
-                'cover' => Storage::disk('spaces')->putFile(
-                    'magazines/' . $folderAndFileName,
-                    public_path('magazines_temp') .
-                        '/' .
-                        $magazineCoverName,
-                    'public'
-                ),
+                'url' => 'magazines/' . $magazineName,
+                'cover' => 'magazines/' . $magazineCoverName,
                 'moderation_status' => 'draft',
             ]);
 
@@ -396,7 +382,7 @@ class MagazineController extends Controller
             'moderation_comments.user_id'
         )
             ->where('moderation_comments.magazine_id', $magazine->id)
-            ->get(['moderation_comments.*', 'users.name']);
+            ->get(['moderation_comments.*', 'users.name', 'users.avatar']);
 
         //formating timezone to default own timezone
         foreach ($comments as $comment) {
