@@ -74,7 +74,7 @@
                 <i class="ni ni-tv-2 text-muted"></i> {{ __('Dashboard') }}
                 </a>
                 </li> --}}
- 
+
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('magazine') }}">
                         <i class="ni ni-single-copy-04 text-muted"></i>
@@ -82,7 +82,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('own-magazine') }}">
+                    <a class="nav-link" href="/magazine/own-magazine">
                         <i class="ni ni-spaceship text-muted"></i>
                         <span class="nav-link-text">E-Magazine Saya</span>
                     </a>
@@ -92,7 +92,7 @@
             <hr class="my-3">
             <!-- Heading -->
             <!-- Navigation -->
-            
+
         </div>
     </div>
 </nav>
