@@ -4,6 +4,8 @@ use App\Http\Controllers\MagazineController;
 use App\Http\Controllers\ModerationCommentController;
 use App\Http\Controllers\LetterController;
 use App\Http\Controllers\LetterHeadController;
+use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
@@ -29,12 +31,15 @@ use Illuminate\Support\Facades\Auth;
 // 	});
 // });
 
-Route::get('/', [App\Http\Controllers\Auth\LoginController::class, 'index'])->name('login')->middleware('guest');
+Route::get('/', [LoginController::class, 'index'])->middleware('guest');
+Route::get('/login', [LoginController::class, 'index'])->middleware('guest');
+Route::post('/login', [LoginController::class, 'authenticate']);
+Route::get('/logout', [LoginController::class, 'logout']);
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/home', [HomeController::class, 'index'])->name('home');
 
-Route::get('/home', 'App\Http\Controllers\HomeController@index')->name('home');
+//Route::get('/home', 'App\Http\Controllers\HomeController@index')->name('home');
 
 Route::get('maintenance', function () {
 	return view('maintenance');
