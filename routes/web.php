@@ -22,13 +22,14 @@ use Illuminate\Support\Facades\Auth;
 // 	return view('auth.login')->middel;
 // });
 
-Route::group(['middleware' => 'guest'], function () {
+// Route::group(['middleware' => 'guest'], function () {
 
-	Route::get('/', function () {
-		return view('auth.login');
-	});
-});
+// 	Route::get('/', function () {
+// 		return view('auth.login');
+// 	});
+// });
 
+Route::get('/', [App\Http\Controllers\Auth\LoginController::class, 'index'])->name('login')->middleware('guest');
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

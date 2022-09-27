@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
 class LoginController extends Controller
@@ -50,5 +52,23 @@ class LoginController extends Controller
     public function __construct()
     {
         $this->middleware('guest')->except('logout');
+    }
+
+    public function index()
+    {
+        return view('auth.login');
+    }
+
+    public function username()
+    {
+        //get the login value from the request
+        $loginValue = request('username');
+        //check if the login value is an email or not
+        $this->username = filter_var($loginValue, FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
+        //merge the login value to the request
+        request()->merge([$this->username => $loginValue]);
+        //return login type
+        return property_exists($this, 'username') ? $this->username : 'email';
+        //dd($this->username);
     }
 }

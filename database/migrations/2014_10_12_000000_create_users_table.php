@@ -17,8 +17,9 @@ return new class extends Migration
         DB::statement('CREATE EXTENSION IF NOT EXISTS "uuid-ossp";');
         Schema::create('users', function (Blueprint $table) {
             $table->uuid('id')->index()->primary();
-            $table->string('name')->unique();
+            $table->string('name');
             $table->string('email')->index();
+            $table->string('username')->unique();
             $table->string('avatar')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
