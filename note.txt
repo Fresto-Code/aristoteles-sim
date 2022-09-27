@@ -36,4 +36,6 @@ search-ms:displayname=Search%20Results%20in%20Windows%20(C%3A)&crumb=location:C%
 - jam comment (done)
 - validation cover max 100kb (done)
 - validation pdf max 5mb (done)
-- login username
+- login username (done)
+- filter, search (done)
+- sort, dlete ditampilkan

@@ -493,4 +493,47 @@ class MagazineController extends Controller
         )->get();
         return view('pages.magazine.show', compact('comments', 'magazine'));
     }
+
+    public function search(Request $request)
+    {
+        $search = $request->search;
+        $magazines = [];
+
+        if ($search != null || trim($search) != '') {
+            if ($request->status == 'all') {
+                $magazines = DB::table('magazines')
+                    ->join('users', 'users.id', '=', 'magazines.author_id')
+                    ->where('magazines.title', 'like', '%' . $search . '%')
+                    ->orWhere('users.name', 'like', '%' . $search . '%')
+                    ->where('magazines.deleted_at', null)
+                    ->orderBy('magazines.created_at', 'desc')
+                    ->paginate(10, ['magazines.*', 'users.name', 'users.avatar']);
+            } else {
+                $magazines = DB::table('magazines')
+                    ->join('users', 'users.id', '=', 'magazines.author_id')
+                    ->where('magazines.title', 'like', '%' . $search . '%')
+                    ->orWhere('users.name', 'like', '%' . $search . '%')
+                    ->where('magazines.moderation_status', $request->status)
+                    ->where('magazines.deleted_at', null)
+                    ->orderBy('magazines.created_at', 'desc')
+                    ->paginate(10, ['magazines.*', 'users.name', 'users.avatar']);
+            }
+        } else {
+            if ($request->status == 'all') {
+                $magazines = DB::table('magazines')
+                    ->join('users', 'users.id', '=', 'magazines.author_id')
+                    ->where('magazines.deleted_at', null)
+                    ->orderBy('magazines.created_at', 'desc')
+                    ->paginate(10, ['magazines.*', 'users.name', 'users.avatar']);
+            } else {
+                $magazines = DB::table('magazines')
+                    ->join('users', 'users.id', '=', 'magazines.author_id')
+                    ->where('magazines.moderation_status', $request->status)
+                    ->where('magazines.deleted_at', null)
+                    ->orderBy('magazines.created_at', 'desc')
+                    ->paginate(10, ['magazines.*', 'users.name', 'users.avatar']);
+            }
+        }
+        return view('pages.magazine.magazine', compact('magazines'));
+    }
 }
