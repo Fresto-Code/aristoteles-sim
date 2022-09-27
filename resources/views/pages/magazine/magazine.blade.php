@@ -91,7 +91,7 @@
                                             @endif
                                             @endif
                                         <td>
-                                            {{ $magazine->title }}
+                                            {{ ucwords($magazine->title) }}
                                         </td>
                                         <th scope="row">
                                             <div class="media align-items-center">
@@ -99,7 +99,7 @@
                                                     <img alt="Image placeholder" src="{{ env('SPACES_URL') . $magazine->avatar }}">
                                                 </a>
                                                 <div class="media-body">
-                                                    <span class="name mb-0 text-sm">{{ $magazine->name }}</span>
+                                                    <span class="name mb-0 text-sm">{{ ucwords($magazine->name) }}</span>
                                                 </div>
                                             </div>
                                         </th>

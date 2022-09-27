@@ -16,7 +16,7 @@ class UsersTableSeeder extends Seeder
     public function run()
     {
         DB::table('users')->insert([
-            'name' => 'Agus Halim',
+            'name' => 'agus halim',
             'email' => 'agus.halim@afresto.com',
             'email_verified_at' => now(),
             'password' => Hash::make('secret'),
@@ -26,7 +26,7 @@ class UsersTableSeeder extends Seeder
             'updated_at' => now()
         ]);
         DB::table('users')->insert([
-            'name' => 'Osis',
+            'name' => 'osis',
             'email' => 'osis@afresto.com',
             'email_verified_at' => now(),
             'password' => Hash::make('secret'),
@@ -36,7 +36,7 @@ class UsersTableSeeder extends Seeder
             'updated_at' => now()
         ]);
         DB::table('users')->insert([
-            'name' => 'Teacher',
+            'name' => 'teacher',
             'email' => 'teacher@afresto.com',
             'email_verified_at' => now(),
             'password' => Hash::make('secret'),

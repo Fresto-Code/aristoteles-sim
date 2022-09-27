@@ -222,7 +222,7 @@ class MagazineController extends Controller
             //create magazine and get data
             $newMagazine = Magazine::create([
                 'author_id' => Auth::user()->id,
-                'title' => $request->title,
+                'title' => strtolower($request->title),
                 'description' => $request->description,
                 'content' => $request->writenMagazine,
                 'cover' => 'magazines/' . $magazineCoverName,
@@ -324,7 +324,7 @@ class MagazineController extends Controller
             //create magazine and get data
             $newMagazine = Magazine::create([
                 'author_id' => Auth::user()->id,
-                'title' => $request->title,
+                'title' => strtolower($request->title),
                 'description' => $request->description,
                 'url' => 'magazines/' . $magazineName,
                 'cover' => 'magazines/' . $magazineCoverName,
@@ -444,7 +444,7 @@ class MagazineController extends Controller
 
         Magazine::where('id', $magazine->id)->update([
             'author_id' => Auth::user()->id,
-            'title' => $request->title,
+            'title' => strtolower($request->title),
             'description' => $request->description,
             'url' => $imageName,
             'moderation_status' => $request->moderation_status,
@@ -496,7 +496,7 @@ class MagazineController extends Controller
 
     public function search(Request $request)
     {
-        $search = $request->search;
+        $search = strtolower($request->search);
         $magazines = [];
 
         if ($search != null || trim($search) != '') {

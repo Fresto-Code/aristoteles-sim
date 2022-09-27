@@ -77,9 +77,9 @@ class RegisterController extends Controller
         );
 
         return User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'username' => $data['username'],
+            'name' => strtolower($data['name']),
+            'email' => strtolower($data['email']),
+            'username' => strtolower($data['username']),
             'password' => Hash::make($data['password']),
             'role' => 'student',
             'cover' => Storage::disk('spaces')->putFile(

@@ -41,7 +41,7 @@
                                 <img alt="Image placeholder" src="{{ env('SPACES_URL') . Auth()->user()->avatar }}">
                             </span>
                             <div class="media-body ml-2 d-none d-lg-block">
-                                <span class="mb-0 text-sm  font-weight-bold">{{ auth()->user()->name }}</span>
+                                <span class="mb-0 text-sm  font-weight-bold">{{ ucwords(auth()->user()->name) }}</span>
                             </div>
                         </div>
                     </a>
