@@ -24,7 +24,9 @@ use Illuminate\Support\Facades\Auth;
 
 Route::group(['middleware' => 'guest'], function () {
 
-	Route::get('/', function () { return view('auth.login'); });
+	Route::get('/', function () {
+		return view('auth.login');
+	});
 });
 
 Auth::routes();
@@ -58,7 +60,7 @@ Route::group(['middleware' => 'auth'], function () {
 
 //magazine
 Route::get('magazine', [MagazineController::class, 'index'])->name('magazine');
-Route::get('magazine/own-magazine', [MagazineController::class, 'ownMagazine'])->name('own-magazine');
+Route::get('magazine/own-magazine', [MagazineController::class, 'ownMagazine'])->name('own.magazine');
 Route::get('magazine/create', [MagazineController::class, 'create']);
 Route::post('magazine', [MagazineController::class, 'store']);
 Route::get('magazine/{magazine}', [MagazineController::class, 'show']);
