@@ -68,5 +68,6 @@ class Kernel extends HttpKernel
         'student' => \App\Http\Middleware\StudentRole::class,
         'teacher' => \App\Http\Middleware\TeacherRole::class,
         'osis' => \App\Http\Middleware\OsisRole::class,
+        'backNotAllowed' => \App\Http\Middleware\BackNotAllowed::class,
     ];
 }
