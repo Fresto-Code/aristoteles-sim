@@ -22,8 +22,10 @@
                         </div>
                         <!-- search bar and filter with form-->
                         <form action="/search" class="col-xl-12 col-lg-12 col-md-12 col-sm-12" enctype="multipart/form-data">
+                            <!-- filter -->
                             <div class="row">
-                                <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4">
+                                <!-- status filter -->
+                                <div class="col-xl-2 col-lg-2 col-md-2 col-sm-2">
                                     <div class="form-group">
                                         <label for="status">Filter</label>
                                         <select class="form-control" id="status" name="status">
@@ -33,7 +35,23 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-xl-8 col-lg-8 col-md-8 col-sm-8">
+                                <!-- start date filter -->
+                                <div class="col-xl-2 col-lg-2 col-md-2 col-sm-2">
+                                    <div class="form-group">
+                                        <label for="start_date">Tanggal Mulai</label>
+                                        <input type="date" class="form-control" id="start_date" name="start_date" value="{{ request('start_date') }}">
+                                    </div>
+                                </div>
+                                <!-- end date filter -->
+                                <div class="col-xl-2 col-lg-2 col-md-2 col-sm-2">
+                                    <div class="form-group">
+                                        <label for="end_date">Tanggal Akhir</label>
+                                        <input type="date" class="form-control" id="end_date" name="end_date" value="{{ request('end_date') }}">
+                                    </div>
+                                </div>
+
+                                <!-- search -->
+                                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
                                     <div class="form-group">
                                         <label for="search">Cari</label>
                                         <input type="search" class="form-control" id="search" placeholder="Cari E-Magazine" name="search" value="{{request('search')}}">

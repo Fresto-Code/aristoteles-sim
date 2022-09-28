@@ -388,14 +388,15 @@ class MagazineController extends Controller
             'moderation_comments.user_id'
         )
             ->where('moderation_comments.magazine_id', $magazine->id)
+            ->orderBy('moderation_comments.created_at', 'asc')
             ->get(['moderation_comments.*', 'users.name', 'users.avatar']);
 
         //formating timezone to default own timezone
-        foreach ($comments as $comment) {
-            $comment->created_at = Carbon::parse($comment->created_at)
-                ->timezone('Asia/Jakarta')
-                ->format('d M Y H:i');
-        }
+        // foreach ($comments as $comment) {
+        //     $comment->created_at = Carbon::parse($comment->created_at)
+        //         ->timezone('Asia/Jakarta')
+        //         ->format('d M Y H:i');
+        // }
 
         // Make sure you have s3 as your disk driver
         //trim url
@@ -496,6 +497,11 @@ class MagazineController extends Controller
 
     public function search(Request $request)
     {
+        //start date
+        $startDate = Carbon::parse($request->start_date)->startOfDay();
+        //end date
+        $endDate = Carbon::parse($request->end_date)->endOfDay();
+
         $search = strtolower($request->search);
         $magazines = [];
 
@@ -505,6 +511,17 @@ class MagazineController extends Controller
                     ->join('users', 'users.id', '=', 'magazines.author_id')
                     ->where('magazines.title', 'like', '%' . $search . '%')
                     ->orWhere('users.name', 'like', '%' . $search . '%')
+                    //condition if start date and end date is not null
+                    ->when(
+                        $request->start_date != null &&
+                            $request->end_date != null,
+                        function ($query) use ($startDate, $endDate) {
+                            return $query->whereBetween(
+                                'magazines.created_at',
+                                [$startDate, $endDate]
+                            );
+                        }
+                    )
                     ->where('magazines.deleted_at', null)
                     ->orderBy('magazines.created_at', 'desc')
                     ->paginate(10, ['magazines.*', 'users.name', 'users.avatar']);
@@ -514,6 +531,17 @@ class MagazineController extends Controller
                     ->where('magazines.title', 'like', '%' . $search . '%')
                     ->orWhere('users.name', 'like', '%' . $search . '%')
                     ->where('magazines.moderation_status', $request->status)
+                    //condition if start date and end date is not null
+                    ->when(
+                        $request->start_date != null &&
+                            $request->end_date != null,
+                        function ($query) use ($startDate, $endDate) {
+                            return $query->whereBetween(
+                                'magazines.created_at',
+                                [$startDate, $endDate]
+                            );
+                        }
+                    )
                     ->where('magazines.deleted_at', null)
                     ->orderBy('magazines.created_at', 'desc')
                     ->paginate(10, ['magazines.*', 'users.name', 'users.avatar']);
@@ -522,6 +550,17 @@ class MagazineController extends Controller
             if ($request->status == 'all') {
                 $magazines = DB::table('magazines')
                     ->join('users', 'users.id', '=', 'magazines.author_id')
+                    //condition if start date and end date is not null
+                    ->when(
+                        $request->start_date != null &&
+                            $request->end_date != null,
+                        function ($query) use ($startDate, $endDate) {
+                            return $query->whereBetween(
+                                'magazines.created_at',
+                                [$startDate, $endDate]
+                            );
+                        }
+                    )
                     ->where('magazines.deleted_at', null)
                     ->orderBy('magazines.created_at', 'desc')
                     ->paginate(10, ['magazines.*', 'users.name', 'users.avatar']);
@@ -529,6 +568,17 @@ class MagazineController extends Controller
                 $magazines = DB::table('magazines')
                     ->join('users', 'users.id', '=', 'magazines.author_id')
                     ->where('magazines.moderation_status', $request->status)
+                    //condition if start date and end date is not null
+                    ->when(
+                        $request->start_date != null &&
+                            $request->end_date != null,
+                        function ($query) use ($startDate, $endDate) {
+                            return $query->whereBetween(
+                                'magazines.created_at',
+                                [$startDate, $endDate]
+                            );
+                        }
+                    )
                     ->where('magazines.deleted_at', null)
                     ->orderBy('magazines.created_at', 'desc')
                     ->paginate(10, ['magazines.*', 'users.name', 'users.avatar']);

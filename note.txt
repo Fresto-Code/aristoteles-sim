@@ -39,3 +39,7 @@ search-ms:displayname=Search%20Results%20in%20Windows%20(C%3A)&crumb=location:C%
 - login username (done)
 - filter, search (done)
 - sort, dlete ditampilkan
+
+- tanggal format (done to asia jakarta on config/app.php)
+- filtering by date (done)
+- livewire
