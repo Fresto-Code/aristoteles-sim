@@ -136,7 +136,7 @@
 
                                 </ul>
                                 <div class="d-flex justify-content-end">
-                                    {{ $magazines->links("pagination::bootstrap-4") }}
+                                    {{ $magazines->links() }}
                                 </div>
                             </nav>
                         </div>
