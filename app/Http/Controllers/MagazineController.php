@@ -522,6 +522,30 @@ class MagazineController extends Controller
                             );
                         }
                     )
+                    //condition if start date is not null
+                    ->when(
+                        $request->start_date != null &&
+                            $request->end_date == null,
+                        function ($query) use ($startDate) {
+                            return $query->where(
+                                'magazines.created_at',
+                                '>=',
+                                $startDate
+                            );
+                        }
+                    )
+                    //condition if end date is not null
+                    ->when(
+                        $request->start_date == null &&
+                            $request->end_date != null,
+                        function ($query) use ($endDate) {
+                            return $query->where(
+                                'magazines.created_at',
+                                '<=',
+                                $endDate
+                            );
+                        }
+                    )
                     ->where('magazines.deleted_at', null)
                     ->orderBy('magazines.created_at', 'desc')
                     ->paginate(10, ['magazines.*', 'users.name', 'users.avatar']);
@@ -539,6 +563,30 @@ class MagazineController extends Controller
                             return $query->whereBetween(
                                 'magazines.created_at',
                                 [$startDate, $endDate]
+                            );
+                        }
+                    )
+                    //condition if start date is not null
+                    ->when(
+                        $request->start_date != null &&
+                            $request->end_date == null,
+                        function ($query) use ($startDate) {
+                            return $query->where(
+                                'magazines.created_at',
+                                '>=',
+                                $startDate
+                            );
+                        }
+                    )
+                    //condition if end date is not null
+                    ->when(
+                        $request->start_date == null &&
+                            $request->end_date != null,
+                        function ($query) use ($endDate) {
+                            return $query->where(
+                                'magazines.created_at',
+                                '<=',
+                                $endDate
                             );
                         }
                     )
@@ -561,6 +609,30 @@ class MagazineController extends Controller
                             );
                         }
                     )
+                    //condition if start date is not null
+                    ->when(
+                        $request->start_date != null &&
+                            $request->end_date == null,
+                        function ($query) use ($startDate) {
+                            return $query->where(
+                                'magazines.created_at',
+                                '>=',
+                                $startDate
+                            );
+                        }
+                    )
+                    //condition if end date is not null
+                    ->when(
+                        $request->start_date == null &&
+                            $request->end_date != null,
+                        function ($query) use ($endDate) {
+                            return $query->where(
+                                'magazines.created_at',
+                                '<=',
+                                $endDate
+                            );
+                        }
+                    )
                     ->where('magazines.deleted_at', null)
                     ->orderBy('magazines.created_at', 'desc')
                     ->paginate(10, ['magazines.*', 'users.name', 'users.avatar']);
@@ -576,6 +648,30 @@ class MagazineController extends Controller
                             return $query->whereBetween(
                                 'magazines.created_at',
                                 [$startDate, $endDate]
+                            );
+                        }
+                    )
+                    //condition if start date is not null
+                    ->when(
+                        $request->start_date != null &&
+                            $request->end_date == null,
+                        function ($query) use ($startDate) {
+                            return $query->where(
+                                'magazines.created_at',
+                                '>=',
+                                $startDate
+                            );
+                        }
+                    )
+                    //condition if end date is not null
+                    ->when(
+                        $request->start_date == null &&
+                            $request->end_date != null,
+                        function ($query) use ($endDate) {
+                            return $query->where(
+                                'magazines.created_at',
+                                '<=',
+                                $endDate
                             );
                         }
                     )
