@@ -33,7 +33,7 @@ use Illuminate\Support\Facades\Auth;
 
 Route::get('/', [LoginController::class, 'index'])->middleware('guest', 'backNotAllowed');
 Route::get('/login', [LoginController::class, 'index'])->middleware('guest', 'backNotAllowed');
-Route::post('/login', [LoginController::class, 'authenticate']);
+Route::post('/login', [LoginController::class, 'login']);
 Route::get('/logout', [LoginController::class, 'logout']);
 Auth::routes();
 

@@ -10,6 +10,12 @@
                 <div class="card-header bg-transparent pb-5">
                     <div class="text-muted text-center mt-2 mb-3"><small>{{ __('Sign in with') }}</small></div>
                     <div class="btn-wrapper text-center">
+                        @if ($message = Session::get('error'))
+                        <div class="alert bg-gradient-danger alert-block">
+                            <button type="button" class="close" data-dismiss="alert"><i class="far fa-times-circle"></i></button>
+                            <strong>{{ $message }}</strong>
+                        </div>
+                        @endif
                         {{-- <a href="#" class="btn btn-neutral btn-icon">
                                 <span class="btn-inner--icon"><img src="{{ asset('argon') }}/img/icons/common/github.svg"></span>
                         <span class="btn-inner--text">{{ __('Github') }}</span>
@@ -21,7 +27,7 @@
                     </div>
                 </div>
                 <div class="card-body px-lg-5 py-lg-5">
-                    <form role="form" method="POST" action="{{ route('login') }}">
+                    <form role="form" method="POST" action="/login">
                         @csrf
 
                         <div class="form-group{{ $errors->has('username') ? ' has-danger' : '' }} mb-3">
