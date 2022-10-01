@@ -31,7 +31,7 @@ use Illuminate\Support\Facades\Auth;
 // 	});
 // });
 
-Route::get('/', [LoginController::class, 'index'])->middleware('guest', 'backNotAllowed');
+//Route::get('/', [LoginController::class, 'index'])->middleware('guest', 'backNotAllowed');
 Route::get('/login', [LoginController::class, 'index'])->middleware('guest', 'backNotAllowed');
 Route::post('/login', [LoginController::class, 'login']);
 Route::get('/logout', [LoginController::class, 'logout']);
@@ -78,7 +78,7 @@ Route::group(['middleware' => ['auth', 'backNotAllowed']], function () {
 	Route::patch('magazine/{magazine}/approve', [MagazineController::class, 'approve']);
 	Route::patch('magazine/{magazine}/cancel', [MagazineController::class, 'cancel']);
 	Route::delete('magazine/{magazine}', [MagazineController::class, 'softDelete']);
-	Route::get('magazine/browse/dashboard', [MagazineController::class, 'browse']);
+	Route::get('magazine/browse/dashboard', [MagazineController::class, 'browse'])->name('magazine.browse.dashboard');
 	Route::get('magazine/choose/type', function () {
 		return view('pages.magazine.public.option');
 	})->name('magazine.choose_type');
@@ -119,3 +119,6 @@ Route::group(['middleware' => ['auth', 'backNotAllowed']], function () {
 	Route::patch('letter-head/{letterHead}', [LetterHeadController::class, 'update']);
 	Route::delete('letter-head/{letterHead}', [LetterHeadController::class, 'softDelete']);
 });
+
+
+Route::get('/', [MagazineController::class, 'browse'])->middleware('guest', 'backNotAllowed')->name('magazine.browse');

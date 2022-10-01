@@ -101,7 +101,7 @@ class LoginController extends Controller
                         } else if (auth()->user()->role == 'osis') {
                             return redirect()->intended('home');
                         } else {
-                            return redirect()->intended('magazine.browse.dashboard');
+                            return redirect()->intended('magazine/browse/dashboard');
                         }
                     } else {
                         return redirect()->back()->with('error', 'Username atau Password salah');
@@ -124,7 +124,7 @@ class LoginController extends Controller
                         } else if (auth()->user()->role == 'osis') {
                             return redirect()->intended('home');
                         } else {
-                            return redirect()->intended('magazine.browse.dashboard');
+                            return redirect()->intended('magazine/browse/dashboard');
                         }
                     } else {
                         return redirect()->back()->with('error', 'Username atau Password salah');
@@ -144,7 +144,7 @@ class LoginController extends Controller
                         } else if (auth()->user()->role == 'osis') {
                             return redirect()->intended('home');
                         } else {
-                            return redirect()->intended('magazine.browse.dashboard');
+                            return redirect()->intended('magazine/browse/dashboard');
                         }
                     } else {
                         return redirect()->back()->with('error', 'Username atau Password salah');
@@ -167,7 +167,7 @@ class LoginController extends Controller
                         } else if (auth()->user()->role == 'osis') {
                             return redirect()->intended('home');
                         } else {
-                            return redirect()->intended('magazine.browse.dashboard');
+                            return redirect()->intended('magazine/browse/dashboard');
                         }
                     } else {
                         return redirect()->back()->with('error', 'Username atau Password salah');
