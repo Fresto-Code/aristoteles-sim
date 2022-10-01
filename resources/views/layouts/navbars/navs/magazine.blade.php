@@ -6,7 +6,7 @@
         <a class="h4 mb-0 text-white text-uppercase d-none d-lg-inline-block" href="/magazine">{{ __('Admin') }}</a>
         @endif
         @if (Auth::user()->role == 'student')
-        <a class="h4 mb-0 text-white text-uppercase d-none d-lg-inline-block" href="/magazine">{{ __('My E-Magazine') }}</a>
+        <a class="h4 mb-0 text-white text-uppercase d-none d-lg-inline-block" href="/magazine/own-magazine">{{ __('My E-Magazine') }}</a>
         @endif
         <!-- Form -->
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-collapse-main" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">

@@ -60,7 +60,7 @@ class MagazineController extends Controller
             ->where('magazines.deleted_at', null)
             ->orderByDesc('created_at')
             ->paginate(10, ['magazines.*', 'users.name', 'users.avatar']);
-        return view('pages.magazine.magazine', compact('magazines'));
+        return view('pages.magazine.own_magazine', compact('magazines'));
     }
 
     /**
@@ -681,5 +681,196 @@ class MagazineController extends Controller
             }
         }
         return view('pages.magazine.magazine', compact('magazines'));
+    }
+    public function searchOwn(Request $request)
+    {
+        //start date
+        $startDate = Carbon::parse($request->start_date)->startOfDay();
+        //end date
+        $endDate = Carbon::parse($request->end_date)->endOfDay();
+
+        $search = strtolower($request->search);
+        $magazines = [];
+
+        if ($search != null || trim($search) != '') {
+            if ($request->status == 'all') {
+                $magazines = DB::table('magazines')
+                    ->join('users', 'users.id', '=', 'magazines.author_id')
+                    ->where('users.id', Auth::user()->id)
+                    ->where('magazines.title', 'like', '%' . $search . '%')
+                    ->orWhere('users.name', 'like', '%' . $search . '%')
+                    //condition if start date and end date is not null
+                    ->when(
+                        $request->start_date != null &&
+                            $request->end_date != null,
+                        function ($query) use ($startDate, $endDate) {
+                            return $query->whereBetween(
+                                'magazines.created_at',
+                                [$startDate, $endDate]
+                            );
+                        }
+                    )
+                    //condition if start date is not null
+                    ->when(
+                        $request->start_date != null &&
+                            $request->end_date == null,
+                        function ($query) use ($startDate) {
+                            return $query->where(
+                                'magazines.created_at',
+                                '>=',
+                                $startDate
+                            );
+                        }
+                    )
+                    //condition if end date is not null
+                    ->when(
+                        $request->start_date == null &&
+                            $request->end_date != null,
+                        function ($query) use ($endDate) {
+                            return $query->where(
+                                'magazines.created_at',
+                                '<=',
+                                $endDate
+                            );
+                        }
+                    )
+                    ->where('magazines.deleted_at', null)
+                    ->orderBy('magazines.created_at', 'desc')
+                    ->paginate(10, ['magazines.*', 'users.name', 'users.avatar']);
+            } else {
+                $magazines = DB::table('magazines')
+                    ->join('users', 'users.id', '=', 'magazines.author_id')
+                    ->where('users.id', Auth::user()->id)
+                    ->where('magazines.title', 'like', '%' . $search . '%')
+                    ->orWhere('users.name', 'like', '%' . $search . '%')
+                    ->where('magazines.moderation_status', $request->status)
+                    //condition if start date and end date is not null
+                    ->when(
+                        $request->start_date != null &&
+                            $request->end_date != null,
+                        function ($query) use ($startDate, $endDate) {
+                            return $query->whereBetween(
+                                'magazines.created_at',
+                                [$startDate, $endDate]
+                            );
+                        }
+                    )
+                    //condition if start date is not null
+                    ->when(
+                        $request->start_date != null &&
+                            $request->end_date == null,
+                        function ($query) use ($startDate) {
+                            return $query->where(
+                                'magazines.created_at',
+                                '>=',
+                                $startDate
+                            );
+                        }
+                    )
+                    //condition if end date is not null
+                    ->when(
+                        $request->start_date == null &&
+                            $request->end_date != null,
+                        function ($query) use ($endDate) {
+                            return $query->where(
+                                'magazines.created_at',
+                                '<=',
+                                $endDate
+                            );
+                        }
+                    )
+                    ->where('magazines.deleted_at', null)
+                    ->orderBy('magazines.created_at', 'desc')
+                    ->paginate(10, ['magazines.*', 'users.name', 'users.avatar']);
+            }
+        } else {
+            if ($request->status == 'all') {
+                $magazines = DB::table('magazines')
+                    ->join('users', 'users.id', '=', 'magazines.author_id')
+                    ->where('users.id', Auth::user()->id)
+                    //condition if start date and end date is not null
+                    ->when(
+                        $request->start_date != null &&
+                            $request->end_date != null,
+                        function ($query) use ($startDate, $endDate) {
+                            return $query->whereBetween(
+                                'magazines.created_at',
+                                [$startDate, $endDate]
+                            );
+                        }
+                    )
+                    //condition if start date is not null
+                    ->when(
+                        $request->start_date != null &&
+                            $request->end_date == null,
+                        function ($query) use ($startDate) {
+                            return $query->where(
+                                'magazines.created_at',
+                                '>=',
+                                $startDate
+                            );
+                        }
+                    )
+                    //condition if end date is not null
+                    ->when(
+                        $request->start_date == null &&
+                            $request->end_date != null,
+                        function ($query) use ($endDate) {
+                            return $query->where(
+                                'magazines.created_at',
+                                '<=',
+                                $endDate
+                            );
+                        }
+                    )
+                    ->where('magazines.deleted_at', null)
+                    ->orderBy('magazines.created_at', 'desc')
+                    ->paginate(10, ['magazines.*', 'users.name', 'users.avatar']);
+            } else {
+                $magazines = DB::table('magazines')
+                    ->join('users', 'users.id', '=', 'magazines.author_id')
+                    ->where('users.id', Auth::user()->id)
+                    ->where('magazines.moderation_status', $request->status)
+                    //condition if start date and end date is not null
+                    ->when(
+                        $request->start_date != null &&
+                            $request->end_date != null,
+                        function ($query) use ($startDate, $endDate) {
+                            return $query->whereBetween(
+                                'magazines.created_at',
+                                [$startDate, $endDate]
+                            );
+                        }
+                    )
+                    //condition if start date is not null
+                    ->when(
+                        $request->start_date != null &&
+                            $request->end_date == null,
+                        function ($query) use ($startDate) {
+                            return $query->where(
+                                'magazines.created_at',
+                                '>=',
+                                $startDate
+                            );
+                        }
+                    )
+                    //condition if end date is not null
+                    ->when(
+                        $request->start_date == null &&
+                            $request->end_date != null,
+                        function ($query) use ($endDate) {
+                            return $query->where(
+                                'magazines.created_at',
+                                '<=',
+                                $endDate
+                            );
+                        }
+                    )
+                    ->where('magazines.deleted_at', null)
+                    ->orderBy('magazines.created_at', 'desc')
+                    ->paginate(10, ['magazines.*', 'users.name', 'users.avatar']);
+            }
+        }
+        return view('pages.magazine.own_magazine', compact('magazines'));
     }
 }

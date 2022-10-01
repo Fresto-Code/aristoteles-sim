@@ -67,6 +67,7 @@ Route::group(['middleware' => 'auth', 'backNotAllowed'], function () {
 Route::group(['middleware' => ['auth', 'backNotAllowed']], function () {
 	//searching
 	Route::get('/search', [MagazineController::class, 'search']);
+	Route::get('/search-own', [MagazineController::class, 'searchOwn']);
 	//magazine
 	Route::get('magazine', [MagazineController::class, 'index'])->name('magazine');
 	Route::get('magazine/own-magazine', [MagazineController::class, 'ownMagazine'])->name('own.magazine');
