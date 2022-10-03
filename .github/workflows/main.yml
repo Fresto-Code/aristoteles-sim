@@ -1,0 +1,19 @@
+name: CD
+on:
+  push:
+    branches: [ master ]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: "178.128.57.37"
+        uses: appleboy/ssh-action@master
+        with:
+          host: '178.128.57.37'
+          username: ${{ secrets.USERNAME }}
+          PASSWORD: ${{ secrets.PASSWORD }}
+          port: 22
+          script: |
+            cd /home/magazine.afresto.id/public_html/
+            git pull git@github.com:elkoaditya/EPrangkatFresto.git
+            git reset --hard
