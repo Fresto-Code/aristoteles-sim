@@ -129,6 +129,8 @@ class LoginController extends Controller
                     } else {
                         return redirect()->back()->with('error', 'Username atau Password salah');
                     }
+                } else {
+                    return redirect()->back()->with('error', 'Username atau Password salah');
                 }
             }
         } elseif ($userEmail != null) {
@@ -172,6 +174,8 @@ class LoginController extends Controller
                     } else {
                         return redirect()->back()->with('error', 'Username atau Password salah');
                     }
+                } else {
+                    return redirect()->back()->with('error', 'Username atau Password salah');
                 }
             }
         } else {
