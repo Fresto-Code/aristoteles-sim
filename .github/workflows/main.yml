@@ -15,5 +15,5 @@ jobs:
           port: 22
           script: |
             cd /home/magazine.afresto.id/public_html/
-            git pull git@github.com:elkoaditya/EPrangkatFresto.git
+            git pull https://github.com/Fresto-Code/aristoteles-sim
             git reset --hard
