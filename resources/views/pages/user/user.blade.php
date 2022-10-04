@@ -126,6 +126,10 @@
                                                     <button type="submit" class="btn btn-sm btn-danger">Hapus</button>
                                                 </form>
                                             </button>
+                                            <!-- change password -->
+                                            <button class="border-0 btn-white shadow-none">
+                                                <a href="{{route('user.changePassword', $user->id)}}" class="btn btn-sm btn-info">Ubah Password</a>
+                                            </button>
 
                                         <th scope="row">
                                             <div class="media align-items-center">

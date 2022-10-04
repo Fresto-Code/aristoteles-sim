@@ -136,4 +136,6 @@ Route::group(['middleware' => ['auth', 'backNotAllowed', 'admin']], function () 
 	Route::get('user/{user}/edit', [UserController::class, 'edit'])->name('user.edit');
 	Route::patch('user/{user}', [UserController::class, 'update'])->name('user.update');
 	Route::delete('user/{user}', [UserController::class, 'softDelete'])->name('user.softDelete');
+	Route::get('user/{user}/change-password', [UserController::class, 'changePassword'])->name('user.changePassword');
+	Route::patch('user/{user}/update-password', [UserController::class, 'updatePassword'])->name('user.updatePassword');
 });

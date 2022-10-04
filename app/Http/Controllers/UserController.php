@@ -146,4 +146,25 @@ class UserController extends Controller
             return view('pages.user.user', compact('users'));
         }
     }
+
+    public function changePassword(User $user)
+    {
+        return view('pages.user.change_password', compact('user'));
+    }
+
+    public function updatePassword(Request $request, User $user)
+    {
+        $request->validate([
+            'password' => ['required', 'confirmed', Password::min(6)],
+        ]);
+
+        try {
+            $user->update([
+                'password' => bcrypt($request->password),
+            ]);
+            return redirect()->route('user')->with('update', 'Password updated successfully.');
+        } catch (\Throwable $th) {
+            return redirect()->route('user')->with('error', 'Password updated failed.');
+        }
+    }
 }
