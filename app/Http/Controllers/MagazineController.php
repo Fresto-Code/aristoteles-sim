@@ -175,10 +175,10 @@ class MagazineController extends Controller
                 'private'
             );
 
-            return redirect()->back();
+            return redirect()->back()->with('success', 'Magazine berhasil di cancel');
         } catch (\Throwable $th) {
             //throw $th;
-            dd($th);
+            return redirect()->back()->with('error', 'Magazine gagal di cancel');
         }
     }
 
