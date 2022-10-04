@@ -136,10 +136,10 @@
                                             {{ $magazine->description }}
                                         </td>
                                         <td>
-                                            {{ $magazine->created_at }}
+                                            {{ date('d F Y', strtotime($magazine->created_at)) }}
                                         </td>
                                         <td>
-                                            {{ $magazine->updated_at }}
+                                            {{ date('d F Y', strtotime($magazine->updated_at)) }}
                                         </td>
                                     </tr>
                                     @endforeach

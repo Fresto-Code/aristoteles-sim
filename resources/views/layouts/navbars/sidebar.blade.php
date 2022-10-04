@@ -87,6 +87,14 @@
                         <span class="nav-link-text">E-Magazine Saya</span>
                     </a>
                 </li>
+                @if (Auth::user()->role == 'admin')
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('user') }}">
+                        <i class="fas fa-users"></i>
+                        <span class="nav-link-text">User</span>
+                    </a>
+                </li>
+                @endif
             </ul>
             <!-- Divider -->
             <hr class="my-3">

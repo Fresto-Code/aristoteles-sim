@@ -6,6 +6,7 @@ use App\Http\Controllers\LetterController;
 use App\Http\Controllers\LetterHeadController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
@@ -123,3 +124,16 @@ Route::group(['middleware' => ['auth', 'backNotAllowed']], function () {
 
 
 Route::get('/', [MagazineController::class, 'browse'])->middleware('guest', 'backNotAllowed')->name('magazine.browse');
+
+//route group admin
+Route::group(['middleware' => ['auth', 'backNotAllowed', 'admin']], function () {
+	//user
+	Route::get('user', [UserController::class, 'index'])->name('user');
+	Route::get('search-user', [UserController::class, 'search']);
+	Route::get('user/create', [UserController::class, 'create'])->name('user.create');
+	Route::post('user', [UserController::class, 'store'])->name('user.store');
+	Route::get('user/{user}', [UserController::class, 'show'])->name('user.show');
+	Route::get('user/{user}/edit', [UserController::class, 'edit'])->name('user.edit');
+	Route::patch('user/{user}', [UserController::class, 'update'])->name('user.update');
+	Route::delete('user/{user}', [UserController::class, 'softDelete'])->name('user.softDelete');
+});
