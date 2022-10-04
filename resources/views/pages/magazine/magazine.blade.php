@@ -3,6 +3,47 @@
 @section('content')
 @include('layouts.headers.cards_basic')
 <div class="container-fluid mt--6">
+    <!-- session create -->
+    @if (session('create'))
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <span class="alert-text"><strong>Success!</strong> {{ session('create') }}</span>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <!-- success -->
+    @elseif(session('success'))
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <span class="alert-text"><strong>Success!</strong> {{ session('success') }}</span>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <!-- session update -->
+    @elseif (session('update'))
+    <div class="alert alert-info alert-dismissible fade show" role="alert">
+        <span class="alert-text"><strong>Success!</strong> {{ session('update') }}</span>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <!-- session delete -->
+    @elseif (session('delete'))
+    <div class="alert alert-secondary alert-dismissible fade show" role="alert">
+        <span class="alert-text"><strong>Success!</strong> {{ session('delete') }}</span>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <!-- session error -->
+    @elseif (session('error'))
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <span class="alert-text"><strong>Error!</strong> {{ session('error') }}</span>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    @endif
     <div class="row">
         <div class="col">
             <div class="card">

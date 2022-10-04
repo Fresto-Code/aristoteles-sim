@@ -36,7 +36,7 @@ class MagazineController extends Controller
                 'magazines.author_id'
             )
                 ->where('magazines.author_id', Auth::user()->id)
-                ->orderBy('moderation_status')
+                ->orderBy('magazines.created_at', 'desc')
                 ->paginate(10, ['magazines.*', 'users.name', 'users.avatar']);
         } else {
             $magazines = Magazine::join(
@@ -45,7 +45,7 @@ class MagazineController extends Controller
                 '=',
                 'magazines.author_id'
             )
-                ->orderBy('moderation_status')
+                ->orderBy('magazines.created_at', 'desc')
                 ->paginate(10, ['magazines.*', 'users.name', 'users.avatar']);
         }
 
@@ -148,10 +148,10 @@ class MagazineController extends Controller
                 'public'
             );
 
-            return redirect()->back();
+            return redirect()->back()->with('success', 'Magazine berhasil di publish');
         } catch (\Throwable $th) {
             //throw $th;
-            dd($th);
+            return redirect()->back()->with('error', 'Magazine gagal di publish');
         }
     }
 
@@ -250,15 +250,17 @@ class MagazineController extends Controller
             Notification::insert($notifications);
 
             DB::commit();
+
+            return redirect('magazine/browse/dashboard')->with('create', 'Magazine berhasil diunggah, silahkan tunggu konfirmasi dari admin');
         } catch (\Throwable $th) {
             DB::rollBack();
-            throw $th;
+            return redirect()->back()->with('error', 'Gagal mengunggah magazine');
         }
 
-        return redirect('magazine/browse/dashboard')->with(
-            'create',
-            'Magazine added successfully!'
-        );
+        // return redirect('magazine/browse/dashboard')->with(
+        //     'create',
+        //     'Magazine added successfully!'
+        // );
     }
 
     public function updateEditor(Request $request, Magazine $magazine)
@@ -352,15 +354,17 @@ class MagazineController extends Controller
             Notification::insert($notifications);
 
             DB::commit();
+            return redirect('magazine/browse/dashboard')->with('create', 'Magazine berhasil diunggah, silahkan tunggu konfirmasi dari admin');
         } catch (\Throwable $th) {
             DB::rollBack();
-            throw $th;
+            //throw $th;
+            return redirect()->back()->with('error', 'Gagal mengunggah magazine');
         }
 
-        return redirect('magazine/browse/dashboard')->with(
-            'create',
-            'Magazine added successfully!'
-        );
+        // return redirect('magazine/browse/dashboard')->with(
+        //     'create',
+        //     'Magazine added successfully!'
+        // );
     }
 
     /**
