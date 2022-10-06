@@ -1,19 +1,19 @@
 name: CD
 on:
   push:
-    branches: [ main ]
+    branches: [ production ]
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: "178.128.57.37"
+      - name: "209.97.170.217"
         uses: appleboy/ssh-action@master
         with:
-          host: '178.128.57.37'
+          host: '209.97.170.217'
           username: ${{ secrets.USERNAME }}
           PASSWORD: ${{ secrets.PASSWORD }}
           port: 22
           script: |
             cd /home/magazine.afresto.id/public_html/
-            git pull https://github.com/Fresto-Code/aristoteles-sim
+            git pull https://github.com/Fresto-Code/aristoteles-sim 'production'
             git reset --hard
