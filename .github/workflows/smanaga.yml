@@ -6,7 +6,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: "146.190.81.35"
+      - name: "Deploying to smanaga"
         uses: appleboy/ssh-action@master
         with:
           host: '146.190.81.35'
@@ -15,5 +15,5 @@ jobs:
           port: 22
           script: |
             cd public_html/
-            git pull https://github.com/Fresto-Code/aristoteles-sim 'production'
-            git reset --hard
+            git pull origin production
+            
