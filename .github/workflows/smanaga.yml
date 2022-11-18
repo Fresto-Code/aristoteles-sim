@@ -10,10 +10,10 @@ jobs:
         uses: appleboy/ssh-action@master
         with:
           host: '209.97.170.217'
-          username: ${{ secrets.USERNAME }}
-          PASSWORD: ${{ secrets.PASSWORD }}
+          username: ${{ secrets.USERNAME_SMANAGA }}
+          PASSWORD: ${{ secrets.PASSWORD_SMANAGA }}
           port: 22
           script: |
-            cd /home/magazine.afresto.id/public_html/
+            cd public_html/
             git pull https://github.com/Fresto-Code/aristoteles-sim 'production'
             git reset --hard
