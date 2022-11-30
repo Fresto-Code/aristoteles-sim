@@ -2,10 +2,13 @@
     "name": "laravel/laravel",
     "type": "project",
     "description": "The Laravel Framework.",
-    "keywords": ["framework", "laravel"],
+    "keywords": [
+        "framework",
+        "laravel"
+    ],
     "license": "MIT",
     "require": {
-        "php": "^8.0.2",
+        "php": "^7.3|^8.0",
         "aws/aws-sdk-php": "^3.235",
         "dompdf/dompdf": "^2.0",
         "guzzlehttp/guzzle": "^7.2",
