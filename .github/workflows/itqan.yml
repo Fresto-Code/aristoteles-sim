@@ -9,7 +9,7 @@ jobs:
       - name: "Deploying to ITQAN"
         uses: appleboy/ssh-action@master
         with:
-          host: '178.128.25.125'
+          host: '146.190.81.35'
           username: ${{ secrets.USERNAME_ITQAN }}
           PASSWORD: ${{ secrets.PASSWORD_ITQAN }}
           port: 22
