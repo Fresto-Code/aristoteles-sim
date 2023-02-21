@@ -188,7 +188,8 @@ class MagazineController extends Controller
             'title' => 'required',
             'description' => 'required',
             //max 100kb
-            'cover_file' => 'required|image|mimes:jpeg,png,jpg|max:600'
+            // 'cover_file' => 'required|image|mimes:jpeg,png,jpg|max:600'
+            'cover_file' => 'required|image|mimes:jpeg,png,jpg|max:10048'
         ]);
 
         $folderAndFileName = time() . '_magazine';
@@ -293,9 +294,9 @@ class MagazineController extends Controller
             'title' => 'required',
             'description' => 'required',
             //max 100kb
-            'cover_file' => 'required|image|mimes:jpeg,png,jpg|max:600',
+            'cover_file' => 'required|image|mimes:jpeg,png,jpg|max:10048',
             //max 5mb
-            'magazine_file' => 'required|mimes:pdf|max:5000',
+            'magazine_file' => 'required|mimes:pdf|max:15048',
         ]);
 
         $folderAndFileName = time() . '_magazine';
