@@ -6,13 +6,13 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: "Deploying to smanaga"
+      - name: "Deploying to littlesunschool"
         uses: appleboy/ssh-action@master
         with:
           host: '146.190.81.35'
-          username: ${{ secrets.USERNAME_littlesunschool }}
-          PASSWORD: ${{ secrets.PASSWORD_littlesunschool }}
+          username: ${{ secrets.USERNAME_LITTLESUNSCHOOL }}
+          PASSWORD: ${{ secrets.PASSWORD_LITTLESUNSCHOOL }}
           port: 22
           script: |
             cd public_html/
-            git pull git@github.com:Fresto-Code/aristoteles-sim.git production
+            git pull origin production
