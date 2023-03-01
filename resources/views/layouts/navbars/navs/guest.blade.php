@@ -18,7 +18,7 @@
                         </a> -->
                         <h1>
                             <a href="javascript:void(0)" class="simple-text logo-normal">
-                                {{ __('Beranda') }}
+                                {{ __('E-Magazine') }}
                             </a>
                         </h1>
                     </div>
