@@ -4,7 +4,7 @@
             <div class="row justify-content-center">
                 <div class="col-lg-5 col-md-6">
                     @if ($enterprise == null)
-                    <h1 class="text-white">{{ __('Selamat Datang di') }}</h1>
+                    <h1 class="text-white">{{ __('Selamat Datang') }}</h1>
                     @else
                     <h1 class="text-white">{{ __('Selamat Datang di ' . $enterprise->name) }}</h1>
                     @endif
