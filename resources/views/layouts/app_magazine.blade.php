@@ -8,7 +8,7 @@
 
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Argon Dashboard') }}</title>
+    <title>{{ config('app.name') }}</title>
     <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
     <!-- Favicon -->
     <link href="{{ asset('argon') }}/img/brand/favicon.png" rel="icon" type="image/png">
@@ -27,9 +27,9 @@
 
 <body class="{{ $class ?? '' }}">
     @auth()
-        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-            @csrf
-        </form>
+    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+        @csrf
+    </form>
     @endauth
 
     <div class="main-content">
@@ -38,7 +38,7 @@
     </div>
 
     @guest()
-        @include('layouts.footers.guest')
+    @include('layouts.footers.guest')
     @endguest
 
     <script src="{{ asset('argon') }}/vendor/jquery/dist/jquery.min.js"></script>
@@ -50,7 +50,7 @@
     <script src="{{ asset('argon') }}/js/argon.js?v=1.0.0"></script>
     <!-- Include the Quill library -->
     <script src="https://cdn.quilljs.com/1.0.0/quill.js"></script>
-    
+
 </body>
 
 </html>

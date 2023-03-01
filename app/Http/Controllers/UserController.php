@@ -159,9 +159,16 @@ class UserController extends Controller
         ]);
 
         try {
-            $user->update([
-                'password' => bcrypt($request->password),
-            ]);
+            if ($user->id_v2 == null) {
+                $user->update([
+                    'password' => bcrypt($request->password),
+                ]);
+            } else {
+                $user->update([
+                    'password' => bcrypt($request->password),
+                    'is_change_password_v2' => 1,
+                ]);
+            }
             return redirect()->route('user')->with('update', 'Password updated successfully.');
         } catch (\Throwable $th) {
             return redirect()->route('user')->with('error', 'Password updated failed.');

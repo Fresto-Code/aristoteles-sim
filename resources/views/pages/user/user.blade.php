@@ -42,14 +42,12 @@
                 <!-- Card header -->
                 <div class="card-header border-0">
                     <div class="row">
-                        <div class="col-xl-8 col-lg-6 col-md-5 col-sm-4">
+                        <div class="col-xl-10 col-lg-6 col-md-5 col-sm-4">
                             <h2>Daftar User</h2>
                         </div>
-                        <div class="col-xl-4 col-lg-6 col-md-7 col-sm-8">
+                        <div class="col-xl-2 col-lg-6 col-md-7 col-sm-8">
 
                             <a href="{{ route('user.create') }}" class="btn btn-success float-left">Tambah User Baru</a>
-
-                            <a href="{{ url('user/browse/dashboard') }}" class="btn btn-primary float-right">Jelajahi PDF</a>
 
                         </div>
                         <!-- search bar and filter with form-->

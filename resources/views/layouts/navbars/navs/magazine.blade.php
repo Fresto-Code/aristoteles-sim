@@ -1,6 +1,6 @@
 <nav class="navbar navbar-top navbar-horizontal navbar-expand-md navbar-dark">
     <div class="container px-4">
-        <a class="h4 mb-0 text-white text-uppercase d-none d-lg-inline-block  mr-5" href="{{ url('magazine/browse/dashboard') }}">{{ __('Home') }}</a>
+        <a class="h4 mb-0 text-white text-uppercase d-none d-lg-inline-block  mr-4" href="{{ url('magazine/browse/dashboard') }}">{{ __('Beranda') }}</a>
         <!-- Brand -->
         @if (Auth::user()->role == 'admin' || Auth::user()->role == 'teacher' || Auth::user()->role == 'osis')
         <a class="h4 mb-0 text-white text-uppercase d-none d-lg-inline-block" href="/magazine">{{ __('Admin') }}</a>
@@ -47,17 +47,17 @@
                     </a>
                     <div class="dropdown-menu dropdown-menu-arrow dropdown-menu-right">
                         <div class=" dropdown-header noti-title">
-                            <h6 class="text-overflow m-0">{{ __('Welcome!') }}</h6>
+                            <h6 class="text-overflow m-0">{{ __('Selamat Datang!') }}</h6>
                         </div>
                         <a href="{{ route('profile.edit') }}" class="dropdown-item">
                             <i class="ni ni-single-02"></i>
-                            <span>{{ __('My profile') }}</span>
+                            <span>{{ __('Profil saya') }}</span>
                         </a>
                         <div class="dropdown-divider"></div>
-                        <a href="/logout" class="dropdown-item" onclick="event.preventDefault();
+                        <a href="{{ route('own_logout') }}" class="dropdown-item" onclick="event.preventDefault();
                         document.getElementById('logout-form').submit();">
                             <i class="ni ni-user-run"></i>
-                            <span>{{ __('Logout') }}</span>
+                            <span>{{ __('Keluar') }}</span>
                         </a>
                     </div>
                 </li>

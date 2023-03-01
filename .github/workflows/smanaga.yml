@@ -16,4 +16,7 @@ jobs:
           script: |
             cd public_html/
             git pull origin production
+            /usr/local/lsws/lsphp81/bin/php ./artisan migrate
+            /usr/local/lsws/lsphp81/bin/php ./artisan optimize
+            /usr/local/lsws/lsphp81/bin/php /usr/local/bin/composer install
             

@@ -8,7 +8,7 @@
 
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Argon Dashboard') }}</title>
+    <title>{{ config('app.name') }}</title>
     <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
     <!-- Favicon -->
     <link href="{{ asset('argon') }}/img/brand/favicon.png" rel="icon" type="image/png">
@@ -18,32 +18,32 @@
 
     <!-- Icons -->
     <link href="{{ asset('argon') }}/vendor/nucleo/css/nucleo.css" rel="stylesheet">
-    <link
-        href="{{ asset('argon') }}/vendor/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">
-        <!-- Argon CSS -->
-        <link type="text/css" href="{{ asset('argon') }}/css/argon.css?v=1.0.0" rel="stylesheet">
-        <link href="https://cdn.quilljs.com/1.0.0/quill.snow.css" rel="stylesheet" />
-    </head>
-    <body class="{{ $class ?? '' }}">
-        @auth()
-            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                @csrf
-            </form>
-            @if (auth()->user()->role == 'admin' ||
-                auth()->user()->role == 'osis' ||
-                auth()->user()->role == 'principal' ||
-                auth()->user()->role == 'teacher')
-                @include('layouts.navbars.sidebar')
-            @endif
-        @endauth
-        
-        <div class="main-content">
-    @include('layouts.navbars.navbar')
-    @yield('content')
+    <link href="{{ asset('argon') }}/vendor/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">
+    <!-- Argon CSS -->
+    <link type="text/css" href="{{ asset('argon') }}/css/argon.css?v=1.0.0" rel="stylesheet">
+    <link href="https://cdn.quilljs.com/1.0.0/quill.snow.css" rel="stylesheet" />
+</head>
+
+<body class="{{ $class ?? '' }}">
+    @auth()
+    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+        @csrf
+    </form>
+    @if (auth()->user()->role == 'admin' ||
+    auth()->user()->role == 'osis' ||
+    auth()->user()->role == 'principal' ||
+    auth()->user()->role == 'teacher')
+    @include('layouts.navbars.sidebar')
+    @endif
+    @endauth
+
+    <div class="main-content">
+        @include('layouts.navbars.navbar')
+        @yield('content')
     </div>
 
     @guest()
-        @include('layouts.footers.guest')
+    @include('layouts.footers.guest')
     @endguest
 
     <script src="{{ asset('argon') }}/vendor/jquery/dist/jquery.min.js"></script>
@@ -54,6 +54,6 @@
     <!-- Argon JS -->
     <script src="{{ asset('argon') }}/js/argon.js?v=1.0.0"></script>
 
-    </body>
+</body>
 
 </html>

@@ -94,6 +94,12 @@
                         <span class="nav-link-text">User</span>
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('enterprise') }}">
+                        <i class="fas fa-cog"></i>
+                        <span class="nav-link-text">Pengaturan</span>
+                    </a>
+                </li>
                 @endif
             </ul>
             <!-- Divider -->

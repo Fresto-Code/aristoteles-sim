@@ -7,6 +7,8 @@ use App\Http\Controllers\LetterHeadController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\OwnLoginController;
+use App\Http\Controllers\EnterpriseController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
@@ -39,6 +41,10 @@ Route::get('/logout', [LoginController::class, 'logout']);
 Auth::routes();
 
 Route::get('/home', [HomeController::class, 'index'])->name('home')->middleware('auth', 'backNotAllowed');
+// ownlogin
+Route::get('/ownlogin', [OwnLoginController::class, 'index'])->middleware('guest', 'backNotAllowed')->name('form_login');
+Route::post('/ownlogin', [OwnLoginController::class, 'authenticate'])->name('own_login');
+Route::get('/ownlogout', [OwnLoginController::class, 'logout'])->name('own_logout');
 
 //Route::get('/home', 'App\Http\Controllers\HomeController@index')->name('home');
 
@@ -138,4 +144,14 @@ Route::group(['middleware' => ['auth', 'backNotAllowed', 'admin']], function () 
 	Route::delete('user/{user}', [UserController::class, 'softDelete'])->name('user.softDelete');
 	Route::get('user/{user}/change-password', [UserController::class, 'changePassword'])->name('user.changePassword');
 	Route::patch('user/{user}/update-password', [UserController::class, 'updatePassword'])->name('user.updatePassword');
+
+	//enterprises
+	Route::get('enterprise', [EnterpriseController::class, 'index'])->name('enterprise');
+	Route::get('search-enterprise', [EnterpriseController::class, 'search']);
+	Route::get('enterprise/create', [EnterpriseController::class, 'create'])->name('enterprise.create');
+	Route::post('enterprise', [EnterpriseController::class, 'store'])->name('enterprise.store');
+	Route::get('enterprise/{enterprise}', [EnterpriseController::class, 'show'])->name('enterprise.show');
+	Route::get('enterprise/{enterprise}/edit', [EnterpriseController::class, 'edit'])->name('enterprise.edit');
+	Route::patch('enterprise/{enterprise}', [EnterpriseController::class, 'update'])->name('enterprise.update');
+	Route::delete('enterprise/{enterprise}', [EnterpriseController::class, 'softDelete'])->name('enterprise.softDelete');
 });

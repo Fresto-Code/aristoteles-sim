@@ -16,4 +16,6 @@ jobs:
           script: |
             cd /home/magazine.afresto.id/public_html/
             git pull https://github.com/Fresto-Code/aristoteles-sim 'production'
-            git reset --hard
+            php artisan migrate
+            php artisan optimize
+            composer install
