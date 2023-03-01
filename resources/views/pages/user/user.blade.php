@@ -71,14 +71,14 @@
                                 <!-- start date filter -->
                                 <div class="col-xl-2 col-lg-2 col-md-2 col-sm-2">
                                     <div class="form-group">
-                                        <label for="start_date">Batas Awal Daftar</label>
+                                        <label for="start_date">Awal</label>
                                         <input type="date" class="form-control" id="start_date" name="start_date" value="{{ request('start_date') }}">
                                     </div>
                                 </div>
                                 <!-- end date filter -->
                                 <div class="col-xl-2 col-lg-2 col-md-2 col-sm-2">
                                     <div class="form-group">
-                                        <label for="end_date">Tanggal Akhir</label>
+                                        <label for="end_date">Akhir</label>
                                         <input type="date" class="form-control" id="end_date" name="end_date" value="{{ request('end_date') }}">
                                     </div>
                                 </div>
