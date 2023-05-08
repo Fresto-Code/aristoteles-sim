@@ -6,12 +6,12 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: "Deploying to smanaga"
+      - name: "Deploying to SMAMARYAMSBY"
         uses: appleboy/ssh-action@master
         with:
           host: '146.190.81.35'
-          username: ${{ secrets.USERNAME_SMANAGA }}
-          PASSWORD: ${{ secrets.PASSWORD_SMANAGA }}
+          username: ${{ secrets.USERNAME_SMAMARYAMSBY }}
+          PASSWORD: ${{ secrets.PASSWORD_SMAMARYAMSBY }}
           port: 22
           script: |
             cd public_html
