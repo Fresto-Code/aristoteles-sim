@@ -14,10 +14,8 @@ jobs:
           PASSWORD: ${{ secrets.PASSWORD }}
           port: 22
           script: |
-            cd public_html
-            git checkout production
+            cd /home/magazine.afresto.id/public_html/
             git pull origin production
-            composer install --ignore-platform-reqs
-            php artisan optimize
             php artisan migrate
-            composer install --ignore-platform-reqs
+            php artisan optimize
+            composer install
