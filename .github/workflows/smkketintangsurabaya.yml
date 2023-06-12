@@ -17,6 +17,7 @@ jobs:
             cd public_html
             git checkout production
             git pull origin production
+            /usr/local/lsws/lsphp81/bin/php /usr/local/bin/composer install --ignore-platform-reqs
             /usr/local/lsws/lsphp81/bin/php ./artisan optimize
             /usr/local/lsws/lsphp81/bin/php ./artisan migrate
             /usr/local/lsws/lsphp81/bin/php /usr/local/bin/composer install --ignore-platform-reqs

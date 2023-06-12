@@ -6,12 +6,12 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: "209.97.170.217"
+      - name: "Deploying to emagazine.smknjatengsmg.id"
         uses: appleboy/ssh-action@master
         with:
-          host: '209.97.170.217'
-          username: ${{ secrets.USERNAME }}
-          PASSWORD: ${{ secrets.PASSWORD }}
+          host: '188.166.227.1'
+          username: ${{ secrets.USERNAME_SMKNJATENGSMG }}
+          PASSWORD: ${{ secrets.PASSWORD_SMKNJATENGSMG }}
           port: 22
           script: |
             cd public_html
