@@ -1,0 +1,23 @@
+name: CD
+on:
+  push:
+    branches: [ production ]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Deploying to emagazine.sim-smabhaone.sch.id"
+        uses: appleboy/ssh-action@master
+        with:
+          host: '146.190.81.35'
+          username: ${{ secrets.USERNAME_SMABHAONE }}
+          PASSWORD: ${{ secrets.PASSWORD_SMABHAONE }}
+          port: 22
+          script: |
+            cd public_html
+            git checkout production
+            git pull origin production
+            /usr/local/lsws/lsphp81/bin/php /usr/local/bin/composer install --ignore-platform-reqs
+            /usr/local/lsws/lsphp81/bin/php ./artisan optimize
+            /usr/local/lsws/lsphp81/bin/php ./artisan migrate
+            /usr/local/lsws/lsphp81/bin/php /usr/local/bin/composer install --ignore-platform-reqs
