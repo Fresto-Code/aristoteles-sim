@@ -1,7 +1,7 @@
 name: CD
 on:
   push:
-    branches: [ production ]
+    branches: [production]
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -9,7 +9,7 @@ jobs:
       - name: "Deploying to smanaga"
         uses: appleboy/ssh-action@master
         with:
-          host: '146.190.81.35'
+          host: "167.172.95.149"
           username: ${{ secrets.USERNAME_SMANAGA }}
           PASSWORD: ${{ secrets.PASSWORD_SMANAGA }}
           port: 22
@@ -21,4 +21,3 @@ jobs:
             /usr/local/lsws/lsphp81/bin/php ./artisan optimize
             /usr/local/lsws/lsphp81/bin/php ./artisan migrate
             /usr/local/lsws/lsphp81/bin/php /usr/local/bin/composer install --ignore-platform-reqs
-            

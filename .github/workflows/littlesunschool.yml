@@ -1,7 +1,7 @@
 name: CD
 on:
   push:
-    branches: [ production ]
+    branches: [production]
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -9,7 +9,7 @@ jobs:
       - name: "Deploying to littlesunschool"
         uses: appleboy/ssh-action@master
         with:
-          host: '146.190.81.35'
+          host: "167.172.95.149"
           username: ${{ secrets.USERNAME_LITTLESUNSCHOOL }}
           PASSWORD: ${{ secrets.PASSWORD_LITTLESUNSCHOOL }}
           port: 22
