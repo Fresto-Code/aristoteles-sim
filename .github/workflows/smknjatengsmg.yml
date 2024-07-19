@@ -1,7 +1,7 @@
 name: CD
 on:
   push:
-    branches: [ production ]
+    branches: [production]
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -9,7 +9,7 @@ jobs:
       - name: "Deploying to emagazine.smknjatengsmg.id"
         uses: appleboy/ssh-action@master
         with:
-          host: '188.166.227.1'
+          host: "134.209.99.219"
           username: ${{ secrets.USERNAME_SMKNJATENGSMG }}
           PASSWORD: ${{ secrets.PASSWORD_SMKNJATENGSMG }}
           port: 22
