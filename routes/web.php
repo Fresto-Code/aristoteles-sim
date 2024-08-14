@@ -40,7 +40,7 @@ Route::post('/login', [LoginController::class, 'login']);
 Route::get('/logout', [LoginController::class, 'logout']);
 Auth::routes();
 
-Route::get('/home', [HomeController::class, 'index'])->name('home')->middleware('auth', 'backNotAllowed');
+Route::get('/home', [MagazineController::class, 'index'])->name('home')->middleware('auth', 'backNotAllowed');
 // ownlogin
 Route::get('/ownlogin', [OwnLoginController::class, 'index'])->middleware('guest', 'backNotAllowed')->name('form_login');
 Route::post('/ownlogin', [OwnLoginController::class, 'authenticate'])->name('own_login');

@@ -26,7 +26,7 @@
             @foreach ($magazines as $magazine)
             <div class="card">
                 <a class="card-block stretched-link text-decoration-none" href={{ env('BOOK_READ_URL') . $magazine->url }} target="_blank">
-                    <img class="card-img-top" src="{{ env('SPACES_URL') . $magazine->cover}}" alt="Card image cap">
+                    <img class="card-img-top" src="{{ $magazine->cover}}" alt="Card image cap">
                     <div class="card-body">
                         <h5 class="card-title">{{ $magazine->title }}</h5>
                         <p class="card-text">{{ $magazine->description }}</p>

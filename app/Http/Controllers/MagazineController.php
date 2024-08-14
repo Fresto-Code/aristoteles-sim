@@ -98,15 +98,34 @@ class MagazineController extends Controller
      */
     public function browse()
     {
-        $magazines = Magazine::join(
-            'users',
-            'users.id',
-            '=',
-            'magazines.author_id'
-        )
+        // $magazines = Magazine::join(
+        //     'users',
+        //     'users.id',
+        //     '=',
+        //     'magazines.author_id'
+        // )
+        //     ->where('magazines.moderation_status', 'published')
+        //     ->get(['magazines.*', 'users.name'])
+        //     ->sortBy('updated_at');
+
+        $magazines = DB::table('magazines')
+            ->join('users', 'users.id', '=', 'magazines.author_id')
+            ->select('magazines.*', 'users.name')
             ->where('magazines.moderation_status', 'published')
-            ->get(['magazines.*', 'users.name'])
-            ->sortBy('updated_at');
+            ->where('magazines.deleted_at', null)
+            ->orderByDesc('created_at')
+            ->get();
+
+        foreach ($magazines as $magazine) {
+            $magazine->created_at = Carbon::parse($magazine->created_at)->translatedFormat('d F Y');
+            $magazine->updated_at = Carbon::parse($magazine->updated_at)->translatedFormat('d F Y');
+            // presign url
+            // $magazine->url = $this->presignURL($magazine->url);
+            // dd($magazine->url);
+            $magazine->cover = $this->presignURL($magazine->cover);
+        }
+        // dd($magazines);
+
         return view('pages.magazine.public.magazine', compact('magazines'));
     }
 
