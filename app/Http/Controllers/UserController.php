@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rules\Password;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Carbon\Carbon;
 
 class UserController extends Controller
@@ -27,6 +28,10 @@ class UserController extends Controller
         $users = User::orderBy('updated_at', 'desc')
             ->where('deleted_at', null)
             ->paginate(10);
+
+        foreach ($users as $user) {
+            $user->avatar = $this->presignURL($user->avatar);
+        }
         return view('pages.user.user', compact('users'));
         // return view('users.index');
     }
@@ -173,5 +178,15 @@ class UserController extends Controller
         } catch (\Throwable $th) {
             return redirect()->route('user')->with('error', 'Password updated failed.');
         }
+    }
+
+    public function presignURL($avatar)
+    {
+        $request = Storage::disk('spaces')->temporaryUrl(
+            $avatar,
+            Carbon::now()->addMinutes(5)
+        );
+
+        return $request;
     }
 }

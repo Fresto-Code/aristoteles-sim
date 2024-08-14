@@ -132,7 +132,7 @@
                                         <th scope="row">
                                             <div class="media align-items-center">
                                                 <a href="#" class="avatar avatar-sm rounded-circle mr-3" data-toggle="tooltip" data-original-title="{{$user->name}}">
-                                                    <img alt="Image placeholder" src="{{ env('SPACES_URL') . $user->avatar }}">
+                                                    <img alt="Image placeholder" src="{{ $user->avatar }}">
                                                 </a>
                                                 <div class="media-body">
                                                     <span class="name mb-0 text-sm">{{ ucwords($user->name) }}</span>

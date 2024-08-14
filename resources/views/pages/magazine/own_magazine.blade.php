@@ -114,7 +114,7 @@
                                         <th scope="row">
                                             <div class="media align-items-center">
                                                 <a href="#" class="avatar avatar-sm rounded-circle mr-3" data-toggle="tooltip" data-original-title="{{$magazine->name}}">
-                                                    <img alt="Image placeholder" src="{{ env('SPACES_URL') . $magazine->avatar }}">
+                                                    <img alt="Image placeholder" src="{{ $magazine->avatar }}">
                                                 </a>
                                                 <div class="media-body">
                                                     <span class="name mb-0 text-sm">{{ ucwords($magazine->name) }}</span>
@@ -136,10 +136,10 @@
                                             {{ $magazine->description }}
                                         </td>
                                         <td>
-                                            {{ date('d F Y', strtotime($magazine->created_at)) }}
+                                            {{ $magazine->created_at }}
                                         </td>
                                         <td>
-                                            {{ date('d F Y', strtotime($magazine->updated_at)) }}
+                                            {{ $magazine->updated_at }}
                                         </td>
                                     </tr>
                                     @endforeach

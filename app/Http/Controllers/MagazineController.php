@@ -29,24 +29,44 @@ class MagazineController extends Controller
     public function index()
     {
         if (Auth::user()->role == 'student') {
-            $magazines = Magazine::join(
-                'users',
-                'users.id',
-                '=',
-                'magazines.author_id'
-            )
+            // $magazines = Magazine::join(
+            //     'users',
+            //     'users.id',
+            //     '=',
+            //     'magazines.author_id'
+            // )
+            //     ->where('magazines.author_id', Auth::user()->id)
+            //     ->orderBy('magazines.created_at', 'desc')
+            //     ->paginate(10, ['magazines.*', 'users.name', 'users.avatar']);
+
+            $magazines = DB::table('magazines')
+                ->join('users', 'users.id', '=', 'magazines.author_id')
                 ->where('magazines.author_id', Auth::user()->id)
-                ->orderBy('magazines.created_at', 'desc')
+                ->where('magazines.deleted_at', null)
+                ->orderByDesc('created_at')
                 ->paginate(10, ['magazines.*', 'users.name', 'users.avatar']);
         } else {
-            $magazines = Magazine::join(
-                'users',
-                'users.id',
-                '=',
-                'magazines.author_id'
-            )
-                ->orderBy('magazines.created_at', 'desc')
+            // $magazines = Magazine::join(
+            //     'users',
+            //     'users.id',
+            //     '=',
+            //     'magazines.author_id'
+            // )
+            //     ->orderBy('magazines.created_at', 'desc')
+            //     ->paginate(10, ['magazines.*', 'users.name', 'users.avatar']);
+
+            $magazines = DB::table('magazines')
+                ->join('users', 'users.id', '=', 'magazines.author_id')
+                ->where('magazines.deleted_at', null)
+                ->orderByDesc('created_at')
                 ->paginate(10, ['magazines.*', 'users.name', 'users.avatar']);
+        }
+
+        foreach ($magazines as $magazine) {
+            $magazine->created_at = Carbon::parse($magazine->created_at)->translatedFormat('d F Y');
+            $magazine->updated_at = Carbon::parse($magazine->updated_at)->translatedFormat('d F Y');
+            // presign url
+            $magazine->avatar = $this->presignURL($magazine->avatar);
         }
 
         return view('pages.magazine.magazine', compact('magazines'));
@@ -60,6 +80,14 @@ class MagazineController extends Controller
             ->where('magazines.deleted_at', null)
             ->orderByDesc('created_at')
             ->paginate(10, ['magazines.*', 'users.name', 'users.avatar']);
+
+        foreach ($magazines as $magazine) {
+            $magazine->created_at = Carbon::parse($magazine->created_at)->translatedFormat('d F Y');
+            $magazine->updated_at = Carbon::parse($magazine->updated_at)->translatedFormat('d F Y');
+            // presign url
+            $magazine->avatar = $this->presignURL($magazine->avatar);
+        }
+
         return view('pages.magazine.own_magazine', compact('magazines'));
     }
 
@@ -685,6 +713,13 @@ class MagazineController extends Controller
                     ->paginate(10, ['magazines.*', 'users.name', 'users.avatar']);
             }
         }
+
+        foreach ($magazines as $magazine) {
+            $magazine->created_at = Carbon::parse($magazine->created_at)->translatedFormat('d F Y');
+            $magazine->updated_at = Carbon::parse($magazine->updated_at)->translatedFormat('d F Y');
+            // presign url
+            $magazine->avatar = $this->presignURL($magazine->avatar);
+        }
         return view('pages.magazine.magazine', compact('magazines'));
     }
     public function searchOwn(Request $request)
@@ -876,6 +911,23 @@ class MagazineController extends Controller
                     ->paginate(10, ['magazines.*', 'users.name', 'users.avatar']);
             }
         }
+
+        foreach ($magazines as $magazine) {
+            $magazine->created_at = Carbon::parse($magazine->created_at)->translatedFormat('d F Y');
+            $magazine->updated_at = Carbon::parse($magazine->updated_at)->translatedFormat('d F Y');
+            // presign url
+            $magazine->avatar = $this->presignURL($magazine->avatar);
+        }
         return view('pages.magazine.own_magazine', compact('magazines'));
+    }
+
+    public function presignURL($avatar)
+    {
+        $request = Storage::disk('spaces')->temporaryUrl(
+            $avatar,
+            Carbon::now()->addMinutes(5)
+        );
+
+        return $request;
     }
 }

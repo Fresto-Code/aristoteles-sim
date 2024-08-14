@@ -1,5 +1,8 @@
 <?php
 
+use Illuminate\Support\Facades\DB;
+use Dotenv\Dotenv;
+
 /*
 |--------------------------------------------------------------------------
 | Create The Application
@@ -40,6 +43,49 @@ $app->singleton(
     Illuminate\Contracts\Debug\ExceptionHandler::class,
     App\Exceptions\Handler::class
 );
+
+// version ringkas
+$environmentFiles = [
+    'aristoteles-sim.test' => '.env',
+    'emagazine-sman1rotebarat.afresto.id' => '.env.sman1rotebarat',
+];
+
+$host = $_SERVER['HTTP_HOST'] ?? 'aristoteles-sim.test';
+
+// Cek apakah domain terkait dengan environment khusus
+if (array_key_exists($host, $environmentFiles)) {
+    $environmentFile = $environmentFiles[$host];
+} else {
+    $environmentFile = '.env';
+}
+
+// Load main environment variables from .env.config
+// $dotenv = Dotenv::createMutable(base_path(), '.env.config');
+// $dotenv->load();
+
+// Load main environment variables dari .env.config jika ada
+$dotenvConfigPath = base_path('.env.config');
+if (file_exists($dotenvConfigPath)) {
+    $dotenv = Dotenv::createMutable(base_path(), '.env.config');
+    $dotenv->load();
+}
+
+// Load environment variables specific to the host
+$envFilePath = base_path($environmentFile);
+if (file_exists($envFilePath)) {
+    $dotenv = Dotenv::createMutable(base_path(), $environmentFile);
+    $dotenv->load();
+}
+
+// // Load environment variables
+// $envFilePath = base_path($environmentFile);
+// if (file_exists($envFilePath)) {
+//     $dotenv = Dotenv\Dotenv::createMutable(base_path(), $environmentFile);
+//     $dotenv->load();
+//     // DB::purge('mysq');
+// }
+
+//
 
 /*
 |--------------------------------------------------------------------------
