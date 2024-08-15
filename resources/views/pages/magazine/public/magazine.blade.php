@@ -25,7 +25,14 @@
         <div class="card-columns">
             @foreach ($magazines as $magazine)
             <div class="card">
-                <a class="card-block stretched-link text-decoration-none" href={{ env('BOOK_READ_URL') . $magazine->url }} target="_blank">
+                <!-- <a class="card-block stretched-link text-decoration-none" href="{{ asset('pdf-engine/external/pdfjs-2.1.266-dist/web/viewer.html') }}?file={{ env('SPACES_URL') . $magazine->url }}" target="_blank"> -->
+
+                <!-- <a class="card-block stretched-link text-decoration-none" href="{{ asset('pdf-engine/external/pdfjs-2.1.266-dist/web/viewer.html') }}?file=urlencode('https://www.adobe.com/content/dam/acom/en/devnet/pdf/pdfs/pdf_reference_1-7.pdf')" target="_blank"> -->
+
+                <!-- <a class="card-block stretched-link text-decoration-none" href="{{ env('BOOK_READ_URL') . $magazine->url }}" target="_blank"> -->
+
+                <a class="card-block stretched-link text-decoration-none" href="{{ env('SPACES_URL') . $magazine->url }}" target="_blank">
+
                     <img class="card-img-top" src="{{ $magazine->cover}}" alt="Card image cap">
                     <div class="card-body">
                         <h5 class="card-title">{{ $magazine->title }}</h5>
