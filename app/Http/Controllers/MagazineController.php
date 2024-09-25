@@ -121,6 +121,8 @@ class MagazineController extends Controller
             $magazine->updated_at = Carbon::parse($magazine->updated_at)->translatedFormat('d F Y');
             // presign url
             $magazine->url = $this->presignURL($magazine->url);
+            // Generate viewer URL by embedding the pre-signed URL
+            $magazine->url = $this->generateViewerURL($magazine->url);
             // dd($magazine->url);
             $magazine->cover = $this->presignURL($magazine->cover);
         }
@@ -948,5 +950,14 @@ class MagazineController extends Controller
         );
 
         return $request;
+    }
+
+    public function generateViewerURL($pdfUrl)
+    {
+        // Get base viewer URL from the environment variable
+        $viewerBaseUrl = env('BOOK_READ_URL');
+
+        // Combine the viewer URL with the pre-signed PDF URL
+        return $viewerBaseUrl . urlencode($pdfUrl);
     }
 }
