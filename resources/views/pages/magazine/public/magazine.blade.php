@@ -31,7 +31,8 @@
 
                 <!-- <a class="card-block stretched-link text-decoration-none" href="{{ env('BOOK_READ_URL') . $magazine->url }}" target="_blank"> -->
 
-                <a class="card-block stretched-link text-decoration-none" href="{{ env('SPACES_URL') . $magazine->url }}" target="_blank">
+                <!-- <a class="card-block stretched-link text-decoration-none" href="{{ env('SPACES_URL') . $magazine->url }}" target="_blank"> -->
+                <a class="card-block stretched-link text-decoration-none" href="{{ $magazine->url }}" target="_blank">
 
                     <img class="card-img-top" src="{{ $magazine->cover}}" alt="Card image cap">
                     <div class="card-body">

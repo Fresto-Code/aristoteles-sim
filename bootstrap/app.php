@@ -48,6 +48,9 @@ $app->singleton(
 $environmentFiles = [
     'aristoteles-sim.test' => '.env',
     'emagazine-sman1rotebarat.afresto.id' => '.env.sman1rotebarat',
+    'emagazine-sdirgt.afresto.id' => '.env.sdirgt',
+    'emagazine-smpirgt.afresto.id' => '.env.smpirgt',
+    'emagazine.donbosko133.sch.id' => '.env.donbosko133',
 ];
 
 $host = $_SERVER['HTTP_HOST'] ?? 'aristoteles-sim.test';

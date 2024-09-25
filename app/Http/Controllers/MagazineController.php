@@ -120,7 +120,7 @@ class MagazineController extends Controller
             $magazine->created_at = Carbon::parse($magazine->created_at)->translatedFormat('d F Y');
             $magazine->updated_at = Carbon::parse($magazine->updated_at)->translatedFormat('d F Y');
             // presign url
-            // $magazine->url = $this->presignURL($magazine->url);
+            $magazine->url = $this->presignURL($magazine->url);
             // dd($magazine->url);
             $magazine->cover = $this->presignURL($magazine->cover);
         }
