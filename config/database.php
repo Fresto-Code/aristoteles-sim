@@ -76,7 +76,7 @@ return [
             'prefix_indexes' => true,
             'search_path' => 'public',
             'sslmode' => env('DB_SSLMODE', 'prefer'),
-            'sslrootcert' => storage_path('ca-certificate.crt'),
+            // 'sslrootcert' => storage_path('ca-certificate.crt'),
         ],
 
         'sqlsrv' => [
@@ -126,7 +126,7 @@ return [
 
         'options' => [
             'cluster' => env('REDIS_CLUSTER', 'redis'),
-            'prefix' => env('REDIS_PREFIX', Str::slug(env('APP_NAME', 'laravel'), '_').'_database_'),
+            'prefix' => env('REDIS_PREFIX', Str::slug(env('APP_NAME', 'laravel'), '_') . '_database_'),
         ],
 
         'default' => [
