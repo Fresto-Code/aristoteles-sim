@@ -261,6 +261,15 @@ class MigrateAndSeedAllDatabases extends Command
             //     'username' => 'superadmin',
             //     'password' => 'gaeLik6aeshie0equooxieVeiThahN',
             // ],
+            // // sman1smg
+            // 'sman1smg' => [
+            //     'driver' => 'pgsql',
+            //     'host' => '167.172.95.149',
+            //     'port' => '5432',
+            //     'database' => 'emagazine-sim-sman1smg-db',
+            //     'username' => 'superadmin',
+            //     'password' => 'gaeLik6aeshie0equooxieVeiThahN',
+            // ],
         ];
 
         return $connections;

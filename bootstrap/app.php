@@ -51,6 +51,7 @@ $environmentFiles = [
     'emagazine-sdirgt.afresto.id' => '.env.sdirgt',
     'emagazine-smpirgt.afresto.id' => '.env.smpirgt',
     'emagazine.donbosko133.sch.id' => '.env.donbosko133',
+    'emagazine-sman1smg.afresto.id' => '.env.sman1smg',
 ];
 
 $host = $_SERVER['HTTP_HOST'] ?? 'aristoteles-sim.test';
