@@ -47,11 +47,14 @@ $app->singleton(
 // version ringkas
 $environmentFiles = [
     'aristoteles-sim.test' => '.env',
-    'emagazine-sman1rotebarat.afresto.id' => '.env.sman1rotebarat',
+    'emagazine-demo.afresto.id' => '.env.demo',
     'emagazine-sdirgt.afresto.id' => '.env.sdirgt',
+    'emagazine-sman1rotebarat.afresto.id' => '.env.sman1rotebarat',
+    'emagazine-sman1smg.afresto.id' => '.env.sman1smg',
+    'emagazine-smkbopkri1yk.afresto.id' => '.env.smkbopkri1yk',
     'emagazine-smpirgt.afresto.id' => '.env.smpirgt',
     'emagazine.donbosko133.sch.id' => '.env.donbosko133',
-    'emagazine-sman1smg.afresto.id' => '.env.sman1smg',
+    'emagazinelittlesunschool.afresto.co' => '.env.littlesunschool',
 ];
 
 $host = $_SERVER['HTTP_HOST'] ?? 'aristoteles-sim.test';
