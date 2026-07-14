@@ -55,15 +55,30 @@ return [
             'throw' => false,
         ],
 
-        'spaces' => [
+        // 'spaces' => [
+        //     'driver' => 's3',
+        //     'key' => env('DO_SPACES_KEY'),
+        //     'secret' => env('DO_SPACES_SECRET'),
+        //     'endpoint' => env('DO_SPACES_ENDPOINT'),
+        //     'region' => env('DO_SPACES_REGION'),
+        //     'bucket' => env('DO_SPACES_BUCKET'),
+        //     'bucket_endpoint' => true,
+        //  ],
+
+        
+           'spaces' => [
             'driver' => 's3',
             'key' => env('DO_SPACES_KEY'),
             'secret' => env('DO_SPACES_SECRET'),
-            'endpoint' => env('DO_SPACES_ENDPOINT'),
             'region' => env('DO_SPACES_REGION'),
             'bucket' => env('DO_SPACES_BUCKET'),
-            'bucket_endpoint' => true,
-         ],
+            'endpoint' => env('DO_SPACES_ENDPOINT'),
+            'url' => env('DO_SPACES_URL'),
+            'use_path_style_endpoint' => false,
+
+            'root' => 'SIM-Systems/letter/', // OK di sini saja
+            'directory_separator' => '/',
+        ],
 
         // 'digitalocean' => [ 
         //     'driver' => 's3', 
