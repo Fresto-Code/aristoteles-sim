@@ -76,7 +76,7 @@ return [
             'url' => env('DO_SPACES_URL'),
             'use_path_style_endpoint' => false,
 
-            'root' => 'SIM-Systems/letter/', // OK di sini saja
+            'root' => 'SIM-Systems/emagazine/', // OK di sini saja
             'directory_separator' => '/',
         ],
 
